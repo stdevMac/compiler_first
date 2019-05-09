@@ -3,7 +3,7 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import (QPushButton, QTabWidget, QTextEdit,
                              QVBoxLayout, QWidget, QFileDialog)
 
-from src.main.python.ShowTab import ShowTable
+from src.main.python.ShowTab import ShowResults
 
 
 class MyTableWidget(QWidget):
@@ -19,7 +19,7 @@ class MyTableWidget(QWidget):
         # Initialize tab screen
         self.tabs = QTabWidget()
         self.tab1 = QWidget()
-        self.tab2 = ShowTable(self)
+        self.tab2 = ShowResults(self)
         self.tabs.resize(300, 200)
 
         # Add tabs
@@ -29,20 +29,15 @@ class MyTableWidget(QWidget):
         # Create first tab
         self.tab1.layout = QVBoxLayout(self)
         self.textBox = QTextEdit()
-        self.textBox.setPlainText("Twinkle, twinkle, little star,\n"
-                                  "How I wonder what you are.\n"
-                                  "Up above the world so high,\n"
-                                  "Like a diamond in the sky.\n"
-                                  "Twinkle, twinkle, little star,\n"
-                                  "How I wonder what you are!\n")
+        self.textBox.setPlainText("Inserte su gramática")
         self.button = QPushButton('Computar', self)
         self.button.setToolTip('This is an example button')
         self.button.move(100, 70)
-        self.button.clicked.connect(self.on_click_button)
+        self.button.clicked.connect(self.compute_button)
         self.load = QPushButton('Cargar Archivo', self)
         self.load.setToolTip('Carga un archivo .grm')
         self.load.move(100, 70)
-        self.load.clicked.connect(self.file_open)
+        self.load.clicked.connect(self.file_open_button)
 
         self.tab1.layout.addWidget(self.textBox)
         self.tab1.layout.addWidget(self.button)
@@ -54,7 +49,7 @@ class MyTableWidget(QWidget):
         self.setLayout(self.layout)
 
     @pyqtSlot()
-    def file_open(self):
+    def file_open_button(self):
         name = QFileDialog.getOpenFileName(self, 'Open File', filter="grm(*.grm)")
         file = open(name[0], 'r')
 
@@ -63,13 +58,7 @@ class MyTableWidget(QWidget):
             self.textBox.setPlainText(text)
 
     @pyqtSlot()
-    def on_click_button(self):
-        print('PyQt5 button click')
+    def compute_button(self):
+        print('Compute button clicked')
         print(self.textBox.toPlainText())
         self.tabs.setCurrentIndex(1)
-
-    @pyqtSlot()
-    def on_click(self):
-        print("\n")
-        for currentQTableWidgetItem in self.tableWidget.selectedItems():
-            print(currentQTableWidgetItem.row(), currentQTableWidgetItem.column(), currentQTableWidgetItem.text())
