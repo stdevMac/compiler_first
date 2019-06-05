@@ -447,7 +447,7 @@ class ContainerSet:
 
     def add(self, value):
         n = len(self.set)
-        self.set.add(value)
+        self.set.update(value)
         return n != len(self.set)
 
     def set_epsilon(self, value=True):
@@ -479,5 +479,5 @@ class ContainerSet:
         return iter(self.set)
 
     def __eq__(self, other):
-        return isinstance(other,
-                          ContainerSet) and self.set == other.set and self.contains_epsilon == other.contains_epsilon
+        return isinstance(other, ContainerSet) \
+               and self.set == other.set and self.contains_epsilon == other.contains_epsilon

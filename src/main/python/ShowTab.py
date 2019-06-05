@@ -1,7 +1,9 @@
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import (QVBoxLayout, QWidget, QLabel, QTextEdit)
 
-from src.main.python import tools
+from src.main.python import tools, first_follow
+
+
 # from src.main.python.GrammarWrapper import GrammarWrapper
 
 
@@ -34,7 +36,9 @@ class ShowResults(QWidget):
 
     def compute_options(self, code):
         tokens = tools.tokenize(code)
-
         grammar = tools.grammar_from_tokens(tokens)
 
+        first, follow = first_follow.compute_first_follow(grammar)
+        self.first.setPlainText(str(first))
+        self.follow.setPlainText(str(follow))
         self.grammar.setPlainText(str(grammar))
