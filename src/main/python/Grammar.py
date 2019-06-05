@@ -21,7 +21,7 @@ class Symbol(object):
 
     def __or__(self, other):
 
-        if isinstance(other, (Sentence)):
+        if isinstance(other, Sentence):
             return SentenceList(Sentence(self), other)
 
         raise TypeError(other)
@@ -42,16 +42,15 @@ class NonTerminal(Symbol):
 
     def __imod__(self, other):
 
-        if isinstance(other, (Sentence)):
+        if isinstance(other, Sentence):
             p = Production(self, other)
             self.Grammar.Add_Production(p)
             return self
 
         if isinstance(other, tuple):
             assert len(other) > 1
-            assert len(other) == len(
-                other[0]) + 2, "Debe definirse una, y solo una, regla por cada símbolo de la producción"
-            # assert len(other) == 2, "Tiene que ser una Tupla de 2 elementos (sentence, attribute)"
+            assert len(other) == len(other[0]) + 2, \
+                'Debe definirse una, y solo una, regla por cada símbolo de la producción'
 
             if isinstance(other[0], Symbol) or isinstance(other[0], Sentence):
                 p = AttributeProduction(self, other[0], other[1:])
@@ -109,8 +108,8 @@ class Terminal(Symbol):
 
 class EOF(Terminal):
 
-    def __init__(self, Grammar):
-        super().__init__('$', Grammar)
+    def __init__(self, grammar):
+        super().__init__('$', grammar)
 
 
 class Sentence(object):
@@ -439,7 +438,6 @@ class Grammar:
             return G
         else:
             return self.copy()
-    # endchange
 
 
 class ContainerSet:
@@ -483,119 +481,3 @@ class ContainerSet:
     def __eq__(self, other):
         return isinstance(other,
                           ContainerSet) and self.set == other.set and self.contains_epsilon == other.contains_epsilon
-
-
-def inspect(item, grammar_name='G', mapper=None):
-    try:
-        return mapper[item]
-    except (TypeError, KeyError):
-        if isinstance(item, dict):
-            items = ',\n   '.join(
-                f'{inspect(key, grammar_name, mapper)}: {inspect(value, grammar_name, mapper)}' for key, value in
-                item.items())
-            return f'{{\n   {items} \n}}'
-        elif isinstance(item, ContainerSet):
-            args = f'{ ", ".join(inspect(x, grammar_name, mapper) for x in item.set) } ,' if item.set else ''
-            return f'ContainerSet({args} contains_epsilon={item.contains_epsilon})'
-        elif isinstance(item, EOF):
-            return f'{grammar_name}.EOF'
-        elif isinstance(item, Epsilon):
-            return f'{grammar_name}.Epsilon'
-        elif isinstance(item, Symbol):
-            return str(item)
-        elif isinstance(item, Sentence):
-            items = ', '.join(inspect(s, grammar_name, mapper) for s in item._symbols)
-            return f'Sentence({items})'
-        elif isinstance(item, Production):
-            left = inspect(item.Left, grammar_name, mapper)
-            right = inspect(item.Right, grammar_name, mapper)
-            return f'Production({left}, {right})'
-        elif isinstance(item, tuple) or isinstance(item, list):
-            ctor = ('(', ')') if isinstance(item, tuple) else ('[', ']')
-            return f'{ctor[0]} {("%s, " * len(item)) % tuple(inspect(x, grammar_name, mapper) for x in item)}{ctor[1]}'
-        else:
-            raise ValueError()
-
-
-def pprint(item, header=""):
-    if header:
-        print(header)
-
-    if isinstance(item, dict):
-        for key, value in item.items():
-            print(f'{key}  --->  {value}')
-    elif isinstance(item, list):
-        print('[')
-        for x in item:
-            print(f'   {repr(x)}')
-        print(']')
-    else:
-        print(item)
-
-
-def from_basic_xcool(G, E, T, F, X, Y, plus, minus, star, div, opar, cpar, num):
-    class Container:
-        def __init__(self):
-            self.firsts = None
-            self.follows = None
-            self.table = None
-
-        def __iter__(self):
-            yield self.firsts
-            yield self.follows
-            yield self.table
-
-    container = Container()
-
-    container.firsts = {
-        plus: ContainerSet(plus, contains_epsilon=False),
-        minus: ContainerSet(minus, contains_epsilon=False),
-        star: ContainerSet(star, contains_epsilon=False),
-        div: ContainerSet(div, contains_epsilon=False),
-        opar: ContainerSet(opar, contains_epsilon=False),
-        cpar: ContainerSet(cpar, contains_epsilon=False),
-        num: ContainerSet(num, contains_epsilon=False),
-        E: ContainerSet(num, opar, contains_epsilon=False),
-        T: ContainerSet(num, opar, contains_epsilon=False),
-        F: ContainerSet(num, opar, contains_epsilon=False),
-        X: ContainerSet(plus, minus, contains_epsilon=True),
-        Y: ContainerSet(div, star, contains_epsilon=True),
-        Sentence(T, X): ContainerSet(num, opar, contains_epsilon=False),
-        Sentence(plus, T, X): ContainerSet(plus, contains_epsilon=False),
-        Sentence(minus, T, X): ContainerSet(minus, contains_epsilon=False),
-        G.Epsilon: ContainerSet(contains_epsilon=True),
-        Sentence(F, Y): ContainerSet(num, opar, contains_epsilon=False),
-        Sentence(star, F, Y): ContainerSet(star, contains_epsilon=False),
-        Sentence(div, F, Y): ContainerSet(div, contains_epsilon=False),
-        Sentence(num): ContainerSet(num, contains_epsilon=False),
-        Sentence(opar, E, cpar): ContainerSet(opar, contains_epsilon=False)
-    }
-
-    container.follows = {
-        E: ContainerSet(G.EOF, cpar, contains_epsilon=False),
-        T: ContainerSet(cpar, plus, G.EOF, minus, contains_epsilon=False),
-        F: ContainerSet(cpar, star, G.EOF, minus, div, plus, contains_epsilon=False),
-        X: ContainerSet(G.EOF, cpar, contains_epsilon=False),
-        Y: ContainerSet(cpar, plus, G.EOF, minus, contains_epsilon=False)
-    }
-
-    container.table = {
-        (E, num,): [Production(E, Sentence(T, X)), ],
-        (E, opar,): [Production(E, Sentence(T, X)), ],
-        (X, plus,): [Production(X, Sentence(plus, T, X)), ],
-        (X, minus,): [Production(X, Sentence(minus, T, X)), ],
-        (X, cpar,): [Production(X, G.Epsilon), ],
-        (X, G.EOF,): [Production(X, G.Epsilon), ],
-        (T, num,): [Production(T, Sentence(F, Y)), ],
-        (T, opar,): [Production(T, Sentence(F, Y)), ],
-        (Y, star,): [Production(Y, Sentence(star, F, Y)), ],
-        (Y, div,): [Production(Y, Sentence(div, F, Y)), ],
-        (Y, plus,): [Production(Y, G.Epsilon), ],
-        (Y, G.EOF,): [Production(Y, G.Epsilon), ],
-        (Y, cpar,): [Production(Y, G.Epsilon), ],
-        (Y, minus,): [Production(Y, G.Epsilon), ],
-        (F, num,): [Production(F, Sentence(num)), ],
-        (F, opar,): [Production(F, Sentence(opar, E, cpar)), ]
-    }
-
-    return container

@@ -61,4 +61,5 @@ class MyTableWidget(QWidget):
     def compute_button(self):
         print('Compute button clicked')
         print(self.textBox.toPlainText())
+        self.tab2.compute_options(self.textBox.toPlainText())
         self.tabs.setCurrentIndex(1)
