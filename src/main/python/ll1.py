@@ -1,6 +1,3 @@
-from src.main.python.Grammar import Grammar
-
-
 def is_register(table, state, symbol, value):
     if state not in table:
         table[state] = dict()
