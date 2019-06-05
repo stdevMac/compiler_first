@@ -1,7 +1,7 @@
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import (QVBoxLayout, QWidget, QLabel, QTextEdit)
+from PyQt5.QtWidgets import (QVBoxLayout, QWidget, QLabel, QTextEdit, QScrollArea)
 
-from src.main.python import tools, first_follow
+from src.main.python import tools, first_follow, ll1
 
 
 # from src.main.python.GrammarWrapper import GrammarWrapper
@@ -16,22 +16,41 @@ class ShowResults(QWidget):
 
         s = QFont('SansSerif', 25)
         self.setFont(s)
-        # self.wrapper = GrammarWrapper()
+
+        self.scroll = QScrollArea(self)
+
+        self.layout.addWidget(self.scroll)
+        self.scroll.setWidgetResizable(True)
+        scroll_content = QWidget(self.scroll)
+
+        scroll_layout = QVBoxLayout(scroll_content)
+        scroll_content.setLayout(scroll_layout)
+
 
         # Initialize tab screen
         self.grammar_label = QLabel('Gramatica')
         self.grammar = QTextEdit()
         self.first_label = QLabel('First')
         self.first = QTextEdit()
-        self.follow_label = QLabel('First')
+        self.follow_label = QLabel('Follow')
         self.follow = QTextEdit()
-        # # Add tabs to widget
-        self.layout.addWidget(self.grammar_label)
-        self.layout.addWidget(self.first_label)
-        self.layout.addWidget(self.follow_label)
-        self.layout.addWidget(self.grammar)
-        self.layout.addWidget(self.first)
-        self.layout.addWidget(self.follow)
+        self.ll1_label = QLabel('Es LL1?')
+        self.ll1 = QTextEdit()
+        self.ll1_table_label = QLabel('Tabla LL1')
+        self.ll1_table = QTextEdit()
+
+        # Add tabs to widget
+        scroll_layout.addWidget(self.grammar_label)
+        scroll_layout.addWidget(self.grammar)
+        scroll_layout.addWidget(self.first_label)
+        scroll_layout.addWidget(self.first)
+        scroll_layout.addWidget(self.follow_label)
+        scroll_layout.addWidget(self.follow)
+        scroll_layout.addWidget(self.ll1_label)
+        scroll_layout.addWidget(self.ll1)
+        scroll_layout.addWidget(self.ll1_table_label)
+        scroll_layout.addWidget(self.ll1_table)
+        self.scroll.setWidget(scroll_content)
         self.setLayout(self.layout)
 
     def compute_options(self, code):
@@ -39,6 +58,19 @@ class ShowResults(QWidget):
         grammar = tools.grammar_from_tokens(tokens)
 
         first, follow = first_follow.compute_first_follow(grammar)
+
+        ll1_table, is_ll1 = ll1.build_ll1_table(grammar, first, follow)
+
+        self.first.setPlainText(str(first))
+
+        self.ll1.setPlainText(str(is_ll1))
+        self.ll1_table.setPlainText(str(ll1_table))
+        self.ll1_table.show()
+        if not is_ll1:
+            self.ll1_table.setPlainText(str(ll1_table))
+            self.ll1_table.hide()
+            self.ll1_table_label.hide()
+
         self.first.setPlainText(str(first))
         self.follow.setPlainText(str(follow))
         self.grammar.setPlainText(str(grammar))

@@ -25,10 +25,10 @@ def build_ll1_table(grammar, first, follow):
 
         first_alpha = first[alpha]
         for symbol in first_alpha:
-            is_ll1 = is_ll1 and is_register(table, x, symbol, production)
+            is_ll1 &= is_register(table, x, symbol, production)
 
         if first_alpha.contains_epsilon:
             for symbol in follow[x]:
-                is_ll1 = is_ll1 and is_register(table, x, symbol, production)
+                is_ll1 &= is_register(table, x, symbol, production)
 
     return table, is_ll1
