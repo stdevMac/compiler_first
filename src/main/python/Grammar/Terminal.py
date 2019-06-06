@@ -1,4 +1,4 @@
-from src.main.python.Grammar.Symbol import Symbol
+from src.main.python.Grammar.Sentence import Symbol
 
 
 class Terminal(Symbol):

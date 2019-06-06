@@ -1,8 +1,6 @@
 from src.main.python.Grammar.AttributeProduction import AttributeProduction
 from src.main.python.Grammar.Production import Production
-from src.main.python.Grammar.SentenceList import SentenceList
-from src.main.python.Grammar.Sentence import Sentence
-from src.main.python.Grammar.Symbol import Symbol
+from src.main.python.Grammar.Sentence import Sentence, SentenceList, Symbol
 
 
 class NonTerminal(Symbol):

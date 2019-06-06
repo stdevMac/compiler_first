@@ -187,5 +187,3 @@ class Grammar:
             return G
         else:
             return self.copy()
-
-
