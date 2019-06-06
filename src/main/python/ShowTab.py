@@ -5,6 +5,7 @@ from src.main.python import tools, first_follow, ll1
 
 
 # from src.main.python.GrammarWrapper import GrammarWrapper
+from src.main.python.tools import rm_common_prefix
 
 
 class ShowResults(QWidget):
@@ -38,6 +39,8 @@ class ShowResults(QWidget):
         self.ll1 = QTextEdit()
         self.ll1_table_label = QLabel('Tabla LL1')
         self.ll1_table = QTextEdit()
+        self.grammar_reduced_label = QLabel('Gramatica reducidad')
+        self.grammar_reduced = QTextEdit()
 
         # Add tabs to widget
         scroll_layout.addWidget(self.grammar_label)
@@ -50,6 +53,8 @@ class ShowResults(QWidget):
         scroll_layout.addWidget(self.ll1)
         scroll_layout.addWidget(self.ll1_table_label)
         scroll_layout.addWidget(self.ll1_table)
+        scroll_layout.addWidget(self.grammar_reduced_label)
+        scroll_layout.addWidget(self.grammar_reduced)
         self.scroll.setWidget(scroll_content)
         self.setLayout(self.layout)
 
@@ -70,7 +75,8 @@ class ShowResults(QWidget):
             self.ll1_table.setPlainText(str(ll1_table))
             self.ll1_table.hide()
             self.ll1_table_label.hide()
-
+        rm_common_prefix(grammar)
+        self.grammar_reduced.setPlainText(str(grammar))
         self.first.setPlainText(str(first))
         self.follow.setPlainText(str(follow))
         self.grammar.setPlainText(str(grammar))

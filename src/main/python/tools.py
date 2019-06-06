@@ -113,6 +113,10 @@ def rm_immediate_left_recursion(grammar):
 
 
 def rm_common_prefix(grammar):
+    """
+
+    :type grammar: Grammar
+    """
     grammar.Productions = []
     q = Queue()
 
@@ -134,24 +138,24 @@ def rm_common_prefix(grammar):
                 for prodct in productions[i:]:
                     counter = 0
 
-                    for index in range(min(len(productions[i].Right), len(prodct.Rigth))):
-                        if productions[i].Right[index] == prodct.Rigth[index]:
+                    for index in range(min(len(productions[i].Right), len(prodct.Right))):
+                        if productions[i].Right[index] == prodct.Right[index]:
                             counter += 1
                         else:
                             break
                     if counter > 0:
                         common_prefixes.append(prodct)
                         length = min(length, counter)
-                if length(common_prefixes) > 1:
+                if len(common_prefixes) > 1:
                     visited.update(common_prefixes)
                     tmp = grammar.NonTerminal(f'{non_terminal.Name}{i + 1}')
 
                     non_terminal %= Sentence(*productions[i].Right[:length]) + tmp
                     for prodct in common_prefixes:
-                        if length == length(prodct.Rigth):
+                        if length == len(prodct.Right):
                             tmp %= grammar.Epsilon
                         else:
-                            tmp %= Sentence(*prodct.Rigth[length:])
+                            tmp %= Sentence(*prodct.Right[length:])
 
                     q.put(tmp)
                 else:
