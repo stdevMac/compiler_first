@@ -1,7 +1,6 @@
 import collections
 import json
 import re
-from queue import Queue
 
 from src.main.python.Grammar.Grammar import Grammar
 from src.main.python.Grammar.Sentence import Sentence
@@ -87,78 +86,3 @@ def grammar_from_tokens(tokens):
     })
 
     return Grammar.from_json(data)
-
-
-def rm_immediate_left_recursion(grammar):
-    grammar.Productions = []
-    non_terminals = grammar.nonTerminals.copy()
-
-    for non_terminal in non_terminals:
-        recursion = [p.Right[1:] for p in non_terminal.productions if len(p.Right) > 0 and p.Right[0] == non_terminal]
-        no_recursion = [p.Right for p in non_terminal.productions if len(p.Right) == 0 or p.Right[0] != non_terminal]
-
-        if len(recursion) > 0:
-            non_terminal.productions = []
-            tmp = grammar.NonTerminal(f'{non_terminal.name}0')
-
-            for p in no_recursion:
-                non_terminal %= Sentence(*p) + tmp
-
-            for p in recursion:
-                tmp %= Sentence(*p) + tmp
-
-            tmp %= grammar.Epsilon
-
-        else:
-            grammar.Productions.extend(non_terminal.productions)
-
-
-def rm_common_prefix(grammar):
-    """
-
-    :type grammar: Grammar
-    """
-    grammar.Productions = []
-    q = Queue()
-
-    for non_terminal in grammar.nonTerminals:
-        q.put(non_terminal)
-
-    while not q.empty():
-        non_terminal = q.get()
-        visited = set()
-
-        productions = non_terminal.productions.copy()
-        non_terminal.productions = []
-
-        for i in range(len(productions)):
-            if productions[i] not in visited:
-                length = len(productions[i].Right)
-
-                common_prefixes = []
-                for prodct in productions[i:]:
-                    counter = 0
-
-                    for index in range(min(len(productions[i].Right), len(prodct.Right))):
-                        if productions[i].Right[index] == prodct.Right[index]:
-                            counter += 1
-                        else:
-                            break
-                    if counter > 0:
-                        common_prefixes.append(prodct)
-                        length = min(length, counter)
-                if len(common_prefixes) > 1:
-                    visited.update(common_prefixes)
-                    tmp = grammar.NonTerminal(f'{non_terminal.Name}{i + 1}')
-
-                    non_terminal %= Sentence(*productions[i].Right[:length]) + tmp
-                    for prodct in common_prefixes:
-                        if length == len(prodct.Right):
-                            tmp %= grammar.Epsilon
-                        else:
-                            tmp %= Sentence(*prodct.Right[length:])
-
-                    q.put(tmp)
-                else:
-                    visited.add(productions[i])
-                    non_terminal %= productions[i].Right

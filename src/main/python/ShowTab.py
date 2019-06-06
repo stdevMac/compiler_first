@@ -1,11 +1,11 @@
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import (QVBoxLayout, QWidget, QLabel, QTextEdit, QScrollArea)
 
-from src.main.python import tools, first_follow, ll1
-
+from src.main.python import ll1
+from src.main.python.Tools import Tokenizer, first_follow
 
 # from src.main.python.GrammarWrapper import GrammarWrapper
-from src.main.python.tools import rm_common_prefix
+from src.main.python.Tools.RemoveCommonPrefix import rm_common_prefix
 
 
 class ShowResults(QWidget):
@@ -59,8 +59,8 @@ class ShowResults(QWidget):
         self.setLayout(self.layout)
 
     def compute_options(self, code):
-        tokens = tools.tokenize(code)
-        grammar = tools.grammar_from_tokens(tokens)
+        tokens = Tokenizer.tokenize(code)
+        grammar = Tokenizer.grammar_from_tokens(tokens)
 
         first, follow = first_follow.compute_first_follow(grammar)
 
