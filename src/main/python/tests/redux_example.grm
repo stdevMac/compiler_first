@@ -1,0 +1,3 @@
+S --> a X Y | a
+X --> a | Y b
+Y --> c | Epsilon
