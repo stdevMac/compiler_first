@@ -1,4 +1,4 @@
-from src.main.python.Grammar import ContainerSet
+from src.main.python.Grammar.ContainerSet import ContainerSet
 import copy
 
 

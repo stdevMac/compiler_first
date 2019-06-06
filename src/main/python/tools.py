@@ -3,7 +3,8 @@ import json
 import re
 from queue import Queue
 
-from src.main.python.Grammar import Grammar, Sentence
+from src.main.python.Grammar.Grammar import Grammar
+from src.main.python.Grammar.Sentence import Sentence
 
 Token = collections.namedtuple('Token', ['typ', 'value', 'line', 'column'])
 token_specification = [
