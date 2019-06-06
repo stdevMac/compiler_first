@@ -6,6 +6,7 @@ from src.main.python.Tools import Tokenizer, first_follow
 
 # from src.main.python.GrammarWrapper import GrammarWrapper
 from src.main.python.Tools.RemoveCommonPrefix import rm_common_prefix
+from src.main.python.Tools.RemoveImmediateLeftRecursion import rm_immediate_left_recursion
 
 
 class ShowResults(QWidget):
@@ -39,6 +40,8 @@ class ShowResults(QWidget):
         self.ll1 = QTextEdit()
         self.ll1_table_label = QLabel('Tabla LL1')
         self.ll1_table = QTextEdit()
+        self.grammar_without_left_recursion_label = QLabel('Quitar la recursion Izquierda')
+        self.grammar_without_left_recursion = QTextEdit()
         self.grammar_reduced_label = QLabel('Gramatica reducidad')
         self.grammar_reduced = QTextEdit()
 
@@ -53,6 +56,8 @@ class ShowResults(QWidget):
         scroll_layout.addWidget(self.ll1)
         scroll_layout.addWidget(self.ll1_table_label)
         scroll_layout.addWidget(self.ll1_table)
+        scroll_layout.addWidget(self.grammar_without_left_recursion_label)
+        scroll_layout.addWidget(self.grammar_without_left_recursion)
         scroll_layout.addWidget(self.grammar_reduced_label)
         scroll_layout.addWidget(self.grammar_reduced)
         self.scroll.setWidget(scroll_content)
@@ -75,8 +80,12 @@ class ShowResults(QWidget):
             self.ll1_table.setPlainText(str(ll1_table))
             self.ll1_table.hide()
             self.ll1_table_label.hide()
-        rm_common_prefix(grammar)
-        self.grammar_reduced.setPlainText(str(grammar))
+        grammar_without_common_prefixes = grammar.copy()
+        rm_common_prefix(grammar_without_common_prefixes)
+        grammar_without_immediate_left_recursion = grammar.copy()
+        rm_immediate_left_recursion(grammar_without_immediate_left_recursion)
+        self.grammar_reduced.setPlainText(str(grammar_without_common_prefixes))
+        self.grammar_without_left_recursion.setPlainText(str(grammar_without_immediate_left_recursion))
         self.first.setPlainText(str(first))
         self.follow.setPlainText(str(follow))
         self.grammar.setPlainText(str(grammar))

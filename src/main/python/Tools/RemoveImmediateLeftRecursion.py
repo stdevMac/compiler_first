@@ -11,7 +11,7 @@ def rm_immediate_left_recursion(grammar):
 
         if len(recursion) > 0:
             non_terminal.productions = []
-            tmp = grammar.NonTerminal(f'{non_terminal.name}0')
+            tmp = grammar.NonTerminal(f'{non_terminal.Name}0')
 
             for p in no_recursion:
                 non_terminal %= Sentence(*p) + tmp
