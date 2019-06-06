@@ -196,7 +196,7 @@ class Epsilon(Terminal, Sentence):
         self._symbols = []
 
     def __str__(self):
-        return "e"
+        return "Epsilon"
 
     def __repr__(self):
         return 'epsilon'
