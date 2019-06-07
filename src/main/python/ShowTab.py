@@ -4,7 +4,6 @@ from PyQt5.QtWidgets import (QVBoxLayout, QWidget, QLabel, QTextEdit, QScrollAre
 from src.main.python import ll1
 from src.main.python.Tools import Tokenizer, first_follow
 
-# from src.main.python.GrammarWrapper import GrammarWrapper
 from src.main.python.Tools.RemoveCommonPrefix import rm_common_prefix
 from src.main.python.Tools.RemoveImmediateLeftRecursion import rm_immediate_left_recursion
 
@@ -28,7 +27,6 @@ class ShowResults(QWidget):
         scroll_layout = QVBoxLayout(scroll_content)
         scroll_content.setLayout(scroll_layout)
 
-
         # Initialize tab screen
         self.grammar_label = QLabel('Gramatica')
         self.grammar = QTextEdit()
@@ -45,7 +43,7 @@ class ShowResults(QWidget):
         self.grammar_reduced_label = QLabel('Gramatica reducidad')
         self.grammar_reduced = QTextEdit()
 
-        # Add tabs to widget
+        # Add widgets
         scroll_layout.addWidget(self.grammar_label)
         scroll_layout.addWidget(self.grammar)
         scroll_layout.addWidget(self.first_label)
