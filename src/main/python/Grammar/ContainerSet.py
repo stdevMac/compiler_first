@@ -28,7 +28,7 @@ class ContainerSet:
         return len(self.set) + int(self.contains_epsilon)
 
     def __str__(self):
-        return '%s-%s' % (str(self.set), self.contains_epsilon)
+        return '%s' % (str(self.set))
 
     def __repr__(self):
         return str(self)

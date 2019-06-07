@@ -42,10 +42,10 @@ class ShowResults(QWidget):
         first, follow = first_follow.compute_first_follow(grammar)
 
         ll1_table, is_ll1 = ll1.build_ll1_table(grammar, first, follow)
-        info = 'First: \n'
+        info = 'Gramatica: \n' + str(grammar) + '\n\n'
+        info += 'First: \n'
         info += str(first) + '\n\n'
         info += 'Follow: \n' + str(follow) + '\n\n'
-        info += 'Gramatica: \n' + str(grammar) + '\n\n'
         info += 'll1: \n' + str(is_ll1) + '\n\n'
         info += 'Tabla ll1: \n' + str(ll1_table) + '\n\n'
 
