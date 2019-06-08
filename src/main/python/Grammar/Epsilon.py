@@ -5,14 +5,14 @@ from src.main.python.Grammar.Terminal import Terminal
 class Epsilon(Terminal, Sentence):
 
     def __init__(self, grammar):
-        super().__init__('epsilon', grammar)
+        super().__init__('Epsilon', grammar)
         self._symbols = []
 
     def __str__(self):
         return "Epsilon"
 
     def __repr__(self):
-        return 'epsilon'
+        return 'Epsilon'
 
     def __iter__(self):
         yield from ()

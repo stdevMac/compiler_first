@@ -4,6 +4,7 @@ import re
 
 from src.main.python.Grammar.Grammar import Grammar
 from src.main.python.Grammar.Sentence import Sentence
+from src.main.python.Grammar.Terminal import Terminal
 
 Token = collections.namedtuple('Token', ['typ', 'value', 'line', 'column'])
 token_specification = [
@@ -74,15 +75,24 @@ def grammar_from_tokens(tokens):
         productions.append({'Head': line[0].value, 'Body': current_body})
         terminals.extend(productions[-1]['Body'])
         line_num += 1
-
-    final_terminals, final_non_terminals = set(terminals).difference(non_terminals + ['epsilon']), set(non_terminals)
+    if 'Epsilon' in terminals:
+        final_terminals, final_non_terminals = \
+            set(terminals).difference(non_terminals), set(non_terminals)
+    else:
+        final_terminals, final_non_terminals = \
+            set(terminals).difference(non_terminals + ['Epsilon']), set(non_terminals)
 
     data = json.dumps({
         'NonTerminals': [symbol for symbol in non_terminals if symbol in final_non_terminals
                          and final_non_terminals.discard(symbol) is None],
         'Terminals': [symbol for symbol in terminals if symbol in final_terminals
                       and final_terminals.discard(symbol) is None],
-        'Productions': productions
+        'Productions': productions,
+        'StartSymbol': non_terminals[0]
     })
 
     return Grammar.from_json(data)
+
+
+def tokenize_input(code: str, grammar):
+    return code.split(' ')

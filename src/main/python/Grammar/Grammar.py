@@ -134,16 +134,22 @@ class Grammar:
         data = json.loads(data)
 
         G = Grammar()
-        dic = {'epsilon': G.Epsilon}
+        dic = {'Epsilon': G.Epsilon}
 
         for term in data['Terminals']:
             dic[term] = G.Terminal(term)
-
+        start_symbol = data['StartSymbol']
         for noTerm in data['NonTerminals']:
+            if noTerm is start_symbol:
+                dic[noTerm] = G.NonTerminal(noTerm, True)
+                continue
             dic[noTerm] = G.NonTerminal(noTerm)
 
         for p in data['Productions']:
             head = p['Head']
+            if 'Epsilon' in p['Body']:
+                dic[head] %= Epsilon(G)
+                continue
             dic[head] %= Sentence(*[dic[term] for term in p['Body']])
 
         return G
