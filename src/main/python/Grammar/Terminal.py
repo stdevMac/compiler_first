@@ -16,4 +16,4 @@ class Terminal(Symbol):
 
     @property
     def IsEpsilon(self):
-        return False
+        return True if self.Name == 'Epsilon' else False

@@ -36,6 +36,12 @@ class ContainerSet:
     def __iter__(self):
         return iter(self.set)
 
+    def __contains__(self, item):
+        for element in self.set:
+            if item == str(element):
+                return True
+        return False
+
     def __eq__(self, other):
         return isinstance(other, ContainerSet) \
                and self.set == other.set and self.contains_epsilon == other.contains_epsilon

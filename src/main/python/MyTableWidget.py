@@ -29,7 +29,9 @@ class MyTableWidget(QWidget):
         # Create first tab
         self.tab1.layout = QVBoxLayout(self)
         self.textBox = QTextEdit()
-        self.textBox.setPlainText("Inserte su gramática")
+        self.recognise_string = QTextEdit()
+        self.textBox.setPlaceholderText("Inserte su gramática")
+        self.recognise_string.setPlaceholderText("Inserte cadenas a reconocer")
         self.button = QPushButton('Computar', self)
         self.button.setToolTip('This is an example button')
         self.button.move(100, 70)
@@ -40,6 +42,7 @@ class MyTableWidget(QWidget):
         self.load.clicked.connect(self.file_open_button)
 
         self.tab1.layout.addWidget(self.textBox)
+        self.tab1.layout.addWidget(self.recognise_string)
         self.tab1.layout.addWidget(self.button)
         self.tab1.layout.addWidget(self.load)
         self.tab1.setLayout(self.tab1.layout)
@@ -61,5 +64,5 @@ class MyTableWidget(QWidget):
     def compute_button(self):
         print('Compute button clicked')
         print(self.textBox.toPlainText())
-        self.tab2.compute_options(self.textBox.toPlainText())
+        self.tab2.compute_options(self.textBox.toPlainText(), self.recognise_string.toPlainText())
         self.tabs.setCurrentIndex(1)

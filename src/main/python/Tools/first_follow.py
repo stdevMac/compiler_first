@@ -1,6 +1,8 @@
 from src.main.python.Grammar.ContainerSet import ContainerSet
 import copy
 
+from src.main.python.Tools.printer import pprint
+
 
 def compute_local_first(firsts, alpha):
     first_alpha = ContainerSet()
@@ -103,26 +105,27 @@ def compute_follows(G, firsts):
     return follows
 
 
-def build_parsing_table(G, firsts, follows):
+def build_parsing_table(grammar, firsts, follows):
     # init parsing table
-    M = {}
-    terminals = G.terminals
-    terminals.append(G.EOF)
+    m = {}
+    terminals = grammar.terminals
+    terminals.append(grammar.EOF)
     # P: X -> alpha
-    for production in G.Productions:
-        X = production.Left
+    for production in grammar.Productions:
+        x = production.Left
         alpha = production.Right
-        for term in G.terminals:
+        for term in grammar.terminals:
 
+            f = firsts[alpha]
             if alpha.IsEpsilon:
-                if term in follows[X].set:
-                    M[X, term] = []
-                    M[X, term].append(production)
-            elif term in firsts[alpha]:
-                M[X, term] = []
-                M[X, term].append(production)
+                if term in follows[x].set:
+                    m[x, str(term)] = []
+                    m[x, str(term)].append(production)
+            elif str(term) in f:
+                m[x, str(term)] = []
+                m[x, str(term)].append(production)
 
-    return M
+    return m
 
 
 def method_predicted_non_recursive(G, M=None, firsts=None, follows=None):
@@ -145,13 +148,17 @@ def method_predicted_non_recursive(G, M=None, firsts=None, follows=None):
             top = stack.pop()
             symbol = w[cursor]
             if top.IsTerminal:
-                cursor += 1
-                continue
+                if top.Name == symbol:
+                    cursor += 1
+                    continue
+                pp_output = pprint(output)
+                joined = ' '.join(w)
+                raise Exception(f"Malformed Expression {joined} {pp_output}")
             try:
                 # Take the production top apply
                 prod = M[top, symbol][0]
             except:
-                raise Exception("Malformed Expression")
+                raise Exception(f"Malformed Expression {w.join(' ')}" + pprint(output))
             output.append(prod)
 
             # cursor += 1

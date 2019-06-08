@@ -45,7 +45,7 @@ class Sentence(object):
 
     @property
     def IsEpsilon(self):
-        return False
+        return True if len(self._symbols) == 0 else False
 
 
 class SentenceList(object):
