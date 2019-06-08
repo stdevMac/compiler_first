@@ -13,7 +13,7 @@ En caso negativo:
 - [ ] Realizar análisis similar al anterior pero con los parsers LALR.
 
 Si la gramática es regular:
-  - [ ] convertirla a autómata
+  - [x] convertirla a autómata
   - [ ] expresión regular
 
 Mostrar versión de la gramática sin:

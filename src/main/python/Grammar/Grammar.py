@@ -146,6 +146,7 @@ class Grammar:
             head = p['Head']
             dic[head] %= Sentence(*[dic[term] for term in p['Body']])
 
+        # here is the automata !!!
         aut = G.DFA()
 
         return G
@@ -223,6 +224,7 @@ class Grammar:
                    trans[(map[j.Left], j.Right[0])] = [map['#']]
             else:
                 trans[(map[j.Left], j.Right[0])] = [map[j.Right[1]]]
+
 
         automaton = NFA(states=map['f'], finals=finals, transitions=trans)
 

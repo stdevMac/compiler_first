@@ -46,6 +46,9 @@ class NFA:
         except:
             pass
 
+    def write_to(self, fname):
+        return self.graph().write_svg(fname)
+
 
 class DFA(NFA):
 
