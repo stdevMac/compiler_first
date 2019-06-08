@@ -42,12 +42,9 @@ class ShowResults(QWidget):
     def run_pipeline(tokens, parser):
         try:
             left_parse = parser(tokens)
-        except:
-            left_parse = None
-            print("Malformed Expression")
-        # ast = evaluate_parse(left_parse, tokens)
-        # result = ast.evaluate()
-        # return left_parse, ast, result
+        except Exception as error:
+            left_parse = str(error)
+
         return left_parse
 
     def compute_options(self, code, strings):

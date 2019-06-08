@@ -1,6 +1,8 @@
 from src.main.python.Grammar.ContainerSet import ContainerSet
 import copy
 
+from src.main.python.Tools.printer import pprint
+
 
 def compute_local_first(firsts, alpha):
     first_alpha = ContainerSet()
@@ -146,13 +148,17 @@ def method_predicted_non_recursive(G, M=None, firsts=None, follows=None):
             top = stack.pop()
             symbol = w[cursor]
             if top.IsTerminal:
-                cursor += 1
-                continue
+                if top.Name == symbol:
+                    cursor += 1
+                    continue
+                pp_output = pprint(output)
+                joined = ' '.join(w)
+                raise Exception(f"Malformed Expression {joined} {pp_output}")
             try:
                 # Take the production top apply
                 prod = M[top, symbol][0]
             except:
-                raise Exception("Malformed Expression")
+                raise Exception(f"Malformed Expression {w.join(' ')}" + pprint(output))
             output.append(prod)
 
             # cursor += 1
