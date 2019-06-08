@@ -153,7 +153,7 @@ class Grammar:
             dic[head] %= Sentence(*[dic[term] for term in p['Body']])
 
         # here is the automata !!!
-        aut = G.DFA()
+        # aut = G.DFA()
 
         return G
 

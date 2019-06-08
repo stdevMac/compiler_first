@@ -2,6 +2,8 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import (QVBoxLayout, QWidget, QLabel, QTextEdit, QScrollArea)
 
 from src.main.python import ll1
+from src.main.python.Automata.State import State
+from src.main.python.Regex.Regex import regexp_from_automaton
 from src.main.python.Tools import Tokenizer, first_follow
 
 from src.main.python.Tools.RemoveCommonPrefix import rm_common_prefix
@@ -66,6 +68,10 @@ class ShowResults(QWidget):
 
             parsing_table = build_parsing_table(grammar, first, follow)
             parser = method_predicted_non_recursive(grammar, M=parsing_table)
+            dfa = grammar.DFA()
+            states = State.from_nfa(dfa, True)
+            regex = regexp_from_automaton(states[1], grammar.terminals)
+            print(regex)
             if len(strings) > 0:
                 for line in str.split(strings, '\n'):
                     if len(line) == 0:

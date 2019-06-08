@@ -6,7 +6,7 @@ class Epsilon(Terminal, Sentence):
 
     def __init__(self, grammar):
         super().__init__('Epsilon', grammar)
-        self._symbols = []
+        self._symbols = [self]
 
     def __str__(self):
         return "Epsilon"
@@ -18,7 +18,7 @@ class Epsilon(Terminal, Sentence):
         yield from ()
 
     def __len__(self):
-        return 0
+        return len(self._symbols)
 
     def __add__(self, other):
         return other
@@ -28,6 +28,9 @@ class Epsilon(Terminal, Sentence):
 
     def __hash__(self):
         return hash("")
+
+    def __getitem__(self, index):
+        return self._symbols[index]
 
     @property
     def IsEpsilon(self):
