@@ -6,6 +6,7 @@ from src.main.python.Tools import Tokenizer, first_follow
 
 from src.main.python.Tools.RemoveCommonPrefix import rm_common_prefix
 from src.main.python.Tools.RemoveImmediateLeftRecursion import rm_immediate_left_recursion
+from src.main.python.Tools.printer import pprint
 
 
 class ShowResults(QWidget):
@@ -42,19 +43,20 @@ class ShowResults(QWidget):
         first, follow = first_follow.compute_first_follow(grammar)
 
         ll1_table, is_ll1 = ll1.build_ll1_table(grammar, first, follow)
-        info = 'Gramatica: \n' + str(grammar) + '\n\n'
-        info += 'First: \n'
-        info += str(first) + '\n\n'
-        info += 'Follow: \n' + str(follow) + '\n\n'
-        info += 'll1: \n' + str(is_ll1) + '\n\n'
-        info += 'Tabla ll1: \n' + str(ll1_table) + '\n\n'
+        info = pprint(str(grammar), 'Gramatica:') + '\n\n'
+        # 'Gramatica: \n' + str(grammar) + '\n\n'
+        info += pprint(first, 'First:') + '\n\n'
+        info += pprint(follow, 'Follow:') + '\n\n'
+        info += pprint(str(is_ll1), 'Es LL1') + '\n\n'
+        if is_ll1:
+            info += pprint(ll1_table, 'Tabla ll1: ') + '\n\n'
 
         grammar_without_common_prefixes = grammar.copy()
         rm_common_prefix(grammar_without_common_prefixes)
         grammar_without_immediate_left_recursion = grammar.copy()
         rm_immediate_left_recursion(grammar_without_immediate_left_recursion)
-        info += 'Gramatica sin prefijos comunes: \n' + str(grammar_without_common_prefixes) + '\n\n'
-        info += 'Gramatica sin recursion inmediata izquierda: \n' \
-                + str(grammar_without_immediate_left_recursion) + '\n\n'
+        info += pprint(str(grammar_without_common_prefixes), 'Gramatica sin prefijos comunes:') + '\n\n'
+        info += pprint(str(grammar_without_immediate_left_recursion),
+                       'Gramatica sin recursion inmediata izquierda:') + '\n\n'
         self.all_info.setPlainText(info)
         self.all_info.setReadOnly(True)

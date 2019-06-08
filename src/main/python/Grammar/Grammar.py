@@ -6,6 +6,7 @@ from src.main.python.Grammar.Epsilon import Epsilon
 from src.main.python.Grammar.NonTerminal import NonTerminal
 from src.main.python.Grammar.Sentence import Sentence
 from src.main.python.Grammar.Terminal import Terminal
+from src.main.python.Tools.printer import pprint
 
 
 class Grammar:
@@ -96,7 +97,7 @@ class Grammar:
 
         ans += 'Productions:\n\t'
 
-        ans += str(self.Productions)
+        ans += pprint(self.Productions)
 
         return ans
 
