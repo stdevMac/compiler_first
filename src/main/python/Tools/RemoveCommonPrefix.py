@@ -41,14 +41,26 @@ def rm_common_prefix(grammar):
                     visited.update(common_prefixes)
                     tmp = grammar.NonTerminal(f'{non_terminal.Name}{i + 1}')
 
-                    non_terminal %= Sentence(*productions[i].Right[:length]) + tmp
+                    non_terminal %= (Sentence(*productions[i].Right[:length]) + tmp)
+
+
+                    for nt in grammar.nonTerminals:
+                        if nt.Name == non_terminal.Name:
+                            nt = non_terminal
+                            for p in nt.productions:
+                                grammar.Productions.append(p)
+                            break
+
+
                     for prodct in common_prefixes:
                         if length == len(prodct.Right):
                             tmp %= grammar.Epsilon
                         else:
                             tmp %= Sentence(*prodct.Right[length:])
 
-                    q.put(tmp)
                 else:
                     visited.add(productions[i])
-                    non_terminal %= productions[i].Right
+                    grammar.Productions.append(productions[i])
+
+
+
