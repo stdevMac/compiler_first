@@ -1,4 +1,3 @@
-from pandas import DataFrame
 from src.main.python.Automata.State import State
 from src.main.python.Automata.formaters import multi_line_formatter
 from src.main.python.Grammar.ContainerSet import ContainerSet
@@ -61,18 +60,6 @@ def encode_value(value):
             return value
     except TypeError:
         return value
-
-
-def table_to_data_frame(table):
-    d = {}
-    for (state, symbol), value in table.items():
-        value = encode_value(value)
-        try:
-            d[state][symbol] = value
-        except KeyError:
-            d[state] = {symbol: value}
-
-    return DataFrame.from_dict(d, orient='index', dtype=str)
 
 
 def expand(item, firsts):
