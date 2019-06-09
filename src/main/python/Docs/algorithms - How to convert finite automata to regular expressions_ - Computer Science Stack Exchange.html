@@ -1,0 +1,2221 @@
+<!DOCTYPE html>
+
+
+    <html itemscope itemtype="http://schema.org/QAPage" class="html__responsive">
+
+    <head>
+
+        <title>algorithms - How to convert finite automata to regular expressions? - Computer Science Stack Exchange</title>
+        <link rel="shortcut icon" href="https://cdn.sstatic.net/Sites/cs/img/favicon.ico?v=b7c683f5c525">
+        <link rel="apple-touch-icon image_src" href="https://cdn.sstatic.net/Sites/cs/img/apple-touch-icon.png?v=02c18a6fe2f9">
+        <link rel="search" type="application/opensearchdescription+xml" title="Computer Science Stack Exchange" href="/opensearch.xml">
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+
+
+        <meta property="og:type" content= "website" />
+        <meta property="og:url" content="https://cs.stackexchange.com/questions/2016/how-to-convert-finite-automata-to-regular-expressions"/>
+        <meta property="og:site_name" content="Computer Science Stack Exchange" />
+        <meta property="og:image" itemprop="image primaryImageOfPage" content="https://cdn.sstatic.net/Sites/cs/img/apple-touch-icon@2.png?v=324a3e0c2b03" />
+        <meta name="twitter:card" content="summary"/>
+        <meta name="twitter:domain" content="cs.stackexchange.com"/>
+        <meta name="twitter:site" content="@StackCompSci" />
+        <meta name="twitter:creator" content="@StackCompSci" />
+        <meta name="twitter:title" property="og:title" itemprop="name" content="How to convert finite automata to regular expressions?" />
+        <meta name="twitter:description" property="og:description" itemprop="description" content="Converting regular expressions into (minimal) NFA that accept the same language is easy with standard algorithms, e.g. Thompson&#39;s algorithm. The other direction seems to be more tedious, though, and " />
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://cdn.sstatic.net/Js/stub.en.js?v=b599a689eb85"></script>
+    
+    <link rel="stylesheet" type="text/css" href="https://cdn.sstatic.net/Shared/stacks.css?v=dc5f18145375" >
+    <link rel="stylesheet" type="text/css" href="https://cdn.sstatic.net/Sites/cs/primary.css?v=481d88fbdafc" >
+
+    
+            <link rel="alternate" type="application/atom+xml" title="Feed for question &#39;How to convert finite automata to regular expressions?&#39;" href="/feeds/question/2016">
+<script src="https://cdn.sstatic.net/Js/citation.en.js?v=02ff0983c185"></script>            <meta name="twitter:app:country" content="US" />
+            <meta name="twitter:app:name:iphone" content="Stack Exchange iOS" />
+            <meta name="twitter:app:id:iphone" content="871299723" />
+            <meta name="twitter:app:url:iphone" content="se-zaphod://cs.stackexchange.com/questions/2016/how-to-convert-finite-automata-to-regular-expressions" />
+            <meta name="twitter:app:name:ipad" content="Stack Exchange iOS" />
+            <meta name="twitter:app:id:ipad" content="871299723" />
+            <meta name="twitter:app:url:ipad" content="se-zaphod://cs.stackexchange.com/questions/2016/how-to-convert-finite-automata-to-regular-expressions" />
+            <meta name="twitter:app:name:googleplay" content="Stack Exchange Android">
+            <meta name="twitter:app:url:googleplay" content="http://cs.stackexchange.com/questions/2016/how-to-convert-finite-automata-to-regular-expressions">
+            <meta name="twitter:app:id:googleplay" content="com.stackexchange.marvin">
+        <script>
+
+            StackExchange.ready(function () {
+
+                StackExchange.using("postValidation", function () {
+                    StackExchange.postValidation.initOnBlurAndSubmit($('#post-form'), 2, 'answer');
+                });
+
+                
+                StackExchange.question.init({votesCast:[],autoShowCommentHelp:true,showCitation:true,showAnswerHelp:true,totalCommentCount:2,shownCommentCount:2,highlightColor:'#F4A83D',backgroundColor:'#FFF',questionId:2016});
+
+                styleCode();
+
+                    StackExchange.realtime.subscribeToQuestion('419', '2016');
+                                                    StackExchange.using("gps", function () { StackExchange.gps.trackOutboundClicks('#content', '.post-text'); });
+
+            });
+        </script>
+
+        
+        
+        
+        
+        
+        
+
+
+            <script type="text/x-mathjax-config">
+                MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+                    tex2jax: { inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno" },
+                    TeX: {
+                        extensions: ["begingroup.js"],
+                        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, 
+                        Macros: { href: "{}" } 
+                    },
+                    messageStyle: "none",
+                    
+                    styles: { ".MathJax_Display, .MathJax_Preview, .MathJax_Preview > *": { "background": "inherit" } },
+                    SEEditor: "mathjaxEditing"
+            });
+            </script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script>
+        <script>
+        StackExchange.ready(function () {
+            StackExchange.realtime.init('wss://qa.sockets.stackexchange.com');
+                StackExchange.realtime.subscribeToReputationNotifications('419');
+        StackExchange.realtime.subscribeToTopBarNotifications('419');
+        });
+    </script>
+    <script>
+        StackExchange.init({"locale":"en","serverTime":1560020682,"routeName":"Questions/Show","stackAuthUrl":"https://stackauth.com","networkMetaHostname":"meta.stackexchange.com","site":{"name":"Computer Science Stack Exchange","description":"Q&A for students, researchers and practitioners of computer science","isNoticesTabEnabled":true,"enableNewTagCreationWarning":false,"insertSpaceAfterNameTabCompletion":false,"id":419,"childUrl":"https://cs.meta.stackexchange.com","enableSocialMediaInSharePopup":true,"protocol":"https"},"user":{"fkey":"51331ecf84043597eda1f2ed941cbbd9de505d2c7b7fd2afe7ca3a517340c68b","tid":"201ec0b8-a919-7052-e363-5092feb3834e","rep":1,"isRegistered":true,"userType":3,"userId":106169,"accountId":9711515,"gravatar":"<div class=\"gravatar-wrapper-32\"><img src=\"https://i.stack.imgur.com/1Iqu7.jpg?s=32&amp;g=1\" alt=\"\" width=\"32\" height=\"32\"></div>","profileUrl":"https://cs.stackexchange.com/users/106169/marcos-antonio-maceo-reyes","canSeeDeletedPosts":false},"realtime":{"newest":true,"active":true,"tagged":true,"staleDisconnectIntervalInHours":0},"events":{"postType":{"question":1},"postEditionSection":{"title":1,"body":2,"tags":3}},"story":{"minCompleteBodyLength":75,"likedTagsMaxLength":300,"dislikedTagsMaxLength":300},"jobPreferences":{"maxNumDeveloperRoles":2,"maxNumIndustries":4},"svgIconPath":"https://cdn.sstatic.net/Img/svg-icons","svgIconHash":"d5683df72f21"}, {"userProfile":{},"userMessaging":{},"tags":{},"snippets":{"renderDomain":"stacksnippets.net"},"slack":{"sidebarAdDismissCookie":"slack-sidebar-ad"},"site":{"allowImageUploads":true,"enableUserHovercards":true,"styleCode":true,"enableImgurHttps":true,"forceHttpsImages":true},"paths":{},"monitoring":{"clientTimingsAbsoluteTimeout":30000,"clientTimingsDebounceTimeout":1000},"mentions":{"maxNumUsersInDropdown":50},"markdown":{"asteriskIntraWordEmphasis":true},"flags":{"allowRetractingFlags":true},"comments":{},"accounts":{"currentPasswordRequiredForChangingStackIdPassword":true}});
+        StackExchange.using.setCacheBreakers({"js/prettify-full.en.js":"7a3b21dfc34f","js/moderator.en.js":"6fb7e0bf5ead","js/pseudomoderator.en.js":"2a3b4f8f9d01","js/full-anon.en.js":"b30b7e414c9a","js/full.en.js":"6756e1c991e6","js/wmd.en.js":"4d760fa94a2f","js/mobile.en.js":"4f3f2f15412f","js/help.en.js":"5492597a764b","js/tageditor.en.js":"943e95c47362","js/tageditornew.en.js":"084e289dab8c","js/inline-tag-editing.en.js":"6c0fb727df2d","js/revisions.en.js":"9042f0dc9de0","js/review.en.js":"355ed8f343cc","js/tagsuggestions.en.js":"b278f9a0b23b","js/post-validation.en.js":"acb7b127bd5f","js/explore-qlist.en.js":"a5d8f71511e1","js/events.en.js":"e0ce587ff927","js/keyboard-shortcuts.en.js":"f288b571218b","js/adops.en.js":"22a9bd59b1e9","js/begin-edit-event.en.js":"3238dd301e69","js/stacks-polyfills.en.js":"faa90b5d0aac","js/mathjax-editing.en.js":"711b89540718"});
+        StackExchange.using("gps", function() {
+             StackExchange.gps.init(true);
+        });
+    </script>
+    <noscript id="noscript-css"><style>body,.top-bar{margin-top:1.9em}</style></noscript>
+    </head>
+        <body class="question-page unified-theme">
+    <div id="notify-container"></div>
+    <div id="custom-header"></div>
+
+
+
+
+<header class="top-bar js-top-bar top-bar__network _fixed">
+    <div class="-container">
+        <div class="-main">
+                <a href="#" class="left-sidebar-toggle p0 ai-center jc-center js-left-sidebar-toggle"><span class="ps-relative"></span></a>
+                            <a href="#" class="-logo js-gps-track js-network-logo network-logo"
+                   data-gps-track="stack_exchange_popup.show">
+                    <svg aria-hidden="true" class="svg-icon native iconLogoSEAlternativeSm" width="107" height="15" viewBox="0 0 107 15"><path d="M48.41 11.93l-1.96-3.2-1.04 1.16v2.04h-1.42V2.18h1.42v6.01L48.14 5h1.72l-2.44 2.7 2.74 4.22h-1.75zm-7.06.08c-1.59 0-3.14-.96-3.14-3.56s1.55-3.54 3.14-3.54c.97 0 1.65.27 2.31.97l-.97.93c-.44-.48-.79-.66-1.34-.66s-1 .22-1.3.62c-.31.38-.42.87-.42 1.68 0 .81.1 1.32.41 1.7.3.4.76.62 1.3.62.56 0 .9-.18 1.35-.66l.97.92c-.66.7-1.34.98-2.31.98zm-5.66-3.15h-1.65c-.83 0-1.26.37-1.26 1s.4.99 1.3.99c.53 0 .93-.04 1.3-.4.22-.2.31-.53.31-1.03v-.56zm.03 3.07v-.63c-.51.5-1 .71-1.87.71-.87 0-1.46-.2-1.89-.63a2.1 2.1 0 0 1-.55-1.49c0-1.16.82-2 2.42-2h1.86v-.5c0-.87-.44-1.3-1.54-1.3-.77 0-1.15.18-1.54.68l-.92-.86c.66-.77 1.35-1 2.52-1 1.93 0 2.9.8 2.9 2.38v4.64h-1.39zm-5.9 0c-1.32 0-1.93-.93-1.93-1.93V6.18h-.8V5.1h.8V3h1.41v2.1h1.36v1.07H29.3v3.75c0 .5.25.81.78.81h.58v1.2h-.85zm-6.33.08c-1.48 0-2.55-.34-3.49-1.28l1-.98c.72.72 1.51.94 2.52.94 1.3 0 2.04-.55 2.04-1.5 0-.42-.13-.78-.39-1.01-.25-.23-.5-.33-1.08-.41l-1.16-.17a3.4 3.4 0 0 1-1.88-.78 2.41 2.41 0 0 1-.72-1.86c0-1.7 1.25-2.86 3.3-2.86 1.3 0 2.22.33 3.07 1.1l-.96.94a2.92 2.92 0 0 0-2.15-.75c-1.16 0-1.8.65-1.8 1.52 0 .35.1.67.37.9.25.22.65.38 1.11.45l1.13.17c.91.13 1.42.35 1.84.72.54.47.8 1.17.8 2 0 1.8-1.48 2.86-3.55 2.86z" fill="#fff"/><path d="M104.16 7.09c-.2-.42-.6-.74-1.2-.74s-.99.32-1.18.74c-.1.25-.15.44-.16.75h2.7a2 2 0 0 0-.16-.75zm-2.54 1.96c0 .9.56 1.57 1.55 1.57.78 0 1.16-.21 1.61-.66l1.08 1.04a3.4 3.4 0 0 1-2.7 1.11c-1.68 0-3.29-.76-3.29-3.62 0-2.3 1.26-3.6 3.1-3.6 1.97 0 3.1 1.44 3.1 3.37v.79h-4.45zm-5.48-2.57C95.1 6.48 95 7.37 95 8.3c0 .94.1 1.85 1.15 1.85 1.05 0 1.18-.91 1.18-1.85 0-.93-.13-1.82-1.18-1.82zm-.17 8.22c-1.1 0-1.84-.21-2.58-.92l1.1-1.11c.4.38.8.54 1.4.54 1.06 0 1.43-.74 1.43-1.46v-.72c-.47.51-1 .7-1.7.7-.69 0-1.29-.23-1.68-.62-.67-.66-.73-1.57-.73-2.8 0-1.24.06-2.13.73-2.8.4-.39 1-.62 1.7-.62.75 0 1.24.2 1.73.75v-.67h1.72v6.8c0 1.7-1.21 2.93-3.12 2.93zm-5.76-2.67V7.76c0-.96-.61-1.28-1.17-1.28-.56 0-1.18.32-1.18 1.28v4.27h-1.78V4.97h1.73v.65a2.44 2.44 0 0 1 1.78-.73c.7 0 1.28.23 1.67.62.58.57.73 1.24.73 2v4.52H90.2zm-7.1-2.98h-1.4c-.64 0-1 .3-1 .8 0 .49.33.81 1.02.81.5 0 .8-.04 1.12-.34.2-.17.26-.46.26-.89v-.38zm.04 2.98v-.6c-.48.47-.93.67-1.74.67-.8 0-1.4-.2-1.82-.62-.38-.4-.58-.97-.58-1.59 0-1.12.77-2.05 2.42-2.05h1.68V7.5c0-.77-.38-1.11-1.32-1.11-.68 0-1 .16-1.37.58l-1.13-1.1c.7-.75 1.38-.97 2.57-.97 1.99 0 3.02.84 3.02 2.5v4.64h-1.73zm-6.93 0v-4.3c0-.94-.6-1.25-1.15-1.25-.56 0-1.15.32-1.15 1.24v4.31h-1.77V2.38h1.77v3.24a2.35 2.35 0 0 1 1.7-.73c1.56 0 2.38 1.08 2.38 2.57v4.57h-1.78zm-6.96.08c-1.42 0-3.18-.76-3.18-3.62 0-2.85 1.76-3.6 3.18-3.6.98 0 1.72.3 2.34.95l-1.2 1.2c-.36-.4-.68-.56-1.14-.56-.42 0-.75.14-1.01.46-.27.33-.4.8-.4 1.55s.13 1.24.4 1.58c.26.3.59.46 1 .46.47 0 .79-.16 1.15-.56l1.2 1.18c-.62.65-1.36.96-2.34.96zm-5.53-.08l-1.3-2.11-1.3 2.11H59l2.45-3.6-2.35-3.46h2.12L62.42 7l1.21-2.02h2.13L63.4 8.43l2.46 3.6h-2.13zm-11.75 0V2.06h6.6V3.8h-4.65v2.33h3.96v1.74h-3.96v2.42h4.65v1.74h-6.6z" fill="#2F96E8"/><path d="M0 3c0-1.1.9-2 2-2h8a2 2 0 0 1 2 2H0z" fill="#8FD8F7"/><path d="M12 10H0c0 1.1.9 2 2 2h5v3l3-3a2 2 0 0 0 2-2z" fill="#155397"/><path fill="#46A2D9" d="M0 4h12v2H0z"/><path fill="#2D6DB5" d="M0 7h12v2H0z"/></svg>
+                </a>
+                <div class="topbar-dialog network-logo-dialog js-network-logo-dialog dno">
+                    <div class="dialog-content">
+                        <h4 class="bold">Stack Exchange Network</h4>
+                        <p>
+                            Stack Exchange network consists of 175 Q&amp;A communities including <a href="https://stackoverflow.com">Stack Overflow</a>, the largest, most trusted online community for developers to learn, share their knowledge, and build their careers.
+                        </p>
+                        <a class="btn-secondary" href="https://stackexchange.com"
+                        data-gps-track="stack_exchange_popup.click">Visit Stack Exchange</a>
+                        <a class="icon-close js-close-button"><svg aria-hidden="true" class="svg-icon iconClear" width="18" height="18" viewBox="0 0 18 18"><path d="M15 4.41L13.59 3 9 7.59 4.41 3 3 4.41 7.59 9 3 13.59 4.41 15 9 10.41 13.59 15 15 13.59 10.41 9 15 4.41z"/></svg></a>
+                    </div>
+                </div>
+
+
+
+        </div>
+
+            <form id="search" action=/search method="get" class="searchbar js-searchbar " autocomplete="off" role="search">
+                    <div class="ps-relative">
+                        <input name="q" type="text" placeholder="Search on Computer Science…" value="" autocomplete="off" maxlength="240" class="s-input js-search-field " />
+                        <button type="submit" aria-label="Search…" class="s-btn s-btn__primary s-btn__icon btn-topbar-primary js-search-submit"><svg aria-hidden="true" class="svg-icon iconSearch" width="18" height="18" viewBox="0 0 18 18"><path d="M18 16.5l-5.14-5.18h-.35a7 7 0 1 0-1.19 1.19v.35L16.5 18l1.5-1.5zM12 7A5 5 0 1 1 2 7a5 5 0 0 1 10 0z"/></svg></button>
+                    </div>
+            </form>
+
+        
+
+
+
+
+
+<ol class="-secondary js-secondary-topbar-links drop-icons-responsively user-logged-in">
+        <li class="-item searchbar-trigger js-searchbar-trigger"><a href="#" class="-link"><svg aria-hidden="true" class="svg-icon iconSearch" width="18" height="18" viewBox="0 0 18 18"><path d="M18 16.5l-5.14-5.18h-.35a7 7 0 1 0-1.19 1.19v.35L16.5 18l1.5-1.5zM12 7A5 5 0 1 1 2 7a5 5 0 0 1 10 0z"/></svg></a></li>
+                <li class="-item">
+                <a href="/users/106169/marcos-antonio-maceo-reyes" class="my-profile js-gps-track" data-gps-track="profile_summary.click()">
+                <div class="gravatar-wrapper-24" title="Marcos Antonio Maceo Reyes"><img src="https://i.stack.imgur.com/1Iqu7.jpg?s=48&amp;g=1" alt="" width="24" height="24" class="-avatar js-avatar-me"></div>
+                    <div class="-rep js-header-rep" title="your reputation: 1">1</div>
+                        <div class="-badges">
+                        </div>
+                </a>
+            </li>
+        <li class="-item inbox-button-item">
+        <a href="https://stackexchange.com/users/9711515?tab=inbox" class="-link js-inbox-button" title="Recent inbox messages">
+            <svg aria-hidden="true" class="svg-icon iconInbox" width="20" height="18" viewBox="0 0 20 18"><path d="M4.63 1h10.56a2 2 0 0 1 1.94 1.35L20 10.79V15a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-4.21l2.78-8.44c.25-.8 1-1.36 1.85-1.35zm8.28 12l2-2h2.95l-2.44-7.32a1 1 0 0 0-.95-.68H5.35a1 1 0 0 0-.95.68L1.96 11h2.95l2 2h6z"/></svg>
+            <span class="indicator-badge js-unread-count _important" style="display: none;"></span>
+        </a>
+    </li>
+    <li class="-item achievements-button-item">
+        <a href="https://stackexchange.com/users/9711515?tab=reputation" class="-link js-achievements-button _highlighted-positive" title="You have new achievements" data-unread-class="_highlighted-positive">
+            <svg aria-hidden="true" class="svg-icon iconAchievements" width="18" height="18" viewBox="0 0 18 18"><path d="M15 2V1H3v1H0v4c0 1.6 1.4 3 3 3v1c.4 1.5 3 2.6 5 3v2H5s-1 1.5-1 2h10c0-.4-1-2-1-2h-3v-2c2-.4 4.6-1.5 5-3V9c1.6-.2 3-1.4 3-3V2h-3zM3 7c-.5 0-1-.5-1-1V4h1v3zm8.4 2.5L9 8 6.6 9.4l1-2.7L5 5h3l1-2.7L10 5h2.8l-2.3 1.8 1 2.7h-.1zM16 6c0 .5-.5 1-1 1V4h1v2z"/></svg>
+            <span class="indicator-badge js-unread-count _positive" style="display: none;"></span>
+        </a>
+    </li>
+
+    <li class="-item help-button-item" data-remove-order=1><a href="#" class="-link js-help-button" title="Help Center and other resources">
+        <svg aria-hidden="true" class="svg-icon iconHelp" width="18" height="18" viewBox="0 0 18 18"><path d="M9 1a8 8 0 1 0 0 16A8 8 0 0 0 9 1zm.81 12.13c-.02.71-.55 1.15-1.24 1.13-.66-.02-1.17-.49-1.15-1.2.02-.72.56-1.18 1.22-1.16.7.03 1.2.51 1.17 1.23zM11.77 8c-.3.34-.65.65-1.02.91l-.53.37c-.26.2-.42.43-.5.69a4 4 0 0 0-.09.75c0 .05-.03.16-.18.16H7.88c-.16 0-.18-.1-.18-.15.03-.66.12-1.21.4-1.66.4-.49.88-.9 1.43-1.22.16-.12.28-.25.38-.39a1.34 1.34 0 0 0 .02-1.71c-.24-.31-.51-.46-1.03-.46-.51 0-.8.26-1.02.6-.21.33-.18.73-.18 1.1H5.75c0-1.38.35-2.25 1.1-2.76.52-.35 1.17-.5 1.93-.5 1 0 1.79.18 2.49.71.64.5.98 1.18.98 2.12 0 .57-.2 1.05-.48 1.44z"/></svg>
+    </a></li>
+
+    <li class="-item site-switcher-item">
+        <a href="https://stackexchange.com" class="-link js-site-switcher-button js-gps-track" data-gps-track="site_switcher.show" title="A list of all 175 Stack Exchange sites">
+            <svg aria-hidden="true" class="svg-icon iconStackExchange" width="18" height="18" viewBox="0 0 18 18"><path d="M15 1H3a2 2 0 0 0-2 2v2h16V3a2 2 0 0 0-2-2zM1 13c0 1.1.9 2 2 2h8v3l3-3h1a2 2 0 0 0 2-2v-2H1v2zm16-7H1v4h16V6z"/></svg>
+        </a>
+    </li>
+
+
+    <li class="-dialog-container js-topbar-dialog-corral">
+
+
+    <div class="topbar-dialog siteSwitcher-dialog dno">
+        <div class="header">
+            <h3><a href="https://cs.stackexchange.com">current community</a>
+            </h3>
+        </div>
+        <div class="modal-content current-site-container">
+            <ul class="current-site">
+                    <li class="grid">
+                            <div class="fl1">
+            <a href="https://cs.stackexchange.com"
+       class="current-site-link site-link js-gps-track grid gs8 gsx"
+       data-id="419"
+       data-gps-track="site_switcher.click({ item_type:3 })">
+        <div class="favicon favicon-cs site-icon grid--cell" title="Computer Science"></div>
+        <span class="grid--cell fl1">
+            Computer Science
+        </span>
+    </a>
+
+    </div>
+    <div class="related-links">
+            <a href="https://cs.stackexchange.com/help" class="js-gps-track"     data-gps-track="site_switcher.click({ item_type:14 })"
+>help</a>
+                    <a href="https://chat.stackexchange.com?tab=site&amp;host=cs.stackexchange.com" class="js-gps-track"     data-gps-track="site_switcher.click({ item_type:6 })"
+>chat</a>
+                    <a href="https://cs.stackexchange.com/users/logout" class="js-gps-track"     data-gps-track="site_switcher.click({ item_type:8 })"
+>log out</a>
+    </div>
+
+                    </li>
+                    <li class="related-site grid">
+                            <div class="L-shaped-icon-container">
+        <span class="L-shaped-icon"></span>
+    </div>
+
+                            <a href="https://cs.meta.stackexchange.com"
+       class="site-link js-gps-track grid gs8 gsx"
+       data-id="421"
+       data-gps-track="site.switch({ target_site:421, item_type:3 }),site_switcher.click({ item_type:4 })">
+        <div class="favicon favicon-csmeta site-icon grid--cell" title="Computer Science Meta"></div>
+        <span class="grid--cell fl1">
+            Computer Science Meta
+        </span>
+    </a>
+
+                    </li>
+            </ul>
+        </div>
+
+        <div class="header" id="your-communities-header">
+            <h3>
+                    <a href="https://stackexchange.com/users/9711515/?tab=accounts">your communities</a>
+            </h3>
+
+                <a href="#" id="edit-pinned-sites">edit</a>
+                <a href="#" id="cancel-pinned-sites" style="display: none;">cancel</a>
+        </div>
+        <div class="modal-content" id="your-communities-section">
+
+                <ul class="my-sites">
+                        <li>
+                                <a href="https://cs.stackexchange.com"
+       class="site-link js-gps-track grid gs8 gsx"
+       data-id="419"
+       data-gps-track="site.switch({ target_site:419, item_type:3 }),site_switcher.click({ item_type:1 })">
+        <div class="favicon favicon-cs site-icon grid--cell" title="Computer Science"></div>
+        <span class="grid--cell fl1">
+            Computer Science
+        </span>
+            <span class="rep-score grid--cell">1</span>
+    </a>
+
+                        </li>
+                        <li>
+                                <a href="https://stackoverflow.com"
+       class="site-link js-gps-track grid gs8 gsx"
+       data-id="1"
+       data-gps-track="site.switch({ target_site:1, item_type:3 }),site_switcher.click({ item_type:1 })">
+        <div class="favicon favicon-stackoverflow site-icon grid--cell" title="Stack Overflow"></div>
+        <span class="grid--cell fl1">
+            Stack Overflow
+        </span>
+            <span class="rep-score grid--cell">1</span>
+    </a>
+
+                        </li>
+                        <li>
+                                <a href="https://es.stackoverflow.com"
+       class="site-link js-gps-track grid gs8 gsx"
+       data-id="637"
+       data-gps-track="site.switch({ target_site:637, item_type:3 }),site_switcher.click({ item_type:1 })">
+        <div class="favicon favicon-es site-icon grid--cell" title="Stack Overflow en español"></div>
+        <span class="grid--cell fl1">
+            Stack Overflow en espa&#241;ol
+        </span>
+            <span class="rep-score grid--cell">1</span>
+    </a>
+
+                        </li>
+                </ul>
+                    <div class="pinned-site-editor-container" style="display: none;">
+                        <input type="hidden" name="fkey" value="51331ecf84043597eda1f2ed941cbbd9de505d2c7b7fd2afe7ca3a517340c68b">
+                        <input id="js-site-search-txt"
+                                type="text"
+                                class="site-filter-input"
+                                value=""
+                                placeholder="Add a Stack Exchange community"/>
+                        <input type="submit" id="pin-site-btn" value="Add" disabled="disabled"/>
+                        <ul class="js-found-sites found-sites"></ul>
+                        <ul class="pinned-site-list sortable" data-custom-list="False">
+                        </ul>
+                        <input type="submit" value="Save" id="save-pinned-sites-btn" disabled="disabled"/>
+                        <a href="#" id="reset-pinned-sites">reset to default list</a>
+                    </div>
+        </div>
+
+        <div class="header">
+            <h3><a href="https://stackexchange.com/sites">more stack exchange communities</a>
+            </h3>
+            <a href="https://stackoverflow.blog" class="fr">company blog</a>
+        </div>
+        <div class="modal-content">
+                <div class="child-content"></div>
+        </div>        
+    </div>
+            <div class="topbar-dialog help-dialog js-help-dialog dno">
+        <div class="modal-content">
+            <ul>
+                                    <li>
+                        <a href="/tour" class="js-gps-track" data-gps-track="help_popup.click({ item_type:1 })">
+                            Tour
+                            <span class="item-summary">
+                                Start here for a quick overview of the site
+                            </span>
+                        </a>
+                    </li>
+                <li>
+                    <a href="/help" class="js-gps-track" data-gps-track="help_popup.click({ item_type:4 })">
+                        Help Center
+                        <span class="item-summary">
+                            Detailed answers to any questions you might have
+                        </span>
+                    </a>
+                </li>
+                        <li>
+                            <a href="https://cs.meta.stackexchange.com" class="js-gps-track" data-gps-track="help_popup.click({ item_type:2 })">
+                                Meta
+                                <span class="item-summary">
+                                    Discuss the workings and policies of this site
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://stackoverflow.com/company/about" class="js-gps-track" data-gps-track="help_popup.click({ item_type:6 })">
+                                About Us
+                                <span class="item-summary">
+                                    Learn more about Stack Overflow the company
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.stackoverflowbusiness.com/?ref=topbar_help" class="js-gps-track" data-gps-track="help_popup.click({ item_type:7 })">
+                                Business
+                                <span class="item-summary">
+                                    Learn more about hiring developers or posting ads with us
+                                </span>
+                            </a>
+                        </li>
+            </ul>
+        </div>
+    </div>
+                    <div class="topbar-dialog leftnav-dialog js-leftnav-dialog dno">
+                <div class="left-sidebar js-unpinned-left-sidebar" data-can-be="left-sidebar" data-is-here-when="sm"></div>
+            </div>
+    </li>
+</ol>
+
+    </div>
+</header>
+
+    <script>
+        StackExchange.ready(function () { StackExchange.topbar.init({ observeSize: true }); });
+        StackExchange.scrollPadding.setPaddingTop(50, 10);     </script>
+
+
+
+
+
+        <header class="site-header">
+            <div class="site-header--container">
+                <a class="site-header--link d-flex ai-center fs-headline1 fw-bold" href="https://cs.stackexchange.com">
+                        <img class="h-auto wmx100" src="https://cdn.sstatic.net/Sites/cs/img/logo.svg?v=27188323e9e9" alt="Computer Science">
+                </a>
+
+            </div>
+        </header>
+
+    <div class="container">
+
+
+
+
+
+<div id="left-sidebar" data-is-here-when="md lg" class="left-sidebar js-pinned-left-sidebar">
+    <div class="left-sidebar--sticky-container js-sticky-leftnav">
+            <nav role="navigation">
+                <ol class="nav-links">
+                    <li>    <li>
+        <a
+            href="/"
+            class="pl8 js-gps-track nav-links--link"
+            
+            data-gps-track="top_nav.click({is_current:false, location:2, destination:8})">
+Home        </a>
+    </li>
+</li>
+                    <li>
+                        <ol class="nav-links">
+                                <li class=" youarehere">
+        <a id="nav-questions"
+            href="/questions"
+            class="pl8 js-gps-track nav-links--link"
+            
+            data-gps-track="top_nav.click({is_current:true, location:2, destination:1})">
+Questions        </a>
+    </li>
+
+    <li>
+        <a id="nav-tags"
+            href="/tags"
+            class="pl8 js-gps-track nav-links--link"
+            
+            data-gps-track="top_nav.click({is_current:false, location:2, destination:2})">
+Tags        </a>
+    </li>
+    <li>
+        <a id="nav-users"
+            href="/users"
+            class="pl8 js-gps-track nav-links--link"
+            
+            data-gps-track="top_nav.click({is_current:false, location:2, destination:3})">
+Users        </a>
+    </li>
+    <li>
+        <a id="nav-unanswered"
+            href="/unanswered"
+            class="pl8 js-gps-track nav-links--link"
+            
+            data-gps-track="top_nav.click({is_current:false, location:2, destination:5})">
+Unanswered        </a>
+    </li>
+                                                    </ol>
+                    </li>
+                </ol>
+            </nav>
+    </div>
+</div>
+
+
+        <div id="content" class="">
+
+
+            
+
+
+<div itemprop="mainEntity" itemscope itemtype="http://schema.org/Question">
+    <link itemprop="image" href="https://cdn.sstatic.net/Sites/cs/img/apple-touch-icon.png?v=02c18a6fe2f9">
+
+    <div class="inner-content clearfix">
+    
+    
+
+            <div id="question-header" class="grid">
+                    <h1 itemprop="name" class="grid--cell fs-headline1 fl1 ow-break-word"><a href="/questions/2016/how-to-convert-finite-automata-to-regular-expressions" class="question-hyperlink">How to convert finite automata to regular expressions?</a></h1>
+
+            
+<div class="pl8 aside-cta grid--cell print:d-none" role="navigation" aria-label="ask new question">
+        <a href="/questions/ask" class="d-inline-flex ai-center ws-nowrap s-btn s-btn__primary" >
+            Ask Question
+        </a>
+</div>
+
+        </div>
+            <div id="mainbar" role="main" aria-label="question and answers">
+
+            
+
+<div class="question" data-questionid="2016"  id="question">
+
+    
+    <div class="post-layout">
+            <div class="votecell post-layout--left">
+                
+
+<div class="js-voting-container grid fd-column ai-stretch gs4 fc-black-200" data-post-id="2016">
+        <button class="js-vote-up-btn grid--cell s-btn s-btn__unset c-pointer" title="This question shows research effort; it is useful and clear (click again to undo)" aria-pressed="false" aria-label="up vote" data-selected-classes="fc-theme-primary"><svg aria-hidden="true" class="svg-icon m0 iconArrowUpLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 26h32L18 10 2 26z"/></svg></button>
+        <div class="js-vote-count grid--cell fc-black-500 fs-title grid fd-column ai-center" itemprop="upvoteCount" data-value="113">113</div>
+        <button class="js-vote-down-btn grid--cell s-btn s-btn__unset c-pointer" title="This question does not show any research effort; it is unclear or not useful (click again to undo)" aria-pressed="false" aria-label="down vote" data-selected-classes="fc-theme-primary"><svg aria-hidden="true" class="svg-icon m0 iconArrowDownLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 10h32L18 26 2 10z"/></svg></button>
+
+        <button class="js-favorite-btn s-btn s-btn__unset c-pointer py8" aria-pressed="false" aria-label="favorite (97)" data-selected-classes="fc-yellow-600">
+            <svg aria-hidden="true" class="svg-icon iconStar" width="18" height="18" viewBox="0 0 18 18"><path d="M9 12.65l-5.29 3.63 1.82-6.15L.44 6.22l6.42-.17L9 0l2.14 6.05 6.42.17-5.1 3.9 1.83 6.16L9 12.65z"/></svg>
+            <div class="js-favorite-count mt8" data-value="97">97</div>
+        </button>
+
+
+</div>
+
+            </div>
+
+            
+<div class="postcell post-layout--right">
+    <span class="d-none">$\begingroup$</span>
+    <div class="post-text" itemprop="text">
+
+<p>Converting regular expressions into (minimal) NFA that accept the same language is easy with standard algorithms, e.g. <a href="http://en.wikipedia.org/wiki/Thompson%27s_construction_algorithm">Thompson's algorithm</a>. The other direction seems to be more tedious, though, and sometimes the resulting expressions are messy.</p>
+
+<p>What algorithms are there for converting NFA into equivalent regular expressions? Are there advantages regarding time complexity or result size?</p>
+
+<p><sup>This is supposed to be a reference question. Please include a general decription of your method as well as a non-trivial example.</sup></p>
+    </div>
+
+        <div class="post-taglist grid gs4 gsy fd-column">
+            <div class="grid ps-relative d-block">
+                <a href="/questions/tagged/algorithms" class="post-tag" title="show questions tagged &#39;algorithms&#39;" rel="tag">algorithms</a> <a href="/questions/tagged/formal-languages" class="post-tag" title="show questions tagged &#39;formal-languages&#39;" rel="tag">formal-languages</a> <a href="/questions/tagged/finite-automata" class="post-tag" title="show questions tagged &#39;finite-automata&#39;" rel="tag">finite-automata</a> <a href="/questions/tagged/regular-expressions" class="post-tag" title="show questions tagged &#39;regular-expressions&#39;" rel="tag">regular-expressions</a> <a href="/questions/tagged/reference-question" class="post-tag" title="show questions tagged &#39;reference-question&#39;" rel="tag">reference-question</a> 
+            </div>
+        </div>
+
+    <div class="mb0 ">
+        <div class="mt16 pt4 grid gs8 gsy fw-wrap jc-end ai-start">
+            <div class="grid--cell mr16" style="flex: 1 1 100px;">
+<div class="post-menu"><a href="/q/2016/106169" title="short permalink to this question" class="short-link" itemprop="url" id="link-post-2016">share</a><span class="lsep">|</span><a id="cite-link-2016" class="cite-link">cite</a><span class="lsep">|</span><a href="/posts/2016/edit" class="suggest-edit-post" title="revise and improve this post">edit</a></div>
+            </div>
+
+                <div class="post-signature grid--cell">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="/posts/2016/revisions" title="show all edits to this post">edited <span title="2014-03-22 11:29:26Z" class="relativetime">Mar 22 '14 at 11:29</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="d-none" itemprop="name">Raphael</span>
+        <div class="-flair">
+            
+        </div>
+    </div>
+</div>                </div>
+            <div class="post-signature owner grid--cell">
+<div class="user-info user-hover">
+    <div class="user-action-time">
+        asked <span title="2012-05-23 08:19:27Z" class="relativetime">May 23 '12 at 8:19</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/98/raphael"><div class="gravatar-wrapper-32"><img src="https://i.stack.imgur.com/6iB0U.jpg?s=32&amp;g=1" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <a href="/users/98/raphael">Raphael</a><span class="mod-flair" title="moderator">&#9830;</span><span class="d-none" itemprop="name">Raphael</span>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score 58,534" dir="ltr">58.5k</span><span title="25 gold badges"><span class="badge1"></span><span class="badgecount">25</span></span><span title="143 silver badges"><span class="badge2"></span><span class="badgecount">143</span></span><span title="324 bronze badges"><span class="badge3"></span><span class="badgecount">324</span></span>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+    </div>
+    <span class="d-none">$\endgroup$</span>
+</div>
+                
+    <div class="post-layout--right">
+	    <div id="comments-2016" class="comments js-comments-container " data-post-id="2016">
+            <ul class="comments-list js-comments-list"
+                    data-remaining-comments-count="0"
+                    data-canpost="false"
+                    data-cansee="true"
+                    data-comments-unavailable="false"
+                    data-addlink-disabled="true">
+
+
+    <li id="comment-5284" class="comment js-comment " data-comment-id="5284">
+        <div class="js-comment-actions comment-actions">
+            <div class="comment-score js-comment-edit-hide">
+                    <span title="number of &#39;useful comment&#39; votes received"
+                            class="cool">2</span>
+            </div>
+                    </div>
+        <div class="comment-text js-comment-text-and-form">
+            <div class="comment-body js-comment-edit-hide">
+                <span class="d-none">$\begingroup$</span>
+                <span class="comment-copy">Note a <a href="http://cstheory.stackexchange.com/questions/9221/known-algorithms-to-go-from-a-dfa-to-a-regular-expression/9261#9261">similar question over at cstheory.SE</a> which is probably not suited for our audience.</span>
+                <span class="d-none">$\endgroup$</span>
+                    &ndash;&nbsp;<a href="/users/98/raphael"
+                       title="58,534 reputation"
+                       class="comment-user owner">Raphael<span class="mod-flair" title="moderator">&#9830;</span></a>
+                <span class="comment-date" dir="ltr"><span title="2012-05-23 08:27:30Z" class="relativetime-clean">May 23 '12 at 8:27</span></span>
+                        <span title="this comment was edited 1 time">
+                            <svg aria-hidden="true" class="svg-icon va-text-bottom o50 iconPencilSm" width="14" height="14" viewBox="0 0 14 14"><path d="M11.1 1.71l1.13 1.12c.2.2.2.51 0 .71L11.1 4.7 9.21 2.86l1.17-1.15c.2-.2.51-.2.71 0zM2 10.12l6.37-6.43 1.88 1.88L3.88 12H2v-1.88z"/></svg>
+                        </span>
+                                                            </div>
+        </div>
+    </li>
+    <li id="comment-42435" class="comment js-comment " data-comment-id="42435">
+        <div class="js-comment-actions comment-actions">
+            <div class="comment-score js-comment-edit-hide">
+            </div>
+                    </div>
+        <div class="comment-text js-comment-text-and-form">
+            <div class="comment-body js-comment-edit-hide">
+                <span class="d-none">$\begingroup$</span>
+                <span class="comment-copy">all answers use formal technique to write RE from DFA. I believe my technique by analysis is comparatively easy and objective I demonstrate in my answe: <a href="http://stackoverflow.com/questions/7550711/what-is-the-language-of-this-deterministic-finite-automata/13965717#13965717">What is the language of this deterministic finite automata?</a> I feel it would be helpful sometime. Yes, of-course sometime I myself uses formal method(Arden theorem) to write RE is question is complex like given in this example: <a href="http://stackoverflow.com/a/17434694/1673391">How to write regular expression for a DFA</a></span>
+                <span class="d-none">$\endgroup$</span>
+                    &ndash;&nbsp;<a href="/users/5000/grijesh-chauhan"
+                       title="556 reputation"
+                       class="comment-user">Grijesh Chauhan</a>
+                <span class="comment-date" dir="ltr"><span title="2014-02-15 18:13:31Z" class="relativetime-clean">Feb 15 '14 at 18:13</span></span>
+                                                            </div>
+        </div>
+    </li>
+            </ul>
+	    </div>
+
+        <div id="comments-link-2016" data-rep=50 data-reg=true>
+
+                <a class="js-add-link comments-link disabled-link "
+                   title="Use comments to ask for more information or suggest improvements. Avoid answering questions in comments."
+                   >add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href=# onclick=""></a>
+        </div>         
+    </div>        </div>
+</div>
+
+
+
+            <div id="answers">
+
+                <a name="tab-top"></a>
+                <div id="answers-header">
+                    <div class="subheader answers-subheader">
+                        <h2 data-answercount="4">
+                                4 Answers
+                            <span style="display:none;" itemprop="answerCount">4</span>
+                        </h2>
+                        <div>
+                            
+<div id="tabs">
+        <a href="/questions/2016/how-to-convert-finite-automata-to-regular-expressions?answertab=active#tab-top" data-nav-xhref="" title="Answers with the latest activity first" data-value="active" data-shortcut="A">
+            active</a>
+        <a href="/questions/2016/how-to-convert-finite-automata-to-regular-expressions?answertab=oldest#tab-top" data-nav-xhref="" title="Answers in the order they were provided" data-value="oldest" data-shortcut="O">
+            oldest</a>
+        <a class="youarehere is-selected " href="/questions/2016/how-to-convert-finite-automata-to-regular-expressions?answertab=votes#tab-top" data-nav-xhref="" title="Answers with the highest score first" data-value="votes" data-shortcut="V">
+            votes</a>
+    </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+  
+<a name="2389"></a>
+<div id="answer-2389" class="answer accepted-answer" data-answerid="2389"  itemprop="acceptedAnswer" itemscope itemtype="http://schema.org/Answer">
+    <div class="post-layout">
+            <div class="votecell post-layout--left">
+                
+
+<div class="js-voting-container grid fd-column ai-stretch gs4 fc-black-200" data-post-id="2389">
+        <button class="js-vote-up-btn grid--cell s-btn s-btn__unset c-pointer" title="This answer is useful (click again to undo)" aria-pressed="false" aria-label="up vote" data-selected-classes="fc-theme-primary"><svg aria-hidden="true" class="svg-icon m0 iconArrowUpLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 26h32L18 10 2 26z"/></svg></button>
+        <div class="js-vote-count grid--cell fc-black-500 fs-title grid fd-column ai-center" itemprop="upvoteCount" data-value="90">90</div>
+        <button class="js-vote-down-btn grid--cell s-btn s-btn__unset c-pointer" title="This answer is not useful (click again to undo)" aria-pressed="false" aria-label="down vote" data-selected-classes="fc-theme-primary"><svg aria-hidden="true" class="svg-icon m0 iconArrowDownLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 10h32L18 26 2 10z"/></svg></button>
+
+
+                <div class="js-accepted-answer-indicator grid--item fc-green-500 ta-center p4" title="loading when this answer was accepted..." tabindex="0" role="note" aria-label="accepted"><svg aria-hidden="true" class="svg-icon iconCheckmarkLg" width="36" height="36" viewBox="0 0 36 36"><path d="M6 14l8 8L30 6v8L14 30l-8-8v-8z"/></svg></div>
+<div class="bounty-award-container grid--cell"><span class="bounty-award d-block ta-center" title="This answer has been awarded bounties worth 150 reputation by Raphael">+150</span></div>
+</div>
+
+            </div>
+            
+
+<div class="answercell post-layout--right">
+    <span class="d-none">$\begingroup$</span>
+    <div class="post-text" itemprop="text">
+<p>There are several methods to do the conversion from finite automata to regular expressions. Here I will describe the one usually taught in school which is very visual. I believe it is the most used in practice. However, writing the algorithm is not such a good idea.</p>
+
+
+
+<h1>State removal method</h1>
+
+<p>This algorithm is about handling the graph of the automaton and is thus not very suitable for algorithms since it needs graph primitives such as ... state removal. I will describe it using higher-level primitives.</p>
+
+<h3>The key idea</h3>
+
+<p>The idea is to consider regular expressions on edges and then removing intermediate states while keeping the edges labels consistent.</p>
+
+<p>The main pattern can be seen in the following to figures. The first has labels between $p,q,r$ that are regular expressions $e,f,g,h,i$ and we want to remove $q$.</p>
+
+<p><img src="https://i.stack.imgur.com/2SHwN.png" alt="p-q-r automaton"></p>
+
+<p>Once removed, we compose $e,f,g,h,i$ together (while preserving the other edges between $p$ and $r$ but this is not displayed on this):</p>
+
+<p><img src="https://i.stack.imgur.com/z7jyq.png" alt="enter image description here"></p>
+
+<h3>Example</h3>
+
+<p>Using the same example as in <a href="https://cs.stackexchange.com/a/2017/82">Raphael's answer</a>:</p>
+
+<p><img src="https://i.stack.imgur.com/MPPop.png" alt="1-2-3 automaton"></p>
+
+<p>we successively remove $q_2$:</p>
+
+<p><img src="https://i.stack.imgur.com/cIWqt.png" alt="1-3 automaton"></p>
+
+<p>and then $q_3$:</p>
+
+<p><img src="https://i.stack.imgur.com/H80eu.png" alt="1 automaton"></p>
+
+<p>then we still have to apply a star on the expression from $q_1$ to $q_1$. In this case, the final state is also initial so we really just need to add a star:</p>
+
+<p>$$ (ab+(b+aa)(ba)^*(a+bb))^* $$</p>
+
+<h3>Algorithm</h3>
+
+<p><code>L[i,j]</code> is the regexp of the language from $q_i$ to $q_j$. First, we remove all multi-edges:</p>
+
+<pre><code>for i = 1 to n:
+  for j = 1 to n:
+    if i == j then:
+      L[i,j] := ε
+    else:
+      L[i,j] := ∅
+    for a in Σ:
+      if trans(i, a, j):
+        L[i,j] := L[i,j] + a
+</code></pre>
+
+<p>Now, the state removal. Suppose we want to remove the state $q_k$:</p>
+
+<pre><code>remove(k):
+  for i = 1 to n:
+    for j = 1 to n:
+      L[i,i] += L[i,k] . star(L[k,k]) . L[k,i]
+      L[j,j] += L[j,k] . star(L[k,k]) . L[k,j]
+      L[i,j] += L[i,k] . star(L[k,k]) . L[k,j]
+      L[j,i] += L[j,k] . star(L[k,k]) . L[k,i]
+</code></pre>
+
+<p>Note that both with a pencil of paper and with an algorithm you should simplify expressions like <code>star(ε)=ε</code>, <code>e.ε=e</code>, <code>∅+e=e</code>, <code>∅.e=∅</code> (By hand you just don't write the edge when it's not $∅$, or even $ε$ for a self-loop and you ignore when there is no transition between $q_i$ and $q_k$ or $q_j$ and $q_k$)</p>
+
+<p>Now, how to use <code>remove(k)</code>? You should not remove final or initial states lightly, otherwise you will miss parts of the language.</p>
+
+<pre><code>for i = 1 to n:
+  if not(final(i)) and not(initial(i)):
+    remove(i)
+</code></pre>
+
+<p>If you have only one final state $q_f$ and one initial state $q_s$ then the final expression is:</p>
+
+<pre><code>e := star(L[s,s]) . L[s,f] . star(L[f,s] . star(L[s,s]) . L[s,f] + L[f,f])
+</code></pre>
+
+<p>If you have several final states (or even initial states) then there is no simple way of merging these ones, other than applying the transitive closure method. Usually this is not a problem by hand but this is awkward when writing the algorithm. A much simpler workaround is to enumerate all pairs $(s,f)$ and run the algorithm on the (already state-removed) graph to get all expressions $e_{s,f}$ supposing $s$ is the only initial state and $f$ is the only final state, then doing the union of all $e_{s,f}$.</p>
+
+<p>This, and the fact that this is modifying languages more dynamically than the first method make it more error-prone when programming. I suggest using any other method.</p>
+
+<h3>Cons</h3>
+
+<p>There are a lot of cases in this algorithm, for example for choosing which node we should remove, the number of final states at the end, the fact that a final state can be initial, too etc. </p>
+
+<p>Note that now that the algorithm is written, this is a lot like the transitive closure method. Only the context of the usage is different. I do not recommend implementing the algorithm, but using the method to do that by hand is a good idea. </p>
+    </div>
+    <div class="grid mb0 fw-wrap ai-start jc-end gs8 gsy">
+        <time itemprop="dateCreated" datetime="2012-06-16T14:05:44"></time>
+    <div class="grid--cell mr16" style="flex: 1 1 100px;">
+<div class="post-menu"><a href="/a/2389/106169" title="short permalink to this answer" class="short-link" itemprop="url" id="link-post-2389">share</a><span class="lsep">|</span><a id="cite-link-2389" class="cite-link">cite</a><span class="lsep">|</span><a href="/posts/2389/edit" class="suggest-edit-post" title="revise and improve this post">edit</a></div>                    </div>
+    <div class="post-signature grid--cell fl0">
+<div class="user-info user-hover">
+    <div class="user-action-time">
+        <a href="/posts/2389/revisions" title="show all edits to this post">edited <span title="2017-04-13 12:48:34Z" class="relativetime">Apr 13 '17 at 12:48</span></a>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/-1/community"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/a007be5a61f6aa8f3e85ae2fc18dd66e?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/-1/community">Community</a><span class="mod-flair" title="moderator">&#9830;</span>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">1</span>
+        </div>
+    </div>
+</div>    </div>
+            
+
+
+    <div class="post-signature grid--cell fl0">
+<div class="user-info user-hover">
+    <div class="user-action-time">
+        answered <span title="2012-06-16 14:05:44Z" class="relativetime">Jun 16 '12 at 14:05</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/82/jmad"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/9fc9d83e5a1e879464afd05acc995a00?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <a href="/users/82/jmad">jmad</a><span class="d-none" itemprop="name">jmad</span>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">8,597</span><span title="30 silver badges"><span class="badge2"></span><span class="badgecount">30</span></span><span title="40 bronze badges"><span class="badge3"></span><span class="badgecount">40</span></span>
+        </div>
+    </div>
+</div>
+
+    </div>
+    </div>
+    <span class="d-none">$\endgroup$</span>
+</div>
+
+    
+    <div class="post-layout--right">
+	    <div id="comments-2389" class="comments js-comments-container " data-post-id="2389">
+            <ul class="comments-list js-comments-list"
+                    data-remaining-comments-count="0"
+                    data-canpost="false"
+                    data-cansee="true"
+                    data-comments-unavailable="false"
+                    data-addlink-disabled="true">
+
+
+    <li id="comment-54202" class="comment js-comment " data-comment-id="54202">
+        <div class="js-comment-actions comment-actions">
+            <div class="comment-score js-comment-edit-hide">
+                    <span title="number of &#39;useful comment&#39; votes received"
+                            class="cool">1</span>
+            </div>
+                    </div>
+        <div class="comment-text js-comment-text-and-form">
+            <div class="comment-body js-comment-edit-hide">
+                <span class="d-none">$\begingroup$</span>
+                <span class="comment-copy">In the example, 2nd image, after removing node &quot;2&quot;, there is an edge missing - loop edge (ab) in node A.</span>
+                <span class="d-none">$\endgroup$</span>
+                    &ndash;&nbsp;<a href="/users/1124/panos-kal"
+                       title="103 reputation"
+                       class="comment-user">Panos Kal.</a>
+                <span class="comment-date" dir="ltr"><span title="2014-06-22 11:37:34Z" class="relativetime-clean">Jun 22 '14 at 11:37</span></span>
+                        <span title="this comment was edited 1 time">
+                            <svg aria-hidden="true" class="svg-icon va-text-bottom o50 iconPencilSm" width="14" height="14" viewBox="0 0 14 14"><path d="M11.1 1.71l1.13 1.12c.2.2.2.51 0 .71L11.1 4.7 9.21 2.86l1.17-1.15c.2-.2.51-.2.71 0zM2 10.12l6.37-6.43 1.88 1.88L3.88 12H2v-1.88z"/></svg>
+                        </span>
+                                                            </div>
+        </div>
+    </li>
+    <li id="comment-63252" class="comment js-comment " data-comment-id="63252">
+        <div class="js-comment-actions comment-actions">
+            <div class="comment-score js-comment-edit-hide">
+            </div>
+                    </div>
+        <div class="comment-text js-comment-text-and-form">
+            <div class="comment-body js-comment-edit-hide">
+                <span class="d-none">$\begingroup$</span>
+                <span class="comment-copy">@Kabamaru: Fixed.  But now I think the $\varepsilon$ in the 3rd image should also be <code>ab</code>, and similarly perhaps in the final regular expression.</span>
+                <span class="d-none">$\endgroup$</span>
+                    &ndash;&nbsp;<a href="/users/7459/wandering-logic"
+                       title="15,226 reputation"
+                       class="comment-user">Wandering Logic</a>
+                <span class="comment-date" dir="ltr"><span title="2014-10-09 21:59:21Z" class="relativetime-clean">Oct 9 '14 at 21:59</span></span>
+                                                            </div>
+        </div>
+    </li>
+    <li id="comment-85933" class="comment js-comment " data-comment-id="85933">
+        <div class="js-comment-actions comment-actions">
+            <div class="comment-score js-comment-edit-hide">
+            </div>
+                    </div>
+        <div class="comment-text js-comment-text-and-form">
+            <div class="comment-body js-comment-edit-hide">
+                <span class="d-none">$\begingroup$</span>
+                <span class="comment-copy">You can make the algorithm work for any number of initial and final states by adding a new initial $q^+$ and a new final state $q^-$, and connecting these to the original initial and final states by $\varepsilon$-edges. Now remove <i>all</i> the original states. The expression is then found at the single remaining edge from $q^+$ to $q_-$. The construction will not give loops at $q^+$ or $q_-$ as these states do not have ingoing resp. outgoing edges. Or if you are strict, they will have labels representing the empty set.</span>
+                <span class="d-none">$\endgroup$</span>
+                    &ndash;&nbsp;<a href="/users/4287/hendrik-jan"
+                       title="21,683 reputation"
+                       class="comment-user">Hendrik Jan</a>
+                <span class="comment-date" dir="ltr"><span title="2015-05-22 17:08:41Z" class="relativetime-clean">May 22 '15 at 17:08</span></span>
+                                                            </div>
+        </div>
+    </li>
+    <li id="comment-94129" class="comment js-comment " data-comment-id="94129">
+        <div class="js-comment-actions comment-actions">
+            <div class="comment-score js-comment-edit-hide">
+                    <span title="number of &#39;useful comment&#39; votes received"
+                            class="cool">1</span>
+            </div>
+                    </div>
+        <div class="comment-text js-comment-text-and-form">
+            <div class="comment-body js-comment-edit-hide">
+                <span class="d-none">$\begingroup$</span>
+                <span class="comment-copy">There is still a problem with the second example: before simplification the automata accepts &quot;ba&quot;, (1, 3, 1) but after simplification it doesn&#39;t.</span>
+                <span class="d-none">$\endgroup$</span>
+                    &ndash;&nbsp;<a href="/users/10314/wvxvw"
+                       title="918 reputation"
+                       class="comment-user">wvxvw</a>
+                <span class="comment-date" dir="ltr"><span title="2015-08-31 19:05:12Z" class="relativetime-clean">Aug 31 '15 at 19:05</span></span>
+                                                            </div>
+        </div>
+    </li>
+            </ul>
+	    </div>
+
+        <div id="comments-link-2389" data-rep=50 data-reg=true>
+
+                <a class="js-add-link comments-link disabled-link "
+                   title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."
+                   >add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href=# onclick=""></a>
+        </div>         
+    </div>    </div>
+</div>
+
+  
+<a name="2017"></a>
+<div id="answer-2017" class="answer" data-answerid="2017"  itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
+    <div class="post-layout">
+            <div class="votecell post-layout--left">
+                
+
+<div class="js-voting-container grid fd-column ai-stretch gs4 fc-black-200" data-post-id="2017">
+        <button class="js-vote-up-btn grid--cell s-btn s-btn__unset c-pointer" title="This answer is useful (click again to undo)" aria-pressed="false" aria-label="up vote" data-selected-classes="fc-theme-primary"><svg aria-hidden="true" class="svg-icon m0 iconArrowUpLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 26h32L18 10 2 26z"/></svg></button>
+        <div class="js-vote-count grid--cell fc-black-500 fs-title grid fd-column ai-center" itemprop="upvoteCount" data-value="47">47</div>
+        <button class="js-vote-down-btn grid--cell s-btn s-btn__unset c-pointer" title="This answer is not useful (click again to undo)" aria-pressed="false" aria-label="down vote" data-selected-classes="fc-theme-primary"><svg aria-hidden="true" class="svg-icon m0 iconArrowDownLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 10h32L18 26 2 10z"/></svg></button>
+
+
+                <div class="js-accepted-answer-indicator grid--item fc-green-500 ta-center p4 d-none" title="loading when this answer was accepted..." tabindex="0" role="note" aria-label="accepted"><svg aria-hidden="true" class="svg-icon iconCheckmarkLg" width="36" height="36" viewBox="0 0 36 36"><path d="M6 14l8 8L30 6v8L14 30l-8-8v-8z"/></svg></div>
+
+</div>
+
+            </div>
+            
+
+<div class="answercell post-layout--right">
+    <span class="d-none">$\begingroup$</span>
+    <div class="post-text" itemprop="text">
+<h3>Method</h3>
+
+<p>The nicest method I have seen is one that expresses the automaton as equation system of (regular) languages which can be solved. It is in particular nice as it seems to yield more concise expressions than other methods.</p>
+
+<p>Let $A= (Q,\Sigma,\delta,q_0,F)$ an NFA without $\varepsilon$-transitions. For every state $q_i$, create the equation</p>
+
+<p>$\qquad \displaystyle Q_i = \bigcup\limits_{q_i \overset{a}{\to} q_j} aQ_j \cup \begin{cases} \{\varepsilon\} &amp;,\ q_i \in F \\ \emptyset &amp;, \text{ else}\end{cases}$</p>
+
+<p>where $F$ is the set of final states and $q_i \overset{a}{\to} q_j$ means there is a transition from $q_i$ to $q_j$ labelled with $a$. If you read $\cup$ as $+$ or $\mid$ (depending on your regular expression definition), you see that this is an equation of regular expressions.</p>
+
+<p>For solving the system you need associativity and distributivity of $\cup$ and $\cdot$ (string concatenation), commutativity of $\cup$ and <a href="https://en.wikipedia.org/wiki/Arden%27s_lemma">Arden's Lemma</a>¹:</p>
+
+<blockquote>
+  <p>Let $L,U,V \subseteq \Sigma^*$ regular languages with $\varepsilon \notin U$. Then,</p>
+  
+  <p>$\qquad \displaystyle L = UL \cup V \quad \Longleftrightarrow \quad L = U^*V$</p>
+</blockquote>
+
+<p>The solution is a set of regular expressions $Q_i$, one for every state $q_i$. $Q_i$ describes exactly those words that can be accepted by $A$ when started in $q_i$; therefore $Q_0$ (if $q_0$ is the initial state) is the desired expression.</p>
+
+<hr>
+
+<h3>Example</h3>
+
+<p><sup>For the sake of clarity, we denotate singleton sets by their element, i.e. $a = \{a\}$. The example is due to Georg Zetzsche.</sup></p>
+
+<p>Consider this NFA:</p>
+
+<p><img src="https://i.stack.imgur.com/cfP9h.png" alt="example nfa"><br>
+<sup>[<a href="https://github.com/akerbos/sesketches/blob/gh-pages/src/cs_2016.tikz">source</a>]</sup></p>
+
+<p>The corresponding equation system is:</p>
+
+<p>$\qquad \begin{align}
+  Q_0 &amp;= aQ_1 \cup bQ_2 \cup \varepsilon \\
+  Q_1 &amp;= bQ_0 \cup aQ_2 \\
+  Q_2 &amp;= aQ_0 \cup bQ_1
+\end{align}$</p>
+
+<p>Now plug the third equation into the second:</p>
+
+<p>$\qquad \begin{align}
+  Q_1 &amp;= bQ_0 \cup a(aQ_0 \cup bQ_1) \\
+      &amp;= abQ_1 \cup (b \cup aa)Q_0 \\
+      &amp;= (ab)^*(b \cup aa)Q_0
+\end{align}$</p>
+
+<p>For the last step, we apply Arden's Lemma with $L = Q_1$, $U = ab$ and $V = (b \cup aa) \cdot Q_0$. Note that all three languages are regular and $\varepsilon \notin U = \{ab\}$, enabling us to apply the lemma. Now we plug this result into the first equation:</p>
+
+<p>$\qquad \begin{align}
+  Q_0 &amp;= a(ab)^*(b \cup aa)Q_0 \cup baQ_0 \cup bb(ab)^*(b \cup aa)Q_0 \cup \varepsilon \\
+      &amp;= ((a \cup bb)(ab)^*(b \cup aa) \cup ba)Q_0 \cup \varepsilon \\
+      &amp;= ((a \cup bb)(ab)^*(b \cup aa) \cup ba)^* \qquad \text{(by Arden's Lemma)}
+\end{align}$</p>
+
+<p>Thus, we have found a regular expression for the language accepted by above automaton, namely</p>
+
+<p>$\qquad \displaystyle ((a + bb)(ab)^*(b + aa) + ba)^*.$ </p>
+
+<p>Note that it is quite succinct (compare with the result of other methods) but not uniquely determined; solving the equation system with a different sequence of manipulations leads to other -- equivalent! -- expressions.</p>
+
+<hr>
+
+<ol>
+<li>For a proof of Arden's Lemma, see <a href="http://lmazy.verrech.net/wp-content/uploads/2011/12/nfa2regex.pdf">here</a>.</li>
+</ol>
+    </div>
+    <div class="grid mb0 fw-wrap ai-start jc-end gs8 gsy">
+        <time itemprop="dateCreated" datetime="2012-05-23T08:19:27"></time>
+    <div class="grid--cell mr16" style="flex: 1 1 100px;">
+<div class="post-menu"><a href="/a/2017/106169" title="short permalink to this answer" class="short-link" itemprop="url" id="link-post-2017">share</a><span class="lsep">|</span><a id="cite-link-2017" class="cite-link">cite</a><span class="lsep">|</span><a href="/posts/2017/edit" class="suggest-edit-post" title="revise and improve this post">edit</a></div>                    </div>
+    <div class="post-signature grid--cell fl0">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="/posts/2017/revisions" title="show all edits to this post">edited <span title="2014-01-20 08:39:36Z" class="relativetime">Jan 20 '14 at 8:39</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        
+        <div class="-flair">
+            
+        </div>
+    </div>
+</div>    </div>
+            
+
+
+    <div class="post-signature owner grid--cell fl0">
+<div class="user-info user-hover">
+    <div class="user-action-time">
+        answered <span title="2012-05-23 08:19:27Z" class="relativetime">May 23 '12 at 8:19</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/98/raphael"><div class="gravatar-wrapper-32"><img src="https://i.stack.imgur.com/6iB0U.jpg?s=32&amp;g=1" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <a href="/users/98/raphael">Raphael</a><span class="mod-flair" title="moderator">&#9830;</span><span class="d-none" itemprop="name">Raphael</span>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score 58,534" dir="ltr">58.5k</span><span title="25 gold badges"><span class="badge1"></span><span class="badgecount">25</span></span><span title="143 silver badges"><span class="badge2"></span><span class="badgecount">143</span></span><span title="324 bronze badges"><span class="badge3"></span><span class="badgecount">324</span></span>
+        </div>
+    </div>
+</div>
+
+    </div>
+    </div>
+    <span class="d-none">$\endgroup$</span>
+</div>
+
+    
+    <div class="post-layout--right">
+	    <div id="comments-2017" class="comments js-comments-container " data-post-id="2017">
+            <ul class="comments-list js-comments-list"
+                    data-remaining-comments-count="0"
+                    data-canpost="false"
+                    data-cansee="true"
+                    data-comments-unavailable="false"
+                    data-addlink-disabled="true">
+
+
+    <li id="comment-56845" class="comment js-comment " data-comment-id="56845">
+        <div class="js-comment-actions comment-actions">
+            <div class="comment-score js-comment-edit-hide">
+                    <span title="number of &#39;useful comment&#39; votes received"
+                            class="cool">1</span>
+            </div>
+                    </div>
+        <div class="comment-text js-comment-text-and-form">
+            <div class="comment-body js-comment-edit-hide">
+                <span class="d-none">$\begingroup$</span>
+                <span class="comment-copy">What is the time complexity of this algorithm? Is there a bound on the size of the produced expression?</span>
+                <span class="d-none">$\endgroup$</span>
+                    &ndash;&nbsp;<a href="/users/2253/jmite"
+                       title="23,089 reputation"
+                       class="comment-user">jmite</a>
+                <span class="comment-date" dir="ltr"><span title="2014-07-17 17:39:10Z" class="relativetime-clean">Jul 17 '14 at 17:39</span></span>
+                                                            </div>
+        </div>
+    </li>
+    <li id="comment-56854" class="comment js-comment " data-comment-id="56854">
+        <div class="js-comment-actions comment-actions">
+            <div class="comment-score js-comment-edit-hide">
+            </div>
+                    </div>
+        <div class="comment-text js-comment-text-and-form">
+            <div class="comment-body js-comment-edit-hide">
+                <span class="d-none">$\begingroup$</span>
+                <span class="comment-copy">@jmite: I have no idea. I don&#39;t think I&#39;d try to implement this (other methods seem to be more feasible in this regard) but use it as a pen-and-paper method.</span>
+                <span class="d-none">$\endgroup$</span>
+                    &ndash;&nbsp;<a href="/users/98/raphael"
+                       title="58,534 reputation"
+                       class="comment-user owner">Raphael<span class="mod-flair" title="moderator">&#9830;</span></a>
+                <span class="comment-date" dir="ltr"><span title="2014-07-17 20:58:36Z" class="relativetime-clean">Jul 17 '14 at 20:58</span></span>
+                                                            </div>
+        </div>
+    </li>
+    <li id="comment-96990" class="comment js-comment " data-comment-id="96990">
+        <div class="js-comment-actions comment-actions">
+            <div class="comment-score js-comment-edit-hide">
+                    <span title="number of &#39;useful comment&#39; votes received"
+                            class="cool">1</span>
+            </div>
+                    </div>
+        <div class="comment-text js-comment-text-and-form">
+            <div class="comment-body js-comment-edit-hide">
+                <span class="d-none">$\begingroup$</span>
+                <span class="comment-copy">Here&#39;s a Prolog implementation of this algorithm: <a href="https://github.com/wvxvw/intro-to-automata-theory/blob/master/automata/convert.pl#L424" rel="nofollow noreferrer">github.com/wvxvw/intro-to-automata-theory/blob/master/automata/&hellip;</a> but its <code>maybe_union&#47;2</code> predicate could use more work (esp. wrt eliminating common prefix) to make tidier regular expressions. Another way to see this method is to understand it as translation from regex into right-linear grammar, where languages with Prolog-like unification or ML-like pattern matching make for a very good transducers, so it&#39;s not only a pen-and-paper algorithm :)</span>
+                <span class="d-none">$\endgroup$</span>
+                    &ndash;&nbsp;<a href="/users/10314/wvxvw"
+                       title="918 reputation"
+                       class="comment-user">wvxvw</a>
+                <span class="comment-date" dir="ltr"><span title="2015-09-23 20:43:01Z" class="relativetime-clean">Sep 23 '15 at 20:43</span></span>
+                                                            </div>
+        </div>
+    </li>
+    <li id="comment-125840" class="comment js-comment " data-comment-id="125840">
+        <div class="js-comment-actions comment-actions">
+            <div class="comment-score js-comment-edit-hide">
+            </div>
+                    </div>
+        <div class="comment-text js-comment-text-and-form">
+            <div class="comment-body js-comment-edit-hide">
+                <span class="d-none">$\begingroup$</span>
+                <span class="comment-copy">Just one question. The ε in the first equation is because Qo is a starting state or because it&#39;s a final state? Same way if i have two final states applies?</span>
+                <span class="d-none">$\endgroup$</span>
+                    &ndash;&nbsp;<a href="/users/53689/georgio3"
+                       title="6 reputation"
+                       class="comment-user">Georgio3</a>
+                <span class="comment-date" dir="ltr"><span title="2016-06-16 13:26:18Z" class="relativetime-clean">Jun 16 '16 at 13:26</span></span>
+                        <span title="this comment was edited 1 time">
+                            <svg aria-hidden="true" class="svg-icon va-text-bottom o50 iconPencilSm" width="14" height="14" viewBox="0 0 14 14"><path d="M11.1 1.71l1.13 1.12c.2.2.2.51 0 .71L11.1 4.7 9.21 2.86l1.17-1.15c.2-.2.51-.2.71 0zM2 10.12l6.37-6.43 1.88 1.88L3.88 12H2v-1.88z"/></svg>
+                        </span>
+                                                            </div>
+        </div>
+    </li>
+    <li id="comment-125841" class="comment js-comment " data-comment-id="125841">
+        <div class="js-comment-actions comment-actions">
+            <div class="comment-score js-comment-edit-hide">
+            </div>
+                    </div>
+        <div class="comment-text js-comment-text-and-form">
+            <div class="comment-body js-comment-edit-hide">
+                <span class="d-none">$\begingroup$</span>
+                <span class="comment-copy">@PAOK  Check the definition of $Q_i$ above (the line); it&#39;s because $q_0$ is a final state.</span>
+                <span class="d-none">$\endgroup$</span>
+                    &ndash;&nbsp;<a href="/users/98/raphael"
+                       title="58,534 reputation"
+                       class="comment-user owner">Raphael<span class="mod-flair" title="moderator">&#9830;</span></a>
+                <span class="comment-date" dir="ltr"><span title="2016-06-16 13:31:27Z" class="relativetime-clean">Jun 16 '16 at 13:31</span></span>
+                        <span title="this comment was edited 1 time">
+                            <svg aria-hidden="true" class="svg-icon va-text-bottom o50 iconPencilSm" width="14" height="14" viewBox="0 0 14 14"><path d="M11.1 1.71l1.13 1.12c.2.2.2.51 0 .71L11.1 4.7 9.21 2.86l1.17-1.15c.2-.2.51-.2.71 0zM2 10.12l6.37-6.43 1.88 1.88L3.88 12H2v-1.88z"/></svg>
+                        </span>
+                                                            </div>
+        </div>
+    </li>
+            </ul>
+	    </div>
+
+        <div id="comments-link-2017" data-rep=50 data-reg=true>
+
+                <a class="js-add-link comments-link disabled-link "
+                   title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."
+                   >add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href=# onclick=""></a>
+        </div>         
+    </div>    </div>
+</div>
+
+  
+<a name="2392"></a>
+<div id="answer-2392" class="answer" data-answerid="2392"  itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
+    <div class="post-layout">
+            <div class="votecell post-layout--left">
+                
+
+<div class="js-voting-container grid fd-column ai-stretch gs4 fc-black-200" data-post-id="2392">
+        <button class="js-vote-up-btn grid--cell s-btn s-btn__unset c-pointer" title="This answer is useful (click again to undo)" aria-pressed="false" aria-label="up vote" data-selected-classes="fc-theme-primary"><svg aria-hidden="true" class="svg-icon m0 iconArrowUpLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 26h32L18 10 2 26z"/></svg></button>
+        <div class="js-vote-count grid--cell fc-black-500 fs-title grid fd-column ai-center" itemprop="upvoteCount" data-value="26">26</div>
+        <button class="js-vote-down-btn grid--cell s-btn s-btn__unset c-pointer" title="This answer is not useful (click again to undo)" aria-pressed="false" aria-label="down vote" data-selected-classes="fc-theme-primary"><svg aria-hidden="true" class="svg-icon m0 iconArrowDownLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 10h32L18 26 2 10z"/></svg></button>
+
+
+                <div class="js-accepted-answer-indicator grid--item fc-green-500 ta-center p4 d-none" title="loading when this answer was accepted..." tabindex="0" role="note" aria-label="accepted"><svg aria-hidden="true" class="svg-icon iconCheckmarkLg" width="36" height="36" viewBox="0 0 36 36"><path d="M6 14l8 8L30 6v8L14 30l-8-8v-8z"/></svg></div>
+
+</div>
+
+            </div>
+            
+
+<div class="answercell post-layout--right">
+    <span class="d-none">$\begingroup$</span>
+    <div class="post-text" itemprop="text">
+<h1>Brzozowski algebraic method</h1>
+
+<p>This is the same method as the one described in <a href="https://cs.stackexchange.com/a/2017/82">Raphael's answer</a>, but from a point of view of a systematic algorithm, and then, indeed, the algorithm. It turns out to be easy and natural to implement once you know where to begin. Also it may be easier by hand if drawing all the automata is impractical for some reason.</p>
+
+<p>When writing an algorithm you have to remember that the equations must be always linear so that you have a good abstract representation of the equations, thing that you can forget when you are solving by hand.</p>
+
+<h3>The idea of the algorithm</h3>
+
+<p>I won't describe how it works since it is well done in <a href="https://cs.stackexchange.com/a/2017/82">Raphael's answer</a> which I suggest to read before. Instead, I focus on in which order you should solve the equations without doing too many extra computations or extra cases.</p>
+
+<p>Starting from <a href="http://en.wikipedia.org/wiki/Arden%27s_Rule" rel="nofollow noreferrer">Arden's rule</a>'s ingenious solution $X=A^*B$ to the language equation $X=AX∪B$ we can consider the automaton as a set of equations of the form:</p>
+
+<p>$$X_i = B_i + A_{i,1}X_1 + … + A_{i,n}X_n$$</p>
+
+<p>we can solve this by induction on $n$ by updating the arrays $A_{i,j}$ and $B_{i,j}$ accordingly. At the step $n$, we have:</p>
+
+<p>$$X_n = B_n + A_{n,1}X_1 + … + A_{n,n}X_n$$</p>
+
+<p>and Arden's rule gives us:</p>
+
+<p>$$X_n = A_{n,n}^* (B_n + A_{n,1}X_1 + … + A_{n,n-1}X_{n-1})$$</p>
+
+<p>and by setting $B'_n = A_{n,n}^* B_n$ and $A'_{n,i}=A_{n,n}^*A_{n,i}$ we get:</p>
+
+<p>$$X_n = B'_n + A'_{n,1}X_1 + … + A'_{n,n-1}X_{n-1}$$</p>
+
+<p>and we can then remove all needs of $X_n$ in the system by setting, for $i,j&lt;n$:</p>
+
+<p>$$B'_i = B_i + A_{i,n}B'_n$$
+$$A'_{i,j} = A_{i,j} + A_{i,n}A'_{n,j}$$</p>
+
+<p>When we have solved $X_n$ when $n=1$, we obtain a equation like this:</p>
+
+<p>$$X_1 = B'_1$$</p>
+
+<p>with no $A'_{1,i}$. Thus we got our regular expression.</p>
+
+<h3>The algorithm</h3>
+
+<p>Thanks to this, we can build the algorithm. To have the same convention than in the induction above, we will say that the initial state is $q_1$ and that the number of state is $m$. First, the initialization to fill $B$:</p>
+
+<pre><code>for i = 1 to m:
+  if final(i):
+    B[i] := ε
+  else:
+    B[i] := ∅
+</code></pre>
+
+<p>and $A$:</p>
+
+<pre><code>for i = 1 to m:
+  for j = 1 to m:
+    for a in Σ:
+      if trans(i, a, j):
+        A[i,j] := a
+      else:
+        A[i,j] := ∅
+</code></pre>
+
+<p>and then the solving:</p>
+
+<pre><code>for n = m decreasing to 1:
+  B[n] := star(A[n,n]) . B[n]
+  for j = 1 to n:
+    A[n,j] := star(A[n,n]) . A[n,j];
+  for i = 1 to n:
+    B[i] += A[i,n] . B[n]
+    for j = 1 to n:
+      A[i,j] += A[i,n] . A[n,j]
+</code></pre>
+
+<p>the final expression is then:</p>
+
+<pre><code>e := B[1]
+</code></pre>
+
+<h3>Implementation</h3>
+
+<p>Even if it may seems a system of equations that seems too symbolic for an algorithm, this one is well-suited for an implementation. <a href="http://codepad.org/dbFztCCM" rel="nofollow noreferrer"><s>Here is an implementation of this algorithm in Ocaml</s> (broken link)</a>. Note that apart from the function <code>brzozowski</code>, everything is to print or to use for Raphael's example. Note that there is a surprisingly efficient function of simplification of regular expressions <code>simple_re</code>.</p>
+    </div>
+    <div class="grid mb0 fw-wrap ai-start jc-end gs8 gsy">
+        <time itemprop="dateCreated" datetime="2012-06-16T15:26:54"></time>
+    <div class="grid--cell mr16" style="flex: 1 1 100px;">
+<div class="post-menu"><a href="/a/2392/106169" title="short permalink to this answer" class="short-link" itemprop="url" id="link-post-2392">share</a><span class="lsep">|</span><a id="cite-link-2392" class="cite-link">cite</a><span class="lsep">|</span><a href="/posts/2392/edit" class="suggest-edit-post" title="revise and improve this post">edit</a></div>                    </div>
+    <div class="post-signature grid--cell fl0">
+<div class="user-info user-hover">
+    <div class="user-action-time">
+        <a href="/posts/2392/revisions" title="show all edits to this post">edited <span title="2017-04-13 12:48:34Z" class="relativetime">Apr 13 '17 at 12:48</span></a>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/-1/community"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/a007be5a61f6aa8f3e85ae2fc18dd66e?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/-1/community">Community</a><span class="mod-flair" title="moderator">&#9830;</span>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">1</span>
+        </div>
+    </div>
+</div>    </div>
+            
+
+
+    <div class="post-signature grid--cell fl0">
+<div class="user-info user-hover">
+    <div class="user-action-time">
+        answered <span title="2012-06-16 15:26:54Z" class="relativetime">Jun 16 '12 at 15:26</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/82/jmad"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/9fc9d83e5a1e879464afd05acc995a00?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <a href="/users/82/jmad">jmad</a><span class="d-none" itemprop="name">jmad</span>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">8,597</span><span title="30 silver badges"><span class="badge2"></span><span class="badgecount">30</span></span><span title="40 bronze badges"><span class="badge3"></span><span class="badgecount">40</span></span>
+        </div>
+    </div>
+</div>
+
+    </div>
+    </div>
+    <span class="d-none">$\endgroup$</span>
+</div>
+
+    
+    <div class="post-layout--right">
+	    <div id="comments-2392" class="comments js-comments-container " data-post-id="2392">
+            <ul class="comments-list js-comments-list"
+                    data-remaining-comments-count="0"
+                    data-canpost="false"
+                    data-cansee="true"
+                    data-comments-unavailable="false"
+                    data-addlink-disabled="true">
+
+
+    <li id="comment-91365" class="comment js-comment " data-comment-id="91365">
+        <div class="js-comment-actions comment-actions">
+            <div class="comment-score js-comment-edit-hide">
+                    <span title="number of &#39;useful comment&#39; votes received"
+                            class="cool">4</span>
+            </div>
+                    </div>
+        <div class="comment-text js-comment-text-and-form">
+            <div class="comment-body js-comment-edit-hide">
+                <span class="d-none">$\begingroup$</span>
+                <span class="comment-copy">Link is dead...</span>
+                <span class="d-none">$\endgroup$</span>
+                    &ndash;&nbsp;<a href="/users/22754/columbo"
+                       title="113 reputation"
+                       class="comment-user">Columbo</a>
+                <span class="comment-date" dir="ltr"><span title="2015-07-26 09:28:34Z" class="relativetime-clean">Jul 26 '15 at 9:28</span></span>
+                                                            </div>
+        </div>
+    </li>
+            </ul>
+	    </div>
+
+        <div id="comments-link-2392" data-rep=50 data-reg=true>
+
+                <a class="js-add-link comments-link disabled-link "
+                   title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."
+                   >add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href=# onclick=""></a>
+        </div>         
+    </div>    </div>
+</div>
+
+  
+<a name="2395"></a>
+<div id="answer-2395" class="answer" data-answerid="2395"  itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
+    <div class="post-layout">
+            <div class="votecell post-layout--left">
+                
+
+<div class="js-voting-container grid fd-column ai-stretch gs4 fc-black-200" data-post-id="2395">
+        <button class="js-vote-up-btn grid--cell s-btn s-btn__unset c-pointer" title="This answer is useful (click again to undo)" aria-pressed="false" aria-label="up vote" data-selected-classes="fc-theme-primary"><svg aria-hidden="true" class="svg-icon m0 iconArrowUpLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 26h32L18 10 2 26z"/></svg></button>
+        <div class="js-vote-count grid--cell fc-black-500 fs-title grid fd-column ai-center" itemprop="upvoteCount" data-value="23">23</div>
+        <button class="js-vote-down-btn grid--cell s-btn s-btn__unset c-pointer" title="This answer is not useful (click again to undo)" aria-pressed="false" aria-label="down vote" data-selected-classes="fc-theme-primary"><svg aria-hidden="true" class="svg-icon m0 iconArrowDownLg" width="36" height="36" viewBox="0 0 36 36"><path d="M2 10h32L18 26 2 10z"/></svg></button>
+
+
+                <div class="js-accepted-answer-indicator grid--item fc-green-500 ta-center p4 d-none" title="loading when this answer was accepted..." tabindex="0" role="note" aria-label="accepted"><svg aria-hidden="true" class="svg-icon iconCheckmarkLg" width="36" height="36" viewBox="0 0 36 36"><path d="M6 14l8 8L30 6v8L14 30l-8-8v-8z"/></svg></div>
+
+</div>
+
+            </div>
+            
+
+<div class="answercell post-layout--right">
+    <span class="d-none">$\begingroup$</span>
+    <div class="post-text" itemprop="text">
+<h1>Transitive closure method</h1>
+
+<p>This method is easy to write in a form of an algorithm, but generates absurdly large regular expressions and is impractical if you do it by hand, mostly because this is too systematic. It is a good and simple solution for an algorithm though.</p>
+
+<h3>The key idea</h3>
+
+<p>Let $R^k_{i,j}$ represent the regular expression for the strings going from $q_i$ to $q_j$ using the states $\{q_1, …, q_k\}$. Let $n$ be the number of states of the automaton.</p>
+
+<p>Suppose that you know already the regular expression $R_{i,j}$ from $q_i$ to $q_j$ without the intermediate state $q_k$ (except for extremities), for all $i,j$. Then you can guess how adding another state will affect the new regular expression $R'_{i,j}$: it changes only if you have direct transitions to $q_k$, and it can be expressed like that:</p>
+
+<p>$$R'_{i,j} = R_{i,j} + R_{i,k} . R_{k,k}^* . R_{k,j}$$</p>
+
+<p>($R$ is $R^{k-1}$ and $R'$ is $R^k$.)</p>
+
+<h3>Example</h3>
+
+<p>We will use the same example as in <a href="https://cs.stackexchange.com/a/2017/82">Raphael's answer</a>. At first, you can only use the direct transitions.</p>
+
+<p>Here is the first step (note that a self loop with a label $a$ would have transformed the first $ε$ into $(ε+a)$.</p>
+
+<p>$$R^0 =
+\begin{bmatrix}
+ε &amp; a &amp; b \\
+b &amp; ε &amp; a \\
+a &amp; b &amp; ε
+\end{bmatrix}
+$$</p>
+
+<p>At the second step we can use $q_0$ (which is renamed into $q_1$ for us, because $R^0$ is already used for the purpose above). We will see how $R^1$ works.</p>
+
+<p>From $q_2$ to $q_2$: $R^1_{2,2} = R^0_{2,2} + R^0_{2,1} {R^0_{1,1}}^* R^0_{1,2} = ε + b ε^* a = ε + ba$.</p>
+
+<p>Why is that? It is because going from $q_2$ to $q_2$ using only $q_1$ as an intermediate state can be done by staying here ($ε$) or going to $q_1$ ($a$), looping there ($ε^*$) and coming back ($b$).</p>
+
+<p>$$R^1 =
+\begin{bmatrix}
+ε &amp; a &amp; b \\
+b &amp; ε+ba &amp; a+bb \\
+a &amp; b+aa &amp; ε+ab
+\end{bmatrix}
+$$</p>
+
+<p>You can compute like that $R^2$ and $R^3$, too, and $R^3_{1,1}$ will give you the final expression because $1$ is both initial and final. Note that a lot of simplification of expressions have been done here. Otherwise the first $a$ of $R^0$ would be $(∅+a)$ and the first $a$ of $R^1$ would be $((∅+a)+ε(ε)^*a)$.</p>
+
+<h3>Algorithm</h3>
+
+<p>Initialization:</p>
+
+<pre><code>for i = 1 to n:
+  for j = 1 to n:
+    if i == j:
+      R[i,j,0] := ε
+    else:
+      R[i,j,0] := ∅
+    for a in Σ:
+      if trans(i, a, j):
+        R[i,j,0] := R[i,j,0] + a
+</code></pre>
+
+<p>Transitive closure:</p>
+
+<pre><code>for k = 1 to n:
+  for i = 1 to n:
+    for j = 1 to n:
+      R[i,j,k] := R[i,j,k-1] + R[i,k,k-1] . star(R[k,k,k-1]) . R(k,j,k-1)
+</code></pre>
+
+<p>Then the final expression is (supposing $q_s$ is the initial state):</p>
+
+<pre><code>e := ∅
+for i = 1 to n:
+  if final(i):
+    e := e + R[s,i,n]
+</code></pre>
+
+<p>But you can imagine it generates ugly regular expressions. You can indeed expect things like $(∅)^*+(a+(∅)^*)(ε)^*(a + ∅)$ that represents the same language as $aa$. Note that simplifying a regular expression is useful in practice.</p>
+    </div>
+    <div class="grid mb0 fw-wrap ai-start jc-end gs8 gsy">
+        <time itemprop="dateCreated" datetime="2012-06-16T16:09:42"></time>
+    <div class="grid--cell mr16" style="flex: 1 1 100px;">
+<div class="post-menu"><a href="/a/2395/106169" title="short permalink to this answer" class="short-link" itemprop="url" id="link-post-2395">share</a><span class="lsep">|</span><a id="cite-link-2395" class="cite-link">cite</a><span class="lsep">|</span><a href="/posts/2395/edit" class="suggest-edit-post" title="revise and improve this post">edit</a></div>                    </div>
+    <div class="post-signature grid--cell fl0">
+<div class="user-info user-hover">
+    <div class="user-action-time">
+        <a href="/posts/2395/revisions" title="show all edits to this post">edited <span title="2017-04-13 12:48:31Z" class="relativetime">Apr 13 '17 at 12:48</span></a>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/-1/community"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/a007be5a61f6aa8f3e85ae2fc18dd66e?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/-1/community">Community</a><span class="mod-flair" title="moderator">&#9830;</span>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">1</span>
+        </div>
+    </div>
+</div>    </div>
+            
+
+
+    <div class="post-signature grid--cell fl0">
+<div class="user-info user-hover">
+    <div class="user-action-time">
+        answered <span title="2012-06-16 16:09:42Z" class="relativetime">Jun 16 '12 at 16:09</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/82/jmad"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/9fc9d83e5a1e879464afd05acc995a00?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <a href="/users/82/jmad">jmad</a><span class="d-none" itemprop="name">jmad</span>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">8,597</span><span title="30 silver badges"><span class="badge2"></span><span class="badgecount">30</span></span><span title="40 bronze badges"><span class="badge3"></span><span class="badgecount">40</span></span>
+        </div>
+    </div>
+</div>
+
+    </div>
+    </div>
+    <span class="d-none">$\endgroup$</span>
+</div>
+
+    
+    <div class="post-layout--right">
+	    <div id="comments-2395" class="comments js-comments-container  dno" data-post-id="2395">
+            <ul class="comments-list js-comments-list"
+                    data-remaining-comments-count="0"
+                    data-canpost="false"
+                    data-cansee="true"
+                    data-comments-unavailable="false"
+                    data-addlink-disabled="true">
+
+            </ul>
+	    </div>
+
+        <div id="comments-link-2395" data-rep=50 data-reg=true>
+
+                <a class="js-add-link comments-link disabled-link "
+                   title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."
+                   >add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href=# onclick=""></a>
+        </div>         
+    </div>    </div>
+</div>
+                    <div class="question-status">
+        <h2>                    <b>protected</b> by <a href="/users/-1/community">Community</a><span class="mod-flair" title="moderator">&#9830;</span> <span dir="ltr"><span title="2016-06-16 13:30:22Z" class="relativetime">Jun 16 '16 at 13:30</span></span>
+</h2>
+        <p>
+Thank you for your interest in this question. 
+Because it has attracted low-quality or spam answers that had to be removed, posting an answer now requires 10 <a href="/help/whats-reputation">reputation</a> on this site (the <a href="/help/privileges/new-user">association bonus does not count</a>).
+<br /><br />
+Would you like to answer one of these <a href="/unanswered?fromProtectedNotice=true">unanswered questions</a> instead?</p>
+    </div>
+
+
+
+
+
+                        <h2 class="bottom-notice" data-loc="1">
+Not the answer you&#39;re looking for?                            Browse other questions tagged <a href="/questions/tagged/algorithms" class="post-tag" title="show questions tagged &#39;algorithms&#39;" rel="tag">algorithms</a> <a href="/questions/tagged/formal-languages" class="post-tag" title="show questions tagged &#39;formal-languages&#39;" rel="tag">formal-languages</a> <a href="/questions/tagged/finite-automata" class="post-tag" title="show questions tagged &#39;finite-automata&#39;" rel="tag">finite-automata</a> <a href="/questions/tagged/regular-expressions" class="post-tag" title="show questions tagged &#39;regular-expressions&#39;" rel="tag">regular-expressions</a> <a href="/questions/tagged/reference-question" class="post-tag" title="show questions tagged &#39;reference-question&#39;" rel="tag">reference-question</a>  or <a href="/questions/ask">ask your own question</a>.                        </h2>
+            </div>
+        </div>
+                <div id="sidebar" class="show-votes" role="complementary" aria-label="sidebar">
+
+<script>
+    window.showNewUser = false;
+
+</script>
+
+<div class="module newuser newuser-greeting" id="newuser-box" style="display:none;">
+    <h4>Welcome!</h4>
+    <div>
+        <p>This is a collaboratively edited question and answer site for <b>students, researchers and practitioners of computer science</b>. It's 100% free, no registration required.</p><p>Got a question about the site itself? <a href="https://cs.meta.stackexchange.com">meta</a> is the place to talk about things like what questions are appropriate, what tags we should use, etc.</p>
+        <p class="ar">
+                <a href="/tour?mnu=1">about &raquo;</a>&nbsp;&nbsp;&nbsp;
+            <a href="/help?mnu=1">help &raquo;</a>
+                &nbsp; <a href="https://cs.meta.stackexchange.com">meta &raquo;</a>
+        </p>
+    </div>
+</div>
+    <script>
+    if (showNewUser) {
+        document.getElementById('newuser-box').style.display = '';
+    }
+    </script>                            <div class="module question-stats">
+                    <table id="qinfo">
+                        <tr>
+                            <td>
+                                <p class="label-key">asked</p>
+                            </td>
+                            <td style="padding-left: 10px">
+                                <p class="label-key" title="2012-05-23 08:19:27Z">
+                                    <b>
+                                        <time itemprop="dateCreated" datetime="2012-05-23T08:19:27">7 years ago</time>
+                                    </b>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="label-key">viewed</p>
+                            </td>
+
+                            <td style="padding-left: 10px">
+                                <p class="label-key">
+                                    <b>149,136 times</b>
+                                </p>
+                            </td>
+                        </tr>
+                            <tr>
+                                <td>
+                                    <p class="label-key">active</p>
+                                </td>
+                                <td style="padding-left: 10px">
+                                    <p class="label-key"><b><a href="?lastactivity" class="lastactivity-link" title="2017-03-30 06:14:13Z">2 years, 2 months ago</a></b></p>
+                                </td>
+                            </tr>
+                    </table>
+                </div>
+            <div class="s-sidebarwidget s-sidebarwidget__yellow s-anchors s-anchors__default mb16" data-tracker="cb=1">
+            <div class="s-sidebarwidget--header s-sidebarwidget__small-bold-text">
+                Featured on Meta
+            </div>
+        <ul class="s-sidebarwidget--content s-sidebarwidget__items pt0 pr16 pb0 pl16">
+    <li class="s-sidebarwidget--item grid">
+        <div class="grid--cell1 fl-shrink0">
+                <a href="https://meta.stackexchange.com/questions/328475/unicorn-meta-zoo-3-how-do-we-grade-questions" data-ga="[&quot;community bulletin board&quot;,&quot;Featured on Meta&quot;,&quot;https://meta.stackexchange.com/questions/328475/unicorn-meta-zoo-3-how-do-we-grade-questions&quot;,null,null]">
+<div class="favicon favicon-stackexchangemeta" title="Meta Stack Exchange"></div>                </a>
+        </div>
+        <div class="grid--cell">
+            <a href="https://meta.stackexchange.com/questions/328475/unicorn-meta-zoo-3-how-do-we-grade-questions" data-ga="[&quot;community bulletin board&quot;,&quot;Featured on Meta&quot;,&quot;https://meta.stackexchange.com/questions/328475/unicorn-meta-zoo-3-how-do-we-grade-questions&quot;,null,null]">Unicorn Meta Zoo #3: How do we grade questions?</a>
+        </div>
+    </li>
+        </ul>
+</div>
+<script>
+    StackExchange.ready(function () {
+        StackExchange.newsletterAd.init({
+            subscribeUrl: "/users/email/newsletters/-1/subscribe"
+        });
+    });
+</script>
+
+<div id="newsletter-ad" class="s-sidebarwidget mb16">
+    <div class="s-sidebarwidget--header">
+        <svg aria-hidden="true" class="svg-icon iconMail" width="18" height="18" viewBox="0 0 18 18"><path d="M1 6l8 5 8-5V4L9 9 1 4c0-1.1.9-2 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V6z"/></svg> Love this site?
+    </div>
+    <div class="s-sidebarwidget--content d-block">
+
+        <p id="newsletter-ad-header">Get the <b>weekly newsletter!</b> In it, you&#39;ll get:</p>
+        <ul>
+            <li>The week&#39;s top questions and answers</li>
+            <li>Important community announcements</li>
+            <li>Questions that need answers</li>
+        </ul>
+    <div id="newsletter-signup-container" class="ta-center">
+        <button id="newsletter-signup" class="s-btn s-btn__filled">Sign up for the newsletter</button>
+    </div>
+    <p id="newsletter-preview-container" class="mt8 mb0 ta-center">see an <a href="/newsletter/preview" id="newsletter-preview">example newsletter</a></p>
+
+    </div>
+</div><div class="s-sidebarwidget mb16 module">
+    <div class="s-sidebarwidget--header grid ai-center">
+        <a href="https://chat.stackexchange.com" class="js-chat-ad-link">Visit chat</a>
+    </div>
+        <div class="s-sidebarwidget--content s-sidebarwidget__items d-none js-chat-ad-rooms"></div>
+</div>
+
+
+    <script>
+    // <!--
+        StackExchange.ready(function () {
+            var options = {
+                chatUrl: 'https://chat.stackexchange.com',
+                reloadUrl: '/api/recent-chat',
+                preloadedData: {"activeUsers":77,"activeRooms":52,"rooms":[{"name":"Computer Science","id":2710,"lastPost":1560000002,"posts":61639,"users":[{"name":"Discrete lizard","id":261731,"emailhash":"4524fc7e850c386924385b8803d748a3","lastPost":1560000002},{"name":"nbro","id":137285,"emailhash":"!https://i.stack.imgur.com/Ay4vY.jpg?s=128\u0026g=1","lastPost":1559939861}],"messages":[{"date":1560000002,"user":"Discrete lizard","userid":261731}],"singleImage":false,"tags":[]}]},
+                tagBased: false,
+            };
+
+            StackExchange.chatAd.init(options);
+        });
+    // -->
+    </script><style>
+    .ad-container {
+        width: 300px;
+        height: 250px;
+        overflow: hidden;
+        margin-bottom: 10px;
+    }
+
+    .ad-container .ad {
+        height: 250px;
+    }
+
+    .ad-container a:hover {
+        text-decoration: underline;
+    }
+
+    .ad-container .footer {
+        font-family: Arial,Helvetic,Sans-Serif;
+        font-size: 12px;
+        text-align: center;
+        padding: 8px 0;
+        background-color: #000;
+        color: #EFF;
+
+        transition: transform 225ms ease, opacity 225ms ease;
+        transform: translateY(0);
+        opacity: 0;
+    }
+
+    .ad-container:hover .footer {
+        transform: translateY(-100%);
+        opacity: 0.9;
+    }
+
+    #adzerk2 {
+        height: 250px;
+    }
+</style>
+    <div class="ad-container">
+        <div class="ad">
+            <a href="http://cs.meta.stackexchange.com/ads/ct/1588?url=https%3a%2f%2fcs.meta.stackexchange.com%2fquestions%2f599%2freference-answers-to-frequently-asked-questions&s=518180e9c2dcb4d2f4b8a2b65806aa80bdad0379b8f50dab5cf447b61d3432c5" rel="nofollow" target="_blank"><img src="https://i.stack.imgur.com/UI0Ep.png" alt="A curated list of answers that go over the basics in detail!" title="A curated list of answers that go over the basics in detail!" width="300" height="250"></a>
+        </div>
+        <div class="footer">
+            11 votes ·
+            <a href="https://cs.meta.stackexchange.com/questions/1582#1588"
+                title="click to comment on this ad"
+                target="_blank">
+                comment
+            </a> ·
+            <a href="https://cs.meta.stackexchange.com/ads/display/1582" target="_blank">
+                stats
+            </a>
+        </div>
+    </div>
+            <div class="module sidebar-linked">
+	<h4 id="h-linked">Linked</h4>
+	<div class="linked" data-tracker="lq=1">
+
+<div class="spacer">
+	<a href="/q/41932" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">1</div>
+	</a>
+	<a href="/questions/41932/regular-expression-for-language-with-even-number-of-0s-and-1s?noredirect=1" class="question-hyperlink">Regular expression for language with even number of 0&#39;s and 1&#39;s</a>
+</div>
+<div class="spacer">
+	<a href="/q/30114" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes  default">0</div>
+	</a>
+	<a href="/questions/30114/converting-nfa-to-regular-expression?noredirect=1" class="question-hyperlink">Converting NFA to regular expression</a>
+</div>
+<div class="spacer">
+	<a href="/q/10883" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes  default">2</div>
+	</a>
+	<a href="/questions/10883/whats-the-regex-corresponding-to-this-dfa?noredirect=1" class="question-hyperlink">What&#39;s the regex corresponding to this DFA?</a>
+</div>
+<div class="spacer">
+	<a href="/q/32260" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">-1</div>
+	</a>
+	<a href="/questions/32260/converting-dfa-to-regular-expression?noredirect=1" class="question-hyperlink">Converting DFA to regular expression</a>
+</div>
+<div class="spacer">
+	<a href="/q/4987" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes  default">0</div>
+	</a>
+	<a href="/questions/4987/program-that-generates-a-regular-expression-from-an-fa?noredirect=1" class="question-hyperlink">Program that generates a regular expression from an FA</a>
+</div>
+<div class="spacer">
+	<a href="/q/54883" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">1</div>
+	</a>
+	<a href="/questions/54883/a-regular-expression-for-an-automaton-which-accepts-strings-with-no-more-than-3?noredirect=1" class="question-hyperlink">A regular expression for an automaton which accepts strings with no more than 3 consecutive zeros</a>
+</div>
+<div class="spacer">
+	<a href="/q/44524" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes  default">1</div>
+	</a>
+	<a href="/questions/44524/defining-if-a-language-is-regular?noredirect=1" class="question-hyperlink">Defining if a language is regular</a>
+</div>
+<div class="spacer">
+	<a href="/q/21458" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes  default">0</div>
+	</a>
+	<a href="/questions/21458/proving-a-regular-expression-is-correct?noredirect=1" class="question-hyperlink">Proving a regular expression is correct</a>
+</div>
+<div class="spacer">
+	<a href="/q/49185" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes  default">-2</div>
+	</a>
+	<a href="/questions/49185/regular-expression-for-the-given-dfa?noredirect=1" class="question-hyperlink">Regular Expression for the given DFA</a>
+</div>
+<div class="spacer">
+	<a href="/q/64817" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">0</div>
+	</a>
+	<a href="/questions/64817/what-language-should-the-following-dfa-recognise?noredirect=1" class="question-hyperlink">What language should the following DFA recognise?</a>
+</div>					<div class="spacer more">
+				<a href="/questions/linked/2016">see more linked questions…</a>
+			</div>
+	</div>
+</div>
+
+                <div class="module sidebar-related">
+                    <h4 id="h-related">Related</h4>
+                    <div class="related js-gps-related-questions" data-tracker="rq=1">
+                        <div class="spacer"><a href="/q/6443" title="Vote score (upvotes - downvotes)"><div class="answer-votes answered-accepted default">2</div></a><a href="/questions/6443/simplification-of-regular-expression-and-conversion-into-finite-automata" class="question-hyperlink">Simplification of regular expression and conversion into finite automata</a></div><div class="spacer"><a href="/q/42474" title="Vote score (upvotes - downvotes)"><div class="answer-votes answered-accepted default">1</div></a><a href="/questions/42474/converting-a-nfa-to-its-equivalent-regular-expression" class="question-hyperlink">Converting a NFA to its equivalent regular expression</a></div><div class="spacer"><a href="/q/44524" title="Vote score (upvotes - downvotes)"><div class="answer-votes default">1</div></a><a href="/questions/44524/defining-if-a-language-is-regular" class="question-hyperlink">Defining if a language is regular</a></div><div class="spacer"><a href="/q/55817" title="Vote score (upvotes - downvotes)"><div class="answer-votes default">3</div></a><a href="/questions/55817/show-recognizing-two-regular-expressions-as-equal-is-in-pspace" class="question-hyperlink">Show Recognizing two Regular Expressions as equal is in PSPACE</a></div><div class="spacer"><a href="/q/60583" title="Vote score (upvotes - downvotes)"><div class="answer-votes default">0</div></a><a href="/questions/60583/prove-that-halfl-is-also-regular-if-l-is-a-regular-language" class="question-hyperlink">Prove that half(L) is also regular if L is a regular language</a></div><div class="spacer"><a href="/q/70426" title="Vote score (upvotes - downvotes)"><div class="answer-votes default">3</div></a><a href="/questions/70426/state-complexity-of-homomorphisms-of-regular-languages" class="question-hyperlink">State complexity of homomorphisms of regular languages</a></div><div class="spacer"><a href="/q/71403" title="Vote score (upvotes - downvotes)"><div class="answer-votes default">1</div></a><a href="/questions/71403/regular-expressions-minimum-dfa" class="question-hyperlink">Regular Expressions &amp; Minimum DFA</a></div><div class="spacer"><a href="/q/77925" title="Vote score (upvotes - downvotes)"><div class="answer-votes answered-accepted default">0</div></a><a href="/questions/77925/how-to-generate-regular-expression-for-language-of-regular-expressions" class="question-hyperlink">How to generate regular expression for language of regular expressions?</a></div><div class="spacer"><a href="/q/87366" title="Vote score (upvotes - downvotes)"><div class="answer-votes default">0</div></a><a href="/questions/87366/generating-finite-automata-from-regular-expression" class="question-hyperlink">Generating finite automata from regular expression</a></div><div class="spacer"><a href="/q/97327" title="Vote score (upvotes - downvotes)"><div class="answer-votes answered-accepted default">4</div></a><a href="/questions/97327/efficiently-convert-an-nfa-with-multiple-varepsilon-edges-and-accepting-state" class="question-hyperlink">Efficiently convert an NFA with multiple $\varepsilon$ edges and accepting states into a regular expression</a></div>
+                    </div>
+                </div>
+
+<div id="hot-network-questions" class="module tex2jax_ignore">
+    <h4>
+        <a href="https://stackexchange.com/questions?tab=hot"
+           class="js-gps-track s-link s-link__inherit" 
+           data-gps-track="posts_hot_network.click({ item_type:1, location:11 })">
+            Hot Network Questions
+        </a>
+    </h4>
+    <ul>
+            <li >
+                <div class="favicon favicon-history" title="History Stack Exchange"></div><a href="https://history.stackexchange.com/questions/53046/fermats-statement-about-the-ancients-how-serious-was-he" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:324 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Fermat&#39;s statement about the ancients: How serious was he?
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-security" title="Information Security Stack Exchange"></div><a href="https://security.stackexchange.com/questions/211427/ability-to-change-root-user-password-vulnerability" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:162 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Ability To Change Root User Password (Vulnerability?)
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-mathematica" title="Mathematica Stack Exchange"></div><a href="https://mathematica.stackexchange.com/questions/199832/how-does-the-around-command-at-zero-work" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:387 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How does the Around command at zero work?
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-workplace" title="The Workplace Stack Exchange"></div><a href="https://workplace.stackexchange.com/questions/138089/should-i-put-programming-books-i-wrote-a-few-years-ago-on-my-resume" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:423 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Should I put programming books I wrote a few years ago on my resume?
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-retrocomputing" title="Retrocomputing Stack Exchange"></div><a href="https://retrocomputing.stackexchange.com/questions/11286/was-self-modifying-code-possible-just-using-basic" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:648 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Was Self-modifying-code possible just using BASIC?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-worldbuilding" title="Worldbuilding Stack Exchange"></div><a href="https://worldbuilding.stackexchange.com/questions/148417/electricity-free-spaceship" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:579 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Electricity free spaceship
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-mathematica" title="Mathematica Stack Exchange"></div><a href="https://mathematica.stackexchange.com/questions/199968/varying-the-size-of-dots-in-a-plot-according-to-information-contained-in-list" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:387 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Varying the size of dots in a plot according to information contained in list
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-scifi" title="Science Fiction &amp; Fantasy Stack Exchange"></div><a href="https://scifi.stackexchange.com/questions/214121/sci-fi-novel-ark-ship-from-earth-is-sent-into-space-to-another-planet-one-man" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:186 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Sci-fi novel: ark ship from Earth is sent into space to another planet, one man woken early from cryosleep paints a giant mural
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-politics" title="Politics Stack Exchange"></div><a href="https://politics.stackexchange.com/questions/42010/if-theres-something-that-implicates-the-president-why-is-there-then-a-national" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:475 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    If there&#39;s something that implicates the president why is there then a national security issue? (John Dowd)
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-retrocomputing" title="Retrocomputing Stack Exchange"></div><a href="https://retrocomputing.stackexchange.com/questions/11297/what-is-this-mod-amiga-1200" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:648 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What is this mod? Amiga 1200
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-ell" title="English Language Learners Stack Exchange"></div><a href="https://ell.stackexchange.com/questions/213850/how-do-we-say-within-a-kilometer-radius-spherically" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:481 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How do we say &quot;within a kilometer radius spherically&quot;?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-academia" title="Academia Stack Exchange"></div><a href="https://academia.stackexchange.com/questions/131523/teaching-a-class-likely-meant-to-inflate-the-gpa-of-student-athletes" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:415 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Teaching a class likely meant to inflate the GPA of student athletes
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-puzzling" title="Puzzling Stack Exchange"></div><a href="https://puzzling.stackexchange.com/questions/84820/polygon-construction-for-specified-number-of-interior-and-boundary-lattice-point" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:559 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Polygon Construction for Specified Number of Interior and Boundary Lattice Points
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-security" title="Information Security Stack Exchange"></div><a href="https://security.stackexchange.com/questions/211478/does-putting-salt-first-make-it-easier-for-attacker-to-bruteforce-the-hash" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:162 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Does putting salt first make it easier for attacker to bruteforce the hash?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-ell" title="English Language Learners Stack Exchange"></div><a href="https://ell.stackexchange.com/questions/213663/a-word-that-means-blending-into-a-community-too-much" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:481 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    A word that means &quot;blending into a community too much&quot;
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-photo" title="Photography Stack Exchange"></div><a href="https://photo.stackexchange.com/questions/108764/is-there-a-dslr-mirorless-camera-with-minimal-options-like-a-classic-simple-slr" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:61 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Is there a DSLR/mirorless camera with minimal options like a classic, simple SLR?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-dba" title="Database Administrators Stack Exchange"></div><a href="https://dba.stackexchange.com/questions/240068/why-does-this-query-missing-a-from-clause-not-error-out" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:182 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Why does this query, missing a FROM clause, not error out?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-math" title="Mathematics Stack Exchange"></div><a href="https://math.stackexchange.com/questions/3253240/are-polynomials-with-the-same-roots-identical" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:69 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Are polynomials with the same roots identical?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-electronics" title="Electrical Engineering Stack Exchange"></div><a href="https://electronics.stackexchange.com/questions/442345/why-am-i-seeing-a-weird-notch-on-the-data-line-for-some-logical-1s" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:135 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Why am I Seeing A Weird &quot;Notch&quot; on the Data Line For Some Logical 1s?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-linguistics" title="Linguistics Stack Exchange"></div><a href="https://linguistics.stackexchange.com/questions/31692/origin-of-boor" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:312 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Origin of &quot;boor&quot;
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-aviation" title="Aviation Stack Exchange"></div><a href="https://aviation.stackexchange.com/questions/65259/can-the-removal-of-a-duty-free-sales-trolley-result-in-a-measurable-reduction-in" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:528 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Can the removal of a duty-free sales trolley result in a measurable reduction in emissions?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-rpg" title="Role-playing Games Stack Exchange"></div><a href="https://rpg.stackexchange.com/questions/149406/how-creative-should-the-dm-let-an-artificer-be-in-terms-of-what-they-can-build" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:122 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How creative should the DM let an artificer be in terms of what they can build?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-writing" title="Writing Stack Exchange"></div><a href="https://writing.stackexchange.com/questions/45832/is-it-okay-to-have-a-sequel-start-immediately-after-the-end-of-the-first-book" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:166 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Is it okay to have a sequel start immediately after the end of the first book?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-physics" title="Physics Stack Exchange"></div><a href="https://physics.stackexchange.com/questions/484930/the-usage-of-kelvin-in-formulas" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:11, target_site:151 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    The usage of kelvin in formulas
+                </a>
+
+            </li>
+    </ul>
+
+        <a href="#" 
+           class="show-more js-show-more js-gps-track" 
+           data-gps-track="posts_hot_network.click({ item_type:3, location:11 })">
+            more hot questions
+        </a>
+</div>
+
+    <div id="feed-link" class="js-feed-link">
+        <a href="/feeds/question/2016" title="Feed of this question and its answers">
+            <svg aria-hidden="true" class="svg-icon fc-orange-400 iconRss" width="18" height="18" viewBox="0 0 18 18"><path d="M1 3c0-1.1.9-2 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3zm14.5 12C15.5 8.1 9.9 2.5 3 2.5V5a10 10 0 0 1 10 10h2.5zm-5 0A7.5 7.5 0 0 0 3 7.5V10a5 5 0 0 1 5 5h2.5zm-5 0A2.5 2.5 0 0 0 3 12.5V15h2.5z"/></svg>
+            Question feed
+        </a>
+    </div>
+    <aside class="s-modal js-feed-link-modal" tabindex="-1" role="dialog" aria-labelledby="feed-modal-title" aria-describedby="feed-modal-description" aria-hidden="true">
+        <div class="s-modal--dialog js-modal-dialog wmx4" role="document"  data-controller="se-draggable">
+            <h1 class="s-modal--header fw-bold js-first-tabbable" id="feed-modal-title" data-target="se-draggable.handle" tabindex="0">
+                Subscribe to RSS
+            </h1>
+            <div class="grid gs4 gsy fd-column">
+                <div class="grid--cell">
+                    <label class="d-block s-label" for="feed-url">
+                        Question feed
+                        <p class="s-description mt2" id="feed-modal-description">To subscribe to this RSS feed, copy and paste this URL into your RSS reader.</p>
+                    </label>
+                </div>
+                <div class="grid ps-relative">
+                    <input class="s-input" type="text" name="feed-url" id="feed-url" readonly="readonly" value="https://cs.stackexchange.com/feeds/question/2016" />
+                    <svg aria-hidden="true" class="svg-icon s-input-icon fc-orange-400 iconRss" width="18" height="18" viewBox="0 0 18 18"><path d="M1 3c0-1.1.9-2 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3zm14.5 12C15.5 8.1 9.9 2.5 3 2.5V5a10 10 0 0 1 10 10h2.5zm-5 0A7.5 7.5 0 0 0 3 7.5V10a5 5 0 0 1 5 5h2.5zm-5 0A2.5 2.5 0 0 0 3 12.5V15h2.5z"/></svg>
+                </div>
+            </div>
+            <a class="s-modal--close s-btn s-btn__muted js-modal-close js-last-tabbable" href="#" aria-label="Close">
+                <svg aria-hidden="true" class="svg-icon iconClearSm" width="14" height="14" viewBox="0 0 14 14"><path d="M12 3.41L10.59 2 7 5.59 3.41 2 2 3.41 5.59 7 2 10.59 3.41 12 7 8.41 10.59 12 12 10.59 8.41 7 12 3.41z"/></svg>
+            </a>
+        </div>
+    </aside>
+        </div>
+    </div>
+<script>StackExchange.ready(function(){$.get('/posts/2016/ivc/23eb');});</script>
+<noscript><div><img src="/posts/2016/ivc/23eb" class="dno" alt="" width="0" height="0"></div></noscript><div style="display:none" id="prettify-lang"></div></div>
+
+
+        </div>
+    </div>
+
+    <footer id="footer" class="site-footer js-footer" role="contentinfo">
+        <div class="site-footer--container">
+            
+            <nav class="site-footer--nav">
+                    <div class="site-footer--col site-footer--col__visible js-footer-col" data-name="default">
+                        <h5 class="-title"><a href="/">Computer Science</a></h5>
+                        <ul class="-list js-primary-footer-links">
+                                    <li class="-item"><a class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 2 })" href="/tour">Tour</a></li>
+                                <li class="-item"><a href="/help" class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 3 })">Help</a></li>
+                                    <li class="-item"><a class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 5 })" href="https://chat.stackexchange.com?tab=site&host=cs.stackexchange.com">Chat</a></li>
+                            <li class="-item"><a class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 13 })" href="/contact">Contact</a></li>
+                                <li class="-item"><a class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 14 })" href="https://cs.meta.stackexchange.com">Feedback</a></li>
+                                                            <li class="-item"><a onclick='StackExchange.switchMobile("on")' class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 12 })">Mobile</a></li>
+                        </ul>
+                    </div>
+                <div class="site-footer--col site-footer--col__visible js-footer-col" data-name="default">
+                    <h5 class="-title"><a class="js-gps-track" data-gps-track="footer.click({ location: 2, link: 1 })" href="https://stackoverflow.com/company/about">Company</a></h5>
+                    <ul class="-list">
+                                                    <li class="-item"><a href="https://stackoverflow.com" class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 15})">Stack Overflow</a></li>
+                            <li class="-item"><a href="https://www.stackoverflowbusiness.com" class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 19 })">Stack Overflow Business</a></li>
+                            <li class="-item"><a href="https://stackoverflow.com/jobs" class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 17})">Developer Jobs</a></li>
+                                <li class="-item"><a class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 1 })" href="https://stackoverflow.com/company/about">About</a></li>
+                        <li class="-item"><a class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 27 })" href="https://stackoverflow.com/company/press">Press</a></li>
+                        <li class="-item"><a class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 7 })" href="https://stackoverflow.com/legal">Legal</a></li>
+                        <li class="-item"><a class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 8 })" href="https://stackoverflow.com/legal/privacy-policy">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="site-footer--col site-footer--categories-nav site-footer--col__visible">
+                    <a href="#" class="site-footer--back js-footer-back"><svg aria-hidden="true" class="svg-icon iconArrowLeftAlt" width="18" height="18" viewBox="0 0 18 18"><path d="M10.58 16L12 14.59 6.4 9 12 3.41 10.57 2l-7 7 7 7z"/></svg></a>
+                    <div>
+                        <h5 class="-title"><a href="https://stackexchange.com">Stack Exchange<br> Network</a></h5>
+                        <ul class="-list">
+                            <li class="-item"><a href="#" class="-link _expandable js-footer-category-trigger js-gps-track" data-gps-track="footer.click({ location: 2, link: 24 })" data-target="Technology">Technology</a></li>
+                            <li class="-item"><a href="#" class="-link _expandable js-footer-category-trigger js-gps-track" data-gps-track="footer.click({ location: 2, link: 24 })" data-target="Life / Arts">Life / Arts</a></li>
+                            <li class="-item"><a href="#" class="-link _expandable js-footer-category-trigger js-gps-track" data-gps-track="footer.click({ location: 2, link: 24 })" data-target="Culture / Recreation">Culture / Recreation</a></li>
+                            <li class="-item"><a href="#" class="-link _expandable js-footer-category-trigger js-gps-track" data-gps-track="footer.click({ location: 2, link: 24 })" data-target="Science">Science</a></li>
+                            <li class="-item"><a href="#" class="-link _expandable js-footer-category-trigger js-gps-track" data-gps-track="footer.click({ location: 2, link: 24 })" data-target="Other">Other</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="site-footer--categories">
+                    <div class="site-footer--col site-footer--category js-footer-col" data-name="Technology">
+        <ul class="-list">
+                <li class="-item"><a href="https://stackoverflow.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="professional and enthusiast programmers">Stack Overflow</a></li>
+                <li class="-item"><a href="https://serverfault.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="system and network administrators">Server Fault</a></li>
+                <li class="-item"><a href="https://superuser.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="computer enthusiasts and power users">Super User</a></li>
+                <li class="-item"><a href="https://webapps.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="power users of web applications">Web Applications</a></li>
+                <li class="-item"><a href="https://askubuntu.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="Ubuntu users and developers">Ask Ubuntu</a></li>
+                <li class="-item"><a href="https://webmasters.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="pro webmasters">Webmasters</a></li>
+                <li class="-item"><a href="https://gamedev.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="professional and independent game developers">Game Development</a></li>
+                    </ul></div><div class="site-footer--col site-footer--category js-footer-col" data-name="Technology"><ul class="-list">
+                <li class="-item"><a href="https://tex.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="users of TeX, LaTeX, ConTeXt, and related typesetting systems">TeX - LaTeX</a></li>
+                <li class="-item"><a href="https://softwareengineering.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="professionals, academics, and students working within the systems development life cycle">Software Engineering</a></li>
+                <li class="-item"><a href="https://unix.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="users of Linux, FreeBSD and other Un*x-like operating systems">Unix &amp; Linux</a></li>
+                <li class="-item"><a href="https://apple.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="power users of Apple hardware and software">Ask Different (Apple)</a></li>
+                <li class="-item"><a href="https://wordpress.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="WordPress developers and administrators">WordPress Development</a></li>
+                <li class="-item"><a href="https://gis.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="cartographers, geographers and GIS professionals">Geographic Information Systems</a></li>
+                <li class="-item"><a href="https://electronics.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="electronics and electrical engineering professionals, students, and enthusiasts">Electrical Engineering</a></li>
+                    </ul></div><div class="site-footer--col site-footer--category js-footer-col" data-name="Technology"><ul class="-list">
+                <li class="-item"><a href="https://android.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="enthusiasts and power users of the Android operating system">Android Enthusiasts</a></li>
+                <li class="-item"><a href="https://security.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="information security professionals">Information Security</a></li>
+                <li class="-item"><a href="https://dba.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="database professionals who wish to improve their database skills and learn from others in the community">Database Administrators</a></li>
+                <li class="-item"><a href="https://drupal.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="Drupal developers and administrators">Drupal Answers</a></li>
+                <li class="-item"><a href="https://sharepoint.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="SharePoint enthusiasts">SharePoint</a></li>
+                <li class="-item"><a href="https://ux.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="user experience researchers and experts">User Experience</a></li>
+                <li class="-item"><a href="https://mathematica.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="users of Wolfram Mathematica">Mathematica</a></li>
+                    </ul></div><div class="site-footer--col site-footer--category js-footer-col" data-name="Technology"><ul class="-list">
+                <li class="-item"><a href="https://salesforce.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="Salesforce administrators, implementation experts, developers and anybody in-between">Salesforce</a></li>
+                <li class="-item"><a href="https://expressionengine.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="administrators, end users, developers and designers for ExpressionEngine&#174; CMS">ExpressionEngine&#174; Answers</a></li>
+                <li class="-item"><a href="https://pt.stackoverflow.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="programadores profissionais e entusiastas">Stack Overflow em Portugu&#234;s</a></li>
+                <li class="-item"><a href="https://blender.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="people who use Blender to create 3D graphics, animations, or games">Blender</a></li>
+                <li class="-item"><a href="https://networkengineering.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="network engineers">Network Engineering</a></li>
+                <li class="-item"><a href="https://crypto.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="software developers, mathematicians and others interested in cryptography">Cryptography</a></li>
+                <li class="-item"><a href="https://codereview.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="peer programmer code reviews">Code Review</a></li>
+                    </ul></div><div class="site-footer--col site-footer--category js-footer-col" data-name="Technology"><ul class="-list">
+                <li class="-item"><a href="https://magento.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="users of the Magento e-Commerce platform">Magento</a></li>
+                <li class="-item"><a href="https://softwarerecs.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="people seeking specific software recommendations">Software Recommendations</a></li>
+                <li class="-item"><a href="https://dsp.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="practitioners of the art and science of signal, image and video processing">Signal Processing</a></li>
+                <li class="-item"><a href="https://emacs.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="those using, extending or developing Emacs">Emacs</a></li>
+                <li class="-item"><a href="https://raspberrypi.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="users and developers of hardware and software for Raspberry Pi">Raspberry Pi</a></li>
+                <li class="-item"><a href="https://ru.stackoverflow.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="программистов">Stack Overflow на русском</a></li>
+                <li class="-item"><a href="https://codegolf.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="programming puzzle enthusiasts and code golfers">Programming Puzzles &amp; Code Golf</a></li>
+                    </ul></div><div class="site-footer--col site-footer--category js-footer-col" data-name="Technology"><ul class="-list">
+                <li class="-item"><a href="https://es.stackoverflow.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="programadores y profesionales de la inform&#225;tica">Stack Overflow en espa&#241;ol</a></li>
+                <li class="-item"><a href="https://ethereum.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="users of Ethereum, the decentralized application platform and smart contract enabled blockchain">Ethereum</a></li>
+                <li class="-item"><a href="https://datascience.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="Data science professionals, Machine Learning specialists, and those interested in learning more about the field">Data Science</a></li>
+                <li class="-item"><a href="https://arduino.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="developers of open-source hardware and software that is compatible with Arduino">Arduino</a></li>
+                <li class="-item"><a href="https://bitcoin.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="Bitcoin crypto-currency enthusiasts">Bitcoin</a></li>
+                            <li class="-item">
+                    <a href="https://stackexchange.com/sites#technology" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 26 })">
+                        <strong>
+                            more (31)
+                        </strong>
+                    </a>
+                </li>
+        </ul>
+    </div>
+    <div class="site-footer--col site-footer--category js-footer-col" data-name="Life / Arts">
+        <ul class="-list">
+                <li class="-item"><a href="https://photo.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="professional, enthusiast and amateur photographers">Photography</a></li>
+                <li class="-item"><a href="https://scifi.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="science fiction and fantasy enthusiasts">Science Fiction &amp; Fantasy</a></li>
+                <li class="-item"><a href="https://graphicdesign.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="Graphic Design professionals, students, and enthusiasts">Graphic Design</a></li>
+                <li class="-item"><a href="https://movies.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="movie and tv enthusiasts">Movies &amp; TV</a></li>
+                <li class="-item"><a href="https://music.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="musicians, students, and enthusiasts">Music: Practice &amp; Theory</a></li>
+                <li class="-item"><a href="https://worldbuilding.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="writers/artists using science, geography and culture to construct imaginary worlds and settings">Worldbuilding</a></li>
+                <li class="-item"><a href="https://cooking.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="professional and amateur chefs">Seasoned Advice (cooking)</a></li>
+                    </ul></div><div class="site-footer--col site-footer--category js-footer-col" data-name="Life / Arts"><ul class="-list">
+                <li class="-item"><a href="https://diy.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="contractors and serious DIYers">Home Improvement</a></li>
+                <li class="-item"><a href="https://money.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="people who want to be financially literate">Personal Finance &amp; Money</a></li>
+                <li class="-item"><a href="https://academia.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="academics and those enrolled in higher education">Academia</a></li>
+                <li class="-item"><a href="https://law.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="legal professionals, students, and others with experience or interest in law">Law</a></li>
+                            <li class="-item">
+                    <a href="https://stackexchange.com/sites#lifearts" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 26 })">
+                        <strong>
+                            more (15)
+                        </strong>
+                    </a>
+                </li>
+        </ul>
+    </div>
+    <div class="site-footer--col site-footer--category js-footer-col" data-name="Culture / Recreation">
+        <ul class="-list">
+                <li class="-item"><a href="https://english.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="linguists, etymologists, and serious English language enthusiasts">English Language &amp; Usage</a></li>
+                <li class="-item"><a href="https://skeptics.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="scientific skepticism">Skeptics</a></li>
+                <li class="-item"><a href="https://judaism.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="those who base their lives on Jewish law and tradition and anyone interested in learning more">Mi Yodeya (Judaism)</a></li>
+                <li class="-item"><a href="https://travel.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="road warriors and seasoned travelers">Travel</a></li>
+                <li class="-item"><a href="https://christianity.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="committed Christians, experts in Christianity and those interested in learning more">Christianity</a></li>
+                <li class="-item"><a href="https://ell.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="speakers of other languages learning English">English Language Learners</a></li>
+                <li class="-item"><a href="https://japanese.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="students, teachers, and linguists wanting to discuss the finer points of the Japanese language">Japanese Language</a></li>
+                    </ul></div><div class="site-footer--col site-footer--category js-footer-col" data-name="Culture / Recreation"><ul class="-list">
+                <li class="-item"><a href="https://gaming.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="passionate videogamers on all platforms">Arqade (gaming)</a></li>
+                <li class="-item"><a href="https://bicycles.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="people who build and repair bicycles, people who train cycling, or commute on bicycles">Bicycles</a></li>
+                <li class="-item"><a href="https://rpg.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="gamemasters and players of tabletop, paper-and-pencil role-playing games">Role-playing Games</a></li>
+                <li class="-item"><a href="https://anime.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="anime and manga fans">Anime &amp; Manga</a></li>
+                <li class="-item"><a href="https://puzzling.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="those who create, solve, and study puzzles">Puzzling</a></li>
+                <li class="-item"><a href="https://mechanics.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="mechanics and DIY enthusiast owners of cars, trucks, and motorcycles">Motor Vehicle Maintenance &amp; Repair</a></li>
+                            <li class="-item">
+                    <a href="https://stackexchange.com/sites#culturerecreation" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 26 })">
+                        <strong>
+                            more (33)
+                        </strong>
+                    </a>
+                </li>
+        </ul>
+    </div>
+    <div class="site-footer--col site-footer--category js-footer-col" data-name="Science">
+        <ul class="-list">
+                <li class="-item"><a href="https://mathoverflow.net" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="professional mathematicians">MathOverflow</a></li>
+                <li class="-item"><a href="https://math.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="people studying math at any level and professionals in related fields">Mathematics</a></li>
+                <li class="-item"><a href="https://stats.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="people interested in statistics, machine learning, data analysis, data mining, and data visualization">Cross Validated (stats)</a></li>
+                <li class="-item"><a href="https://cstheory.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="theoretical computer scientists and researchers in related fields">Theoretical Computer Science</a></li>
+                <li class="-item"><a href="https://physics.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="active researchers, academics and students of physics">Physics</a></li>
+                <li class="-item"><a href="https://chemistry.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="scientists, academics, teachers, and students in the field of chemistry">Chemistry</a></li>
+                <li class="-item"><a href="https://biology.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="biology researchers, academics, and students">Biology</a></li>
+                    </ul></div><div class="site-footer--col site-footer--category js-footer-col" data-name="Science"><ul class="-list">
+                <li class="-item"><a href="https://cs.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="students, researchers and practitioners of computer science">Computer Science</a></li>
+                <li class="-item"><a href="https://philosophy.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="those interested in the study of the fundamental nature of knowledge, reality, and existence">Philosophy</a></li>
+                            <li class="-item">
+                    <a href="https://stackexchange.com/sites#science" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 26 })">
+                        <strong>
+                            more (10)
+                        </strong>
+                    </a>
+                </li>
+        </ul>
+    </div>
+    <div class="site-footer--col site-footer--category js-footer-col" data-name="Other">
+        <ul class="-list">
+                <li class="-item"><a href="https://meta.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="meta-discussion of the Stack Exchange family of Q&amp;A websites">Meta Stack Exchange</a></li>
+                <li class="-item"><a href="https://stackapps.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="apps, scripts, and development with the Stack Exchange API">Stack Apps</a></li>
+                <li class="-item"><a href="https://api.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="programmatic interaction with Stack Exchange sites">API</a></li>
+                <li class="-item"><a href="https://data.stackexchange.com" class="-link js-gps-track" data-gps-track="footer.click({ location: 29, link: 25 })" title="querying Stack Exchange data using SQL">Data</a></li>
+                    </ul>
+    </div>
+                </div>
+            </nav>
+            <div class="site-footer--copyright fs-fine">
+                <ul class="-list">
+                    <li class="-item"><a class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link:4 })" href="https://stackoverflow.blog?blb=1">Blog</a></li>
+                    <li class="-item"><a href="https://www.facebook.com/officialstackoverflow/" class="-link">Facebook</a></li>
+                    <li class="-item"><a href="https://twitter.com/stackoverflow" class="-link">Twitter</a></li>
+                    <li class="-item"><a href="https://linkedin.com/company/stack-overflow" class="-link">LinkedIn</a></li>
+                </ul>
+
+                <p class="mt-auto mb24">
+site design / logo &#169; 2019 Stack Exchange Inc; user contributions licensed under <a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="license">cc by-sa 3.0</a>
+                            with <a href="https://stackoverflow.blog/2009/06/25/attribution-required/" rel="license">attribution required</a>.
+                    <span id="svnrev">rev&nbsp;2019.6.8.33918</span>
+                </p>
+            </div>
+        </div>
+
+            </footer>
+            <script>StackExchange.ready(function () { StackExchange.responsiveness.addSwitcher(); })</script>
+    <noscript>
+        <div id="noscript-warning">Computer Science Stack Exchange works best with JavaScript enabled
+            <img src="https://pixel.quantserve.com/pixel/p-c1rF4kxgLUzNc.gif" alt="" class="dno">
+        </div>
+    </noscript>
+
+<script>
+            (function(i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function() { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m);
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+            StackExchange.ready(function () {
+
+                StackExchange.ga.init({
+                    sendTitles: true,
+                    tracker: window.ga,
+                    trackingCodes: [
+                        'UA-108242619-5'
+                    ]
+                });
+
+                    StackExchange.ga.setDimension('dimension1', '9711515');
+
+
+                    StackExchange.ga.setDimension('dimension2', '|algorithms|formal-languages|finite-automata|regular-expressions|reference-question|');
+
+                    StackExchange.ga.setDimension('dimension3', 'Questions/Show');
+
+
+                StackExchange.ga.trackPageView();
+            });
+            
+/**/
+            
+            var _qevents = _qevents || [],
+            _comscore = _comscore || [];
+            (function() {
+                var ssl = 'https:' == document.location.protocol,
+                    s = document.getElementsByTagName('script')[0],
+                    qc = document.createElement('script');
+                 qc.async = true;
+                    qc.src = (ssl ? 'https://secure' : 'http://edge') + '.quantserve.com/quant.js';
+                    s.parentNode.insertBefore(qc, s);
+                    _qevents.push({ qacct: "p-c1rF4kxgLUzNc" });
+/**/
+                 var sc = document.createElement('script');
+                    sc.async = true;
+                    sc.src = (ssl ? 'https://sb' : 'http://b') + '.scorecardresearch.com/beacon.js';
+                    s.parentNode.insertBefore(sc, s);
+                    _comscore.push({ c1: "2", c2: "17440561" });
+            })();
+            
+
+</script>
+            
+    </body>
+    </html>
