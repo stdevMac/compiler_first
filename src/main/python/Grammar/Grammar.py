@@ -181,8 +181,8 @@ class Grammar:
         else:
             return False
 
-    def AugmentedGrammar(self):
-        if not self.IsAugmentedGrammar:
+    def AugmentedGrammar(self, force=False):
+        if not self.IsAugmentedGrammar or force:
 
             G = self.copy()
             # S, self.startSymbol, SS = self.startSymbol, None, self.NonTerminal('S\'', True)
