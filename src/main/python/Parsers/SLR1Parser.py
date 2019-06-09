@@ -6,25 +6,25 @@ from src.main.python.Tools.first_follow import compute_firsts, compute_follows
 class SLR1Parser(ShiftReduceParser):
 
     def _build_parsing_table(self):
-        G = self.G.AugmentedGrammar(True)
-        firsts = compute_firsts(G)
-        follows = compute_follows(G, firsts)
+        grammar = self.grammar.AugmentedGrammar(True)
+        firsts = compute_firsts(grammar)
+        follows = compute_follows(grammar, firsts)
 
-        automaton = build_LR0_automaton(G).to_deterministic()
+        automaton = build_LR0_automaton(grammar).to_deterministic()
         for i, node in enumerate(automaton):
-            if self.verbose: print(i, node)
+            if self.verbose:
+                print(i, node)
             node.idx = i
 
         for node in automaton:
             idx = node.idx
             for state in node.state:
                 item = state.state
-                # - Fill `self.Action` and `self.Goto` according to `item`)
-                # - Feel free to use `self._register(...)`)
+
                 if item.IsReduceItem:
                     prod = item.production
-                    if prod.Left == G.startSymbol:
-                        SLR1Parser._register(self.action, (idx, G.EOF), (ShiftReduceParser.OK, None))
+                    if prod.Left == grammar.startSymbol:
+                        SLR1Parser._register(self.action, (idx, grammar.EOF), (ShiftReduceParser.OK, None))
                     else:
                         for symbol in follows[prod.Left]:
                             SLR1Parser._register(self.action, (idx, symbol), (ShiftReduceParser.REDUCE, prod))

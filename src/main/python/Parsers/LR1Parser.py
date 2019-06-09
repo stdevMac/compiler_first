@@ -1,12 +1,12 @@
 from src.main.python.Parsers.ShiftReduceParser import ShiftReduceParser
-from src.main.python.Parsers.tools import build_LR1_automaton
+from src.main.python.Parsers.tools import build_lr1_automaton
 
 
 class LR1Parser(ShiftReduceParser):
     def _build_parsing_table(self):
-        grammar = self.G.AugmentedGrammar(True)
+        grammar = self.grammar.AugmentedGrammar(True)
 
-        automaton = build_LR1_automaton(grammar)
+        automaton = build_lr1_automaton(grammar)
         for i, node in enumerate(automaton):
             if self.verbose:
                 print(i, '\t', '\n\t '.join(str(x) for x in node.state), '\n')

@@ -63,7 +63,7 @@ def encode_value(value):
         return value
 
 
-def table_to_dataframe(table):
+def table_to_data_frame(table):
     d = {}
     for (state, symbol), value in table.items():
         value = encode_value(value)
@@ -127,7 +127,7 @@ def goto_lr1(items, symbol, firsts=None, just_kernel=False):
     return items if just_kernel else closure_lr1(items, firsts)
 
 
-def build_LR1_automaton(grammar):
+def build_lr1_automaton(grammar):
     assert len(grammar.startSymbol.productions) == 1, 'Grammar must be augmented'
 
     firsts = compute_firsts(grammar)

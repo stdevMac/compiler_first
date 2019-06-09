@@ -3,8 +3,8 @@ class ShiftReduceParser:
     REDUCE = 'REDUCE'
     OK = 'OK'
 
-    def __init__(self, G, verbose=False):
-        self.G = G
+    def __init__(self, grammar, verbose=False):
+        self.grammar = grammar
         self.verbose = verbose
         self.action = {}
         self.goto = {}
@@ -21,7 +21,8 @@ class ShiftReduceParser:
         while True:
             state = stack[-1]
             lookahead = w[cursor]
-            if self.verbose: print(stack, w[cursor:])
+            if self.verbose:
+                print(stack, w[cursor:])
 
             # Your code here!!! (Detect error)
             try:
