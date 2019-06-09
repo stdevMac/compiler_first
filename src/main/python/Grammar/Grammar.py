@@ -7,7 +7,7 @@ from src.main.python.Grammar.NonTerminal import NonTerminal
 from src.main.python.Grammar.Sentence import Sentence
 from src.main.python.Grammar.Terminal import Terminal
 from src.main.python.Tools.printer import pprint
-
+from src.main.python.Automata.tools import *
 
 class Grammar:
 
@@ -152,6 +152,9 @@ class Grammar:
                 continue
             dic[head] %= Sentence(*[dic[term] for term in p['Body']])
 
+        # here is the automata !!!
+        # aut = G.DFA()
+
         return G
 
     def copy(self):
@@ -194,3 +197,41 @@ class Grammar:
             return G
         else:
             return self.copy()
+
+    def DFA(self):
+        trans = {}
+        map = {}
+        finals = []
+
+        for i in range(len(self.nonTerminals)):
+            map[self.nonTerminals[i]] = i
+
+        extra = False
+        for j in self.Productions:
+            if len(j.Right) == 1 and j.Right[0] != 'Epsilon':
+                extra = True
+                break
+
+        if extra:
+            map['#'] = len(self.nonTerminals)
+            map['f'] = len(self.nonTerminals) + 1
+            trans[(map['#'], '$')] = [map['f']]
+        else:
+            map['f'] = len(self.nonTerminals)
+
+        finals.append(map['f'])
+
+        for j in self.Productions:
+            s = j.Right[0]
+            if len(j.Right) == 1:
+               if str(j.Right[0]) == 'Epsilon':
+                   trans[(map[j.Left], '$')] = [map['f']]
+               else:
+                   trans[(map[j.Left], j.Right[0])] = [map['#']]
+            else:
+                trans[(map[j.Left], j.Right[0])] = [map[j.Right[1]]]
+
+
+        automaton = NFA(states=map['f'], finals=finals, transitions=trans)
+
+        return nfa_to_dfa(automaton)
