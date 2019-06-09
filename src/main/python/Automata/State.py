@@ -2,12 +2,28 @@ import pydot
 
 
 class State:
-    def __init__(self, state, final=False):
+    def __init__(self, state, final=False, formatter=lambda x: str(x)):
         self.state = state
         self.final = final
         self.transitions = {}
         self.epsilon_transitions = set()
         self.tag = None
+        self.formatter = formatter
+
+    def set_formatter(self, formatter, visited=None):
+        if visited is None:
+            visited = set()
+        elif self in visited:
+            return
+
+        visited.add(self)
+        self.formatter = formatter
+        for destinations in self.transitions.values():
+            for node in destinations:
+                node.set_formatter(formatter, visited)
+        for node in self.epsilon_transitions:
+            node.set_formatter(formatter, visited)
+        return self
 
     def has_transition(self, symbol):
         return symbol in self.transitions
@@ -30,24 +46,24 @@ class State:
             states = self.epsilon_closure_by_state(*states)
         return any(s.final for s in states)
 
-    def to_deterministic(self):
+    def to_deterministic(self, formatter=lambda x: str(x)):
         closure = self.epsilon_closure
-        start = State(tuple(closure), any(s.final for s in closure))
+        start = State(tuple(closure), any(s.final for s in closure), formatter)
 
-        closures = [closure]
-        states = [start]
-        pending = [start]
+        closures = [ closure ]
+        states = [ start ]
+        pending = [ start ]
 
         while pending:
             state = pending.pop()
-            symbols = {symbol for s in state.state for symbol in s.transitions}
+            symbols = { symbol for s in state.state for symbol in s.transitions }
 
             for symbol in symbols:
                 move = self.move_by_state(symbol, *state.state)
                 closure = self.epsilon_closure_by_state(*move)
 
                 if closure not in closures:
-                    new_state = State(tuple(closure), any(s.final for s in closure))
+                    new_state = State(tuple(closure), any(s.final for s in closure), formatter)
                     closures.append(closure)
                     states.append(new_state)
                     pending.append(new_state)
@@ -80,15 +96,15 @@ class State:
 
     @staticmethod
     def epsilon_closure_by_state(*states):
-        closure = {state for state in states}
+        closure = {state for state in states }
 
-        l = 0
-        while l != len(closure):
-            l = len(closure)
+        length = 0
+        while length != len(closure):
+            length = len(closure)
             tmp = [s for s in closure]
             for s in tmp:
                 for epsilon_state in s.epsilon_transitions:
-                    closure.add(epsilon_state)
+                        closure.add(epsilon_state)
         return closure
 
     @property
@@ -97,7 +113,12 @@ class State:
 
     @property
     def name(self):
-        return str(self.state)
+        return f'{self.tag}\n{self.formatter(self.state)}' if self.tag else self.formatter(self.state)
+
+    def get(self, symbol):
+        target = self.transitions[symbol]
+        assert len(target) == 1
+        return target[0]
 
     def __getitem__(self, symbol):
         if symbol == '':
@@ -123,27 +144,40 @@ class State:
         return hash(self.state)
 
     def __iter__(self):
-        return {x for x in self.state}
+        yield from self._visit()
+
+    def _visit(self, visited=None):
+        if visited is None:
+            visited = set()
+        elif self in visited:
+            return
+
+        visited.add(self)
+        yield self
+
+        for destinations in self.transitions.values():
+            for node in destinations:
+                yield from node._visit(visited)
+        for node in self.epsilon_transitions:
+            yield from node._visit(visited)
 
     def graph(self):
         G = pydot.Dot(rankdir='LR', margin=0.1)
         G.add_node(pydot.Node('start', shape='plaintext', label='', width=0, height=0))
 
         visited = set()
-
         def visit(start):
             ids = id(start)
             if ids not in visited:
                 visited.add(ids)
-                G.add_node(pydot.Node(ids, label=start.name, shape='circle',
-                                      style='bold' if start.final else ''))
+                G.add_node(pydot.Node(ids, label=start.name, shape='circle', style='bold' if start.final else ''))
                 for tran, destinations in start.transitions.items():
                     for end in destinations:
                         visit(end)
                         G.add_edge(pydot.Edge(ids, id(end), label=tran, labeldistance=2))
                 for end in start.epsilon_transitions:
                     visit(end)
-                    G.add_edge(pydot.Edge(ids, id(end), label='epsilon', labeldistance=2))
+                    G.add_edge(pydot.Edge(ids, id(end), label='ε', labeldistance=2))
 
         visit(self)
         G.add_edge(pydot.Edge('start', id(self), label='', style='dashed'))
@@ -155,3 +189,7 @@ class State:
             return self.graph().create_svg().decode('utf8')
         except:
             pass
+
+    def write_to(self, fname):
+        return self.graph().write_svg(fname)
+
