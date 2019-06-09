@@ -8,6 +8,9 @@ from src.main.python.Grammar.Sentence import Sentence
 from src.main.python.Grammar.Terminal import Terminal
 from src.main.python.Tools.printer import pprint
 from src.main.python.Automata.tools import *
+from src.main.python.Automata.NFA import *
+from src.main.python.Automata.DFA import *
+from src.main.python.Automata.State import *
 
 class Grammar:
 
@@ -208,7 +211,7 @@ class Grammar:
 
         extra = False
         for j in self.Productions:
-            if len(j.Right) == 1 and j.Right[0] != 'Epsilon':
+            if len(j.Right) == 1 and j.IsEpsilon:
                 extra = True
                 break
 
@@ -224,7 +227,7 @@ class Grammar:
         for j in self.Productions:
             s = j.Right[0]
             if len(j.Right) == 1:
-               if str(j.Right[0]) == 'Epsilon':
+               if j.IsEpsilon:
                    trans[(map[j.Left], '$')] = [map['f']]
                else:
                    trans[(map[j.Left], j.Right[0])] = [map['#']]

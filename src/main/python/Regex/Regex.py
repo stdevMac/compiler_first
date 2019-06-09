@@ -10,14 +10,21 @@ def regexp_from_automaton(automaton, alphabet):
     a NFA
     """
     table = [[None for _ in range(len(automaton) + 1)] for _ in range(len(automaton) + 1)]
-    pass
     for i in range(0, len(automaton)):
         for j in range(0, len(automaton)):
             if i == j:
                 table[i][j] = 'Epsilon'
             for symbol in alphabet:
-                if automaton[i].has_transition(symbol):
-                    table[i][j] = regex_union(table[i][j], symbol.Name)
+                try:
+                    if automaton[j] in automaton[i].transitions[symbol]:
+                        table[i][j] = regex_union(table[i][j], symbol)
+                except:
+                    try:
+                        if automaton[j] in automaton[i].transitions[symbol.Name]:
+                            table[i][j] = regex_union(table[i][j], '')
+                    except:
+                        continue
+
     final_states = []
     for i in range(0, len(automaton)):
         if automaton[i].final:
@@ -38,17 +45,9 @@ def regexp_from_automaton(automaton, alphabet):
         #      ##     # #   L[f,f]
         #      ##     #)
         re = regex_concat(
-            regex_concat(
-                regex_star(
-                    regex_union(
-                        regex_concat(
-                            regex_concat(
-                                regex_star(table[0][0]),
-                                table[final_states[0]][0]),
-                            table[0][final_states[0]]),
-                        table[final_states[0]][final_states[0]])),
-                table[0][final_states[0]]),
-            table[0][0])
+            regex_star(table[0][0]),
+            table[0][final_states[0]]
+        )
     else:
         re = 'complex'
     return re

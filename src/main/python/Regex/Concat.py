@@ -1,6 +1,14 @@
 def regex_concat(first, second):
-    if first is None or first == 'Epsilon':
-        return second
-    if second is None or second == 'Epsilon':
-        return first
-    return first + second
+    if first is None or second is None:
+        return  None
+    if first == 'Epsilon':
+        if second == 'Epsilon':
+            return 'Epsilon'
+        else:
+            return  second
+    else:
+        if second == 'Epsilon':
+            return  first
+        else:
+            return first + second
+
