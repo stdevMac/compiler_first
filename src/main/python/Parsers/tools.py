@@ -112,7 +112,6 @@ def closure_lr1(items, firsts):
         changed = False
 
         new_items = ContainerSet()
-        # Your code here!!!
         for item in closure:
             new_items.extend(expand(item, firsts))
 

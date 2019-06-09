@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import (QVBoxLayout, QWidget, QLabel, QTextEdit, QScrollAre
 
 from src.main.python import ll1
 from src.main.python.Automata.State import State
+from src.main.python.Parsers.SLR1Parser import SLR1Parser, SLR1Parser2
 from src.main.python.Regex.Regex import regexp_from_automaton
 from src.main.python.Tools import Tokenizer, first_follow
 
@@ -93,7 +94,7 @@ class ShowResults(QWidget):
                     info += 'No es posible mostrar el automata...Error' + '\n\n'
 
             except:
-                info += pprint(str(False), 'Gramtica Regular: ') + '\n\n'
+                info += pprint(str(False), 'Gramatica Regular: ') + '\n\n'
 
             if len(strings) > 0:
                 for line in str.split(strings, '\n'):
@@ -103,6 +104,15 @@ class ShowResults(QWidget):
                     print('Left parser')
                     print(left_parse)
                     info += pprint(left_parse, f'Parse para cadena -> {line}:') + '\n\n'
+
+        info += 'SLR: \n\n'
+        # parser_lr1 = LR1Parser(grammar)
+        parser_slr1 = SLR1Parser(grammar, verbose=True)
+        parser_slr12 = SLR1Parser2(grammar, verbose=True)
+        info += pprint(parser_slr1.action, 'Tabla de Actions:') + '\n\n'
+        info += pprint(parser_slr1.goto, 'Tabla de Goto:') + '\n\n'
+        s = parser_slr1([grammar.terminals[0], grammar.terminals[2], grammar.terminals[2], grammar.EOF])
+        s = parser_slr12([grammar.terminals[0], grammar.terminals[2], grammar.terminals[2], grammar.EOF])
 
         grammar_without_common_prefixes = grammar.copy()
         rm_common_prefix(grammar_without_common_prefixes)
