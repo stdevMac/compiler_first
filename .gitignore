@@ -1,3 +1,4 @@
 *.idea/*
+src/main/python/graph.png
 *__pycache__*
 *.pyc
