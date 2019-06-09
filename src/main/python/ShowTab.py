@@ -1,4 +1,5 @@
-from PyQt5.QtGui import QFont
+import pydot
+from PyQt5.QtGui import QFont, QPixmap
 from PyQt5.QtWidgets import (QVBoxLayout, QWidget, QLabel, QTextEdit, QScrollArea)
 
 from src.main.python import ll1
@@ -34,8 +35,9 @@ class ShowResults(QWidget):
 
         # Initialize tab screen
         self.all_info = QTextEdit()
+        self.image_label = QLabel()
+        self.image = None
 
-        # Add widgets
         scroll_layout.addWidget(self.all_info)
         self.scroll.setWidget(scroll_content)
         self.setLayout(self.layout)
@@ -59,7 +61,7 @@ class ShowResults(QWidget):
 
         ll1_table, is_ll1 = ll1.build_ll1_table(grammar, first, follow)
         info = pprint(str(grammar), 'Gramatica:') + '\n\n'
-        # 'Gramatica: \n' + str(grammar) + '\n\n'
+
         info += pprint(first, 'First:') + '\n\n'
         info += pprint(follow, 'Follow:') + '\n\n'
         info += pprint(str(is_ll1), 'Es LL1') + '\n\n'
@@ -68,10 +70,31 @@ class ShowResults(QWidget):
 
             parsing_table = build_parsing_table(grammar, first, follow)
             parser = method_predicted_non_recursive(grammar, M=parsing_table)
-            dfa = grammar.DFA()
-            states = State.from_nfa(dfa, True)
-            regex = regexp_from_automaton(states[1], grammar.terminals)
-            print(regex)
+
+
+            try:
+                dfa = grammar.DFA()
+                states = State.from_nfa(dfa, True)
+                regex = regexp_from_automaton(states[1], grammar.terminals)
+                info += pprint(str(True), 'Gramtica Regular: ') + '\n\n'
+                info += pprint(regex, 'Expresion Regular Asociada: ') + '\n\n'
+                try:
+                    import pygraphviz as pgv
+                    dot = states[0].graph()
+
+                    (graph, ) = pydot.graph_from_dot_data(str(dot))
+                    gr = pgv.AGraph().from_string(str(graph))
+                    gr.layout()
+                    gr.draw('graph.png')
+                    self.image = QPixmap('graph.png')
+                    self.image_label.setPixmap(self.image)
+                    self.image_label.show()
+                except:
+                    info += 'No es posible mostrar el automata...Error' + '\n\n'
+
+            except:
+                info += pprint(str(False), 'Gramtica Regular: ') + '\n\n'
+
             if len(strings) > 0:
                 for line in str.split(strings, '\n'):
                     if len(line) == 0:
