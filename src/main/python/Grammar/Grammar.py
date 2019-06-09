@@ -7,7 +7,7 @@ from src.main.python.Grammar.NonTerminal import NonTerminal
 from src.main.python.Grammar.Sentence import Sentence
 from src.main.python.Grammar.Terminal import Terminal
 from src.main.python.Tools.printer import pprint
-from src.main.python.Automata.automata import *
+from src.main.python.Automata.tools import *
 
 class Grammar:
 
