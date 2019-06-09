@@ -8,6 +8,12 @@ class ContainerSet:
         self.set.update(value)
         return n != len(self.set)
 
+    def extend(self, values):
+        change = False
+        for value in values:
+            change |= self.add(value)
+        return change
+
     def set_epsilon(self, value=True):
         last = self.contains_epsilon
         self.contains_epsilon = value
