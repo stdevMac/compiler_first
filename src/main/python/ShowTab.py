@@ -68,6 +68,23 @@ class ShowResults(QWidget):
 
         return info
 
+    @staticmethod
+    def show_automaton(automaton: State, label: str, widget: QLabel, image_tag: str):
+        try:
+            import pygraphviz as pgv
+            dot = automaton.graph()
+
+            (graph,) = pydot.graph_from_dot_data(str(dot))
+            graph.set_label(label)
+            gr = pgv.AGraph().from_string(str(graph))
+            gr.layout()
+            gr.draw(image_tag)
+            pix_map = QPixmap(image_tag)
+            widget.setPixmap(pix_map)
+            widget.show()
+        except:
+            return
+
     def compute_options(self, code, strings):
         if len(code) == 0:
             return
