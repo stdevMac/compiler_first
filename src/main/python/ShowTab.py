@@ -4,7 +4,8 @@ from PyQt5.QtWidgets import (QVBoxLayout, QWidget, QLabel, QTextEdit, QScrollAre
 
 from src.main.python import ll1
 from src.main.python.Automata.State import State
-from src.main.python.Parsers.SLR1Parser import SLR1Parser, SLR1Parser2
+from src.main.python.Parsers.LR1Parser import LR1Parser
+from src.main.python.Parsers.SLR1Parser import SLR1Parser
 from src.main.python.Regex.Regex import regexp_from_automaton
 from src.main.python.Tools import Tokenizer, first_follow
 
@@ -106,14 +107,19 @@ class ShowResults(QWidget):
                     info += pprint(left_parse, f'Parse para cadena -> {line}:') + '\n\n'
 
         info += 'SLR: \n\n'
-        # parser_lr1 = LR1Parser(grammar)
+        parser_lr1 = LR1Parser(grammar, verbose=True)
         parser_slr1 = SLR1Parser(grammar, verbose=True)
 
         info += pprint(parser_slr1.action, 'Tabla de Actions:') + '\n\n'
         info += pprint(parser_slr1.goto, 'Tabla de Goto:') + '\n\n'
 
-        s = parser_slr1([grammar.terminals[2], grammar.terminals[0], grammar.terminals[2], grammar.terminals[1], grammar.terminals[2], grammar.EOF])
+        print('\n\n\n\nHola, a continuacion el slr1:')
+        slr1 = parser_slr1([grammar.terminals[2], grammar.terminals[0], grammar.terminals[2], grammar.terminals[1], grammar.terminals[2], grammar.EOF])
 
+        print('\n\n\n\nSorprendido? ... a continuacion el lr1:')
+        lr1 = parser_lr1([grammar.terminals[2], grammar.terminals[0], grammar.terminals[2], grammar.terminals[1], grammar.terminals[2], grammar.EOF])
+
+        print('\n\n\nSomos uno caballos ... Rocio por favor danos 5')
         grammar_without_common_prefixes = grammar.copy()
         rm_common_prefix(grammar_without_common_prefixes)
         grammar_without_immediate_left_recursion = grammar.copy()

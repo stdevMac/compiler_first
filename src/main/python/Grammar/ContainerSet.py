@@ -48,6 +48,9 @@ class ContainerSet:
                 return True
         return False
 
+    def __nonzero__(self):
+        return len(self) > 0
+
     def __eq__(self, other):
         return isinstance(other, ContainerSet) \
                and self.set == other.set and self.contains_epsilon == other.contains_epsilon

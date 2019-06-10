@@ -74,7 +74,7 @@ def expand(item, firsts):
 
     assert not look_a_heads.contains_epsilon
 
-    return [Item(prod, 0, look_a_heads) for prod in next_symbol.productions]
+    return [[Item(prod, 0, look_a_heads)] for prod in next_symbol.productions]
 
 
 def compress(items):
@@ -100,7 +100,8 @@ def closure_lr1(items, firsts):
 
         new_items = ContainerSet()
         for item in closure:
-            new_items.extend(expand(item, firsts))
+            exp = expand(item, firsts)
+            new_items.extend(exp)
 
         changed = closure.update(new_items)
 

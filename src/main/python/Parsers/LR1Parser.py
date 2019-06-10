@@ -1,5 +1,6 @@
 from src.main.python.Parsers.ShiftReduceParser import ShiftReduceParser
 from src.main.python.Parsers.tools import build_lr1_automaton
+from src.main.python.ll1 import is_register
 
 
 class LR1Parser(ShiftReduceParser):
@@ -19,17 +20,17 @@ class LR1Parser(ShiftReduceParser):
                 if item.IsReduceItem:
                     prod = item.production
                     if prod.Left == grammar.startSymbol:
-                        LR1Parser._register(self.action, (idx, grammar.EOF), (ShiftReduceParser.OK, None))
+                        is_register(self.action, idx, grammar.EOF, (ShiftReduceParser.OK, ''))
                     else:
                         for lookahead in item.lookaheads:
-                            LR1Parser._register(self.action, (idx, lookahead), (ShiftReduceParser.REDUCE, prod))
+                            is_register(self.action, idx, lookahead, (ShiftReduceParser.REDUCE, prod))
                 else:
                     next_symbol = item.NextSymbol
                     if next_symbol.IsTerminal:
-                        LR1Parser._register(self.action, (idx, next_symbol),
-                                            (ShiftReduceParser.SHIFT, node[next_symbol.Name][0].idx))
+                        is_register(self.action, idx, next_symbol,
+                                    (ShiftReduceParser.SHIFT, node[next_symbol.Name][0].idx))
                     else:
-                        LR1Parser._register(self.goto, (idx, next_symbol), node[next_symbol.Name][0].idx)
+                        is_register(self.goto, idx, next_symbol, node[next_symbol.Name][0].idx)
                 pass
 
     @staticmethod
