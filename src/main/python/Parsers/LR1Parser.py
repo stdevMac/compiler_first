@@ -6,6 +6,7 @@ from src.main.python.ll1 import is_register
 class LR1Parser(ShiftReduceParser):
     def _build_parsing_table(self):
         self.is_lr1 = True
+        self.error = ''
 
         grammar = self.grammar.AugmentedGrammar(True)
 
@@ -26,20 +27,24 @@ class LR1Parser(ShiftReduceParser):
                     else:
                         for lookahead in item.lookaheads:
                             self.is_lr1 &= is_register(self.action, idx, lookahead, (ShiftReduceParser.REDUCE, prod))
+                            if not self.is_lr1:
+                                tmp = self.get_conflict(self.action, idx, lookahead)
+                                self.error += tmp if tmp is not None else ''
+
                 else:
                     next_symbol = item.NextSymbol
                     if next_symbol.IsTerminal and not next_symbol.IsEpsilon:
                         try:
                             self.is_lr1 &= is_register(self.action, idx, next_symbol,
                                                    (ShiftReduceParser.SHIFT, node[next_symbol.Name][0].idx))
+                            if not self.is_lr1:
+                                tmp = self.get_conflict(self.action, idx, next_symbol)
+                                self.error += tmp if tmp is not None else ''
                         except:
                             self.is_lr1 = False
                     else:
                         if not next_symbol.IsEpsilon:
                             self.is_lr1 &= is_register(self.goto, idx, next_symbol, node[next_symbol.Name][0].idx)
-                pass
-
-    @staticmethod
-    def _register(table, key, value):
-        assert key not in table or table[key] == value, 'Shift-Reduce or Reduce-Reduce conflict!!!'
-        table[key] = value
+                            if not self.is_lr1:
+                                tmp = self.get_conflict(self.action, idx, next_symbol)
+                                self.error += tmp if tmp is not None else ''
