@@ -39,7 +39,9 @@ class ShowResults(QWidget):
 
         # Initialize tab screen
         self.all_info = QTextEdit()
-        self.image_label = QLabel()
+        self.lr_graph_label = QLabel()
+        self.lr1_graph_label = QLabel()
+        self.slr1_graph_label = QLabel()
         self.image = None
         scroll_layout.addWidget(self.all_info)
         self.scroll.setWidget(scroll_content)
@@ -121,8 +123,8 @@ class ShowResults(QWidget):
                     gr.layout()
                     gr.draw('graph.png')
                     self.image = QPixmap('graph.png')
-                    self.image_label.setPixmap(self.image)
-                    self.image_label.show()
+                    self.lr_graph_label.setPixmap(self.image)
+                    self.lr_graph_label.show()
                 except:
                     info += 'No es posible mostrar el automata...Error' + '\n\n'
 
@@ -146,6 +148,7 @@ class ShowResults(QWidget):
             info += pprint(parser_slr1.action, 'Tabla de Actions:') + '\n\n'
             info += pprint(parser_slr1.goto, 'Tabla de Goto:') + '\n\n'
             info += self.full_run_pipeline(grammar, strings, parser_slr1)
+            self.show_automaton(parser_slr1.automaton, 'Automata SLR1', self.slr1_graph_label, 'slr.png')
         else:
             info += pprint(str(False), 'La Gramatica no es SLR(1):') + '\n\n'
 
@@ -154,6 +157,7 @@ class ShowResults(QWidget):
             info += pprint(parser_lr1.action, 'Tabla de Actions:') + '\n\n'
             info += pprint(parser_lr1.goto, 'Tabla de Goto:') + '\n\n'
             info += self.full_run_pipeline(grammar, strings, parser_lr1)
+            self.show_automaton(parser_lr1.automaton, 'Automata LR1', self.lr1_graph_label, 'lr.png')
         else:
             info += pprint(str(False), 'La Gramatica no es LR(1):') + '\n\n'
 

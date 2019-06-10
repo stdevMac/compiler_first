@@ -80,6 +80,7 @@ class State:
         states = []
         for n in range(nfa.states):
             state = State(n, n in nfa.finals)
+            state.idx = n
             states.append(state)
 
         for (origin, symbol), destinations in nfa.map.items():
@@ -170,7 +171,7 @@ class State:
             ids = id(start)
             if ids not in visited:
                 visited.add(ids)
-                G.add_node(pydot.Node(ids, label=start.name, shape='circle', style='bold' if start.final else ''))
+                G.add_node(pydot.Node(ids, label=str(start.idx), shape='circle', style='bold' if start.final else ''))
                 for tran, destinations in start.transitions.items():
                     for end in destinations:
                         visit(end)
