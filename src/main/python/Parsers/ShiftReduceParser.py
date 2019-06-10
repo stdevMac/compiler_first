@@ -43,10 +43,9 @@ class ShiftReduceParser:
                 # Your code here!!! (OK case)
                 elif action == ShiftReduceParser.OK:
                     output.reverse()
-                    return output
+                    return output, productions
                 # Your code here!!! (Invalid case)
                 else:
                     assert False, 'Must be something wrong!'
             except KeyError:
                 return None
-        return productions

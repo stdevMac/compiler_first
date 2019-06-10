@@ -103,3 +103,4 @@ def tokenize_input(code: str, grammar: Grammar=None):
             if terminal.Name == token:
                 terminal_tokens.append(terminal)
     terminal_tokens.append(grammar.EOF)
+    return terminal_tokens

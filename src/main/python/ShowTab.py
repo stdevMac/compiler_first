@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import (QVBoxLayout, QWidget, QLabel, QTextEdit, QScrollAre
 
 from src.main.python import ll1
 from src.main.python.Automata.State import State
+from src.main.python.Grammar import Grammar
 from src.main.python.Parsers.LR1Parser import LR1Parser
 from src.main.python.Parsers.SLR1Parser import SLR1Parser
 from src.main.python.Regex.Regex import regexp_from_automaton
@@ -53,6 +54,19 @@ class ShowResults(QWidget):
 
         return left_parse
 
+    @staticmethod
+    def full_run_pipeline(grammar: Grammar, code, parser):
+        info = ''
+        if len(code) > 0:
+            for line in str.split(code, '\n'):
+                if len(line) == 0:
+                    continue
+                tokens = tokenize_input(line, grammar)
+                output, productions = parser(tokens)
+                info += pprint(productions, f'Parse para cadena -> {line}:') + '\n\n'
+
+        return info
+
     def compute_options(self, code, strings):
         if len(code) == 0:
             return
@@ -78,7 +92,7 @@ class ShowResults(QWidget):
                 dfa = grammar.DFA()
                 states = State.from_nfa(dfa, True)
                 regex = regexp_from_automaton(states[1], grammar.terminals)
-                info += pprint(str(True), 'Gramtica Regular: ') + '\n\n'
+                info += pprint(str(True), 'Gramatica Regular: ') + '\n\n'
                 info += pprint(regex, 'Expresion Regular Asociada: ') + '\n\n'
                 try:
                     import pygraphviz as pgv
@@ -101,7 +115,7 @@ class ShowResults(QWidget):
                 for line in str.split(strings, '\n'):
                     if len(line) == 0:
                         continue
-                    left_parse = self.run_pipeline(tokenize_input(line, grammar), parser)
+                    left_parse = self.run_pipeline(tokenize_input(line), parser)
                     print('Left parser')
                     print(left_parse)
                     info += pprint(left_parse, f'Parse para cadena -> {line}:') + '\n\n'
@@ -113,6 +127,7 @@ class ShowResults(QWidget):
             info += 'La Gramatica es SLR(1):' + '\n\n'
             info += pprint(parser_slr1.action, 'Tabla de Actions:') + '\n\n'
             info += pprint(parser_slr1.goto, 'Tabla de Goto:') + '\n\n'
+            info += self.full_run_pipeline(grammar, strings, parser_slr1)
         else:
             info += pprint(str(False), 'La Gramatica no es SLR(1):') + '\n\n'
 
@@ -120,6 +135,7 @@ class ShowResults(QWidget):
             info += 'La Gramatica es LR(1):' + '\n\n'
             info += pprint(parser_lr1.action, 'Tabla de Actions:') + '\n\n'
             info += pprint(parser_lr1.goto, 'Tabla de Goto:') + '\n\n'
+            info += self.full_run_pipeline(grammar, strings, parser_lr1)
         else:
             info += pprint(str(False), 'La Gramatica no es LR(1):') + '\n\n'
 
