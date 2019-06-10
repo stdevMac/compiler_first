@@ -64,7 +64,7 @@ class ShowResults(QWidget):
                 tokens = tokenize_input(line, grammar)
                 output, productions = parser(tokens)
                 if output is not None and productions is not None:
-                    info += pprint(productions, f'Parse para cadena -> {line}:') + '\n\n'
+                    info += pprint(output, f'Parse para cadena -> {line}:') + '\n\n'
 
         return info
 
