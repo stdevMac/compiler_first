@@ -104,6 +104,7 @@ class ShowResults(QWidget):
                     gr.draw('graph.png')
                     self.image = QPixmap('graph.png')
                     self.image_label.setPixmap(self.image)
+
                     self.image_label.show()
                 except:
                     info += 'No es posible mostrar el automata...Error' + '\n\n'

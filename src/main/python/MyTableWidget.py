@@ -54,6 +54,8 @@ class MyTableWidget(QWidget):
     @pyqtSlot()
     def file_open_button(self):
         name = QFileDialog.getOpenFileName(self, 'Open File', filter="grm(*.grm)")
+        if name[0] == '':
+            return
         file = open(name[0], 'r')
 
         with file:
