@@ -1,4 +1,5 @@
 def is_register(table, state, symbol, value):
+
     if state not in table:
         table[state] = dict()
 
@@ -22,6 +23,7 @@ def build_ll1_table(grammar, first, follow):
     for production in grammar.Productions:
         x = production.Left
         alpha = production.Right
+
 
         first_alpha = first[alpha]
         for symbol in first_alpha:

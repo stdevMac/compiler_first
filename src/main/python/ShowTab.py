@@ -151,6 +151,9 @@ class ShowResults(QWidget):
             self.show_automaton(parser_slr1.automaton, 'Automata SLR1', self.slr1_graph_label, 'slr.png')
         else:
             info += pprint(str(False), 'La Gramatica no es SLR(1):') + '\n\n'
+            info += parser_slr1.error
+            info += pprint(parser_slr1.action, 'Tabla de Actions:') + '\n\n'
+            info += pprint(parser_slr1.goto, 'Tabla de Goto:') + '\n\n'
 
         if parser_lr1.is_lr1:
             info += 'La Gramatica es LR(1):' + '\n\n'
@@ -160,6 +163,9 @@ class ShowResults(QWidget):
             self.show_automaton(parser_lr1.automaton, 'Automata LR1', self.lr1_graph_label, 'lr.png')
         else:
             info += pprint(str(False), 'La Gramatica no es LR(1):') + '\n\n'
+            info += parser_lr1.error
+            info += pprint(parser_lr1.action, 'Tabla de Actions:') + '\n\n'
+            info += pprint(parser_lr1.goto, 'Tabla de Goto:') + '\n\n'
 
         grammar_without_common_prefixes = deepcopy(grammar)
         rm_common_prefix(grammar_without_common_prefixes)
