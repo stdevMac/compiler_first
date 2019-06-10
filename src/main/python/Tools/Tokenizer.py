@@ -94,5 +94,12 @@ def grammar_from_tokens(tokens):
     return Grammar.from_json(data)
 
 
-def tokenize_input(code: str, grammar):
-    return code.split(' ')
+def tokenize_input(code: str, grammar: Grammar=None):
+    if grammar is None:
+        return code.split(' ')
+    terminal_tokens = []
+    for token in code.split(' '):
+        for terminal in grammar.terminals:
+            if terminal.Name == token:
+                terminal_tokens.append(terminal)
+    terminal_tokens.append(grammar.EOF)
