@@ -141,6 +141,9 @@ class ShowResults(QWidget):
             info += self.full_run_pipeline(grammar, strings, parser_lr1)
         else:
             info += pprint(str(False), 'La Gramatica no es LR(1):') + '\n\n'
+            info += parser_lr1.error
+            info += pprint(parser_lr1.action, 'Tabla de Actions:') + '\n\n'
+            info += pprint(parser_lr1.goto, 'Tabla de Goto:') + '\n\n'
 
         grammar_without_common_prefixes = deepcopy(grammar)
         rm_common_prefix(grammar_without_common_prefixes)
