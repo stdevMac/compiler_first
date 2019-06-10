@@ -86,19 +86,19 @@ class Grammar:
 
         mul = '%s, '
 
-        ans = 'Non-Terminals:\n\t'
+        ans = 'Non-Terminals:\n'
 
         nonterminals = mul * (len(self.nonTerminals) - 1) + '%s\n'
 
         ans += nonterminals % tuple(self.nonTerminals)
 
-        ans += 'Terminals:\n\t'
+        ans += 'Terminals:\n'
 
         terminals = mul * (len(self.terminals) - 1) + '%s\n'
 
         ans += terminals % tuple(self.terminals)
 
-        ans += 'Productions:\n\t'
+        ans += 'Productions:\n'
 
         ans += pprint(self.Productions)
 
