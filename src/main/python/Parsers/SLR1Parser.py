@@ -13,6 +13,12 @@ class SLR1Parser(ShiftReduceParser):
         follows = compute_follows(grammar, firsts)
 
         automaton = build_LR0_automaton(grammar).to_deterministic(empty_formatter)
+
+        assert automaton.recognize('E')
+        assert automaton.recognize('T*F')
+        assert automaton.recognize(['E', '+', 'int'])
+        assert not automaton.recognize('E*F')
+
         for i, node in enumerate(automaton):
             if self.verbose:
                 print(i, node)

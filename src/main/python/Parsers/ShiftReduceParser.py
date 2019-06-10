@@ -19,6 +19,7 @@ class ShiftReduceParser:
         output = []
 
         while True:
+
             state = stack[-1]
             lookahead = w[cursor]
             if self.verbose:
@@ -35,7 +36,7 @@ class ShiftReduceParser:
                 elif action == ShiftReduceParser.REDUCE:
                     for _ in range(len(tag.Right)):
                         stack.pop()
-                    stack.append(self.goto[stack[-1], tag.Left])
+                    stack.append(self.goto[stack[-1]][tag.Left][0])
                     output.append(tag)
                 # Your code here!!! (OK case)
                 elif action == ShiftReduceParser.OK:

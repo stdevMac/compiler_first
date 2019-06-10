@@ -108,11 +108,11 @@ class ShowResults(QWidget):
         info += 'SLR: \n\n'
         # parser_lr1 = LR1Parser(grammar)
         parser_slr1 = SLR1Parser(grammar, verbose=True)
-        parser_slr12 = SLR1Parser2(grammar, verbose=True)
+
         info += pprint(parser_slr1.action, 'Tabla de Actions:') + '\n\n'
         info += pprint(parser_slr1.goto, 'Tabla de Goto:') + '\n\n'
-        s = parser_slr1([grammar.terminals[0], grammar.terminals[2], grammar.terminals[2], grammar.EOF])
-        s = parser_slr12([grammar.terminals[0], grammar.terminals[2], grammar.terminals[2], grammar.EOF])
+
+        s = parser_slr1([grammar.terminals[2], grammar.terminals[0], grammar.terminals[2], grammar.terminals[1], grammar.terminals[2], grammar.EOF])
 
         grammar_without_common_prefixes = grammar.copy()
         rm_common_prefix(grammar_without_common_prefixes)
