@@ -17,7 +17,7 @@ def regexp_from_automaton(automaton, alphabet):
             for symbol in alphabet:
                 try:
                     if automaton[j] in automaton[i].transitions[symbol]:
-                        table[i][j] = regex_union(table[i][j], symbol)
+                        table[i][j] = regex_union(table[i][j], symbol.Name)
                 except:
                     try:
                         if automaton[j] in automaton[i].transitions[symbol.Name]:
