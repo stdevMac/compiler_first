@@ -17,12 +17,14 @@ class ShiftReduceParser:
         stack = [0]
         cursor = 0
         output = []
+        productions = ''
 
         while True:
 
             state = stack[-1]
             lookahead = w[cursor]
             if self.verbose:
+                productions += str(stack) + str(w[cursor:]) + '\n'
                 print(stack, w[cursor:])
 
             # Your code here!!! (Detect error)
@@ -47,3 +49,4 @@ class ShiftReduceParser:
                     assert False, 'Must be something wrong!'
             except KeyError:
                 return None
+        return productions
