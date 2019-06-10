@@ -28,14 +28,15 @@ class LR1Parser(ShiftReduceParser):
                             self.is_lr1 &= is_register(self.action, idx, lookahead, (ShiftReduceParser.REDUCE, prod))
                 else:
                     next_symbol = item.NextSymbol
-                    if next_symbol.IsTerminal:
+                    if next_symbol.IsTerminal and not next_symbol.IsEpsilon:
                         try:
                             self.is_lr1 &= is_register(self.action, idx, next_symbol,
                                                    (ShiftReduceParser.SHIFT, node[next_symbol.Name][0].idx))
                         except:
                             self.is_lr1 = False
                     else:
-                        self.is_lr1 &= is_register(self.goto, idx, next_symbol, node[next_symbol.Name][0].idx)
+                        if not next_symbol.IsEpsilon:
+                            self.is_lr1 &= is_register(self.goto, idx, next_symbol, node[next_symbol.Name][0].idx)
                 pass
 
     @staticmethod

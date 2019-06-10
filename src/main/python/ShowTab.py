@@ -130,6 +130,9 @@ class ShowResults(QWidget):
             info += self.full_run_pipeline(grammar, strings, parser_slr1)
         else:
             info += pprint(str(False), 'La Gramatica no es SLR(1):') + '\n\n'
+            info += parser_slr1.error
+            info += pprint(parser_slr1.action, 'Tabla de Actions:') + '\n\n'
+            info += pprint(parser_slr1.goto, 'Tabla de Goto:') + '\n\n'
 
         if parser_lr1.is_lr1:
             info += 'La Gramatica es LR(1):' + '\n\n'

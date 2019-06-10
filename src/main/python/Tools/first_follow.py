@@ -1,4 +1,5 @@
 from src.main.python.Grammar.ContainerSet import ContainerSet
+from src.main.python.Grammar.Sentence import Sentence
 import copy
 
 from src.main.python.Tools.printer import pprint
