@@ -49,3 +49,12 @@ class ShiftReduceParser:
                     assert False, 'Must be something wrong!'
             except KeyError:
                 return None, None
+
+    @staticmethod
+    def get_conflict(table, state, symbol):
+        if state in table:
+            row = table[state]
+            cell = row[symbol]
+            if len(cell) == 2:
+                return 'Conflicto ' + cell[0][0] + '-' + cell[1][0] + f' en estado {state} y simbolo {symbol} \n'
+        return None
