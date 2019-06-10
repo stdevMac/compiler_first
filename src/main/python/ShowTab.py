@@ -14,6 +14,7 @@ from src.main.python.Tools.RemoveImmediateLeftRecursion import rm_immediate_left
 from src.main.python.Tools.Tokenizer import tokenize_input
 from src.main.python.Tools.first_follow import build_parsing_table, method_predicted_non_recursive
 from src.main.python.Tools.printer import pprint
+from copy import deepcopy
 
 
 class ShowResults(QWidget):
@@ -123,9 +124,9 @@ class ShowResults(QWidget):
         else:
             info += pprint(str(False), 'La Gramatica no es LR(1):') + '\n\n'
 
-        grammar_without_common_prefixes = grammar.copy()
+        grammar_without_common_prefixes = deepcopy(grammar)
         rm_common_prefix(grammar_without_common_prefixes)
-        grammar_without_immediate_left_recursion = grammar.copy()
+        grammar_without_immediate_left_recursion = deepcopy(grammar)
         rm_immediate_left_recursion(grammar_without_immediate_left_recursion)
         info += pprint(str(grammar_without_common_prefixes), 'Gramatica sin prefijos comunes:') + '\n\n'
         info += pprint(str(grammar_without_immediate_left_recursion),

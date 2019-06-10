@@ -162,9 +162,15 @@ class Grammar:
 
     def copy(self):
         G = Grammar()
-        G.Productions = self.Productions.copy()
+        # G.Productions = self.Productions.copy()
+        G.Productions = []
+        for p in self.Productions:
+            G.Productions.append(p.copy())
+
         G.nonTerminals = self.nonTerminals.copy()
+
         G.terminals = self.terminals.copy()
+
         G.pType = self.pType
         G.startSymbol = self.startSymbol
         G.Epsilon = self.Epsilon

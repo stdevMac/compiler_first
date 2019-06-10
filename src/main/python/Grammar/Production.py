@@ -20,6 +20,9 @@ class Production(object):
     def __hash__(self):
         return hash((self.Left, self.Right))
 
+    def copy(self):
+        return Production(self.Left, self.Right)
+
     @property
     def IsEpsilon(self):
         return self.Right.IsEpsilon

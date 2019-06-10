@@ -47,9 +47,6 @@ def rm_common_prefix(grammar):
                     for nt in grammar.nonTerminals:
                         if nt.Name == non_terminal.Name:
                             nt = non_terminal
-                            for p in nt.productions:
-                                grammar.Productions.append(p)
-                            break
 
 
                     for prodct in common_prefixes:
@@ -61,6 +58,9 @@ def rm_common_prefix(grammar):
                 else:
                     visited.add(productions[i])
                     grammar.Productions.append(productions[i])
+                    for nt in grammar.nonTerminals:
+                        if nt.Name == non_terminal.Name:
+                            nt.productions.append(productions[i])
 
 
 

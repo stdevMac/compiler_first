@@ -16,6 +16,10 @@ def rm_immediate_left_recursion(grammar):
             for p in no_recursion:
                 non_terminal %= Sentence(*p) + tmp
 
+            for p in non_terminal.productions:
+                if p not in grammar.Productions:
+                    grammar.Productions.append(p)
+
             for p in recursion:
                 tmp %= Sentence(*p) + tmp
 

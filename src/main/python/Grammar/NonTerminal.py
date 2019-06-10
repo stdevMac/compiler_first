@@ -9,6 +9,8 @@ class NonTerminal(Symbol):
         super().__init__(name, grammar)
         self.productions = []
 
+
+
     def __imod__(self, other):
 
         if isinstance(other, Sentence):
