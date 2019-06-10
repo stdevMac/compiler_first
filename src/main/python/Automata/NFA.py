@@ -15,6 +15,10 @@ class NFA:
             self.transitions[origin][symbol] = destinations
             self.vocabulary.add(symbol)
 
+        for i in range(self.states):
+            if len(self.transitions[i]) == 0:
+                self.transitions.pop(i, None)
+
         self.vocabulary.discard('')
 
     def epsilon_transitions(self, state):

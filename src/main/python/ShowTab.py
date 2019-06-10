@@ -88,7 +88,6 @@ class ShowResults(QWidget):
             parsing_table = build_parsing_table(grammar, first, follow)
             parser = method_predicted_non_recursive(grammar, M=parsing_table)
 
-
             try:
                 dfa = grammar.DFA()
                 states = State.from_nfa(dfa, True)

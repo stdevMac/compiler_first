@@ -217,7 +217,7 @@ class Grammar:
 
         extra = False
         for j in self.Productions:
-            if len(j.Right) == 1 and j.IsEpsilon:
+            if len(j.Right) == 1 and not j.IsEpsilon:
                 extra = True
                 break
 
@@ -240,7 +240,6 @@ class Grammar:
             else:
                 trans[(map[j.Left], j.Right[0])] = [map[j.Right[1]]]
 
-
-        automaton = NFA(states=map['f'], finals=finals, transitions=trans)
+        automaton = NFA(states=len(map), finals=finals, transitions=trans)
 
         return nfa_to_dfa(automaton)
