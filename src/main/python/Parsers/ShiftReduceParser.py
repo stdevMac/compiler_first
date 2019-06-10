@@ -48,4 +48,4 @@ class ShiftReduceParser:
                 else:
                     assert False, 'Must be something wrong!'
             except KeyError:
-                return None
+                return None, None

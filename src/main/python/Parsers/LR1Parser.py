@@ -29,8 +29,11 @@ class LR1Parser(ShiftReduceParser):
                 else:
                     next_symbol = item.NextSymbol
                     if next_symbol.IsTerminal:
-                        self.is_lr1 &= is_register(self.action, idx, next_symbol,
+                        try:
+                            self.is_lr1 &= is_register(self.action, idx, next_symbol,
                                                    (ShiftReduceParser.SHIFT, node[next_symbol.Name][0].idx))
+                        except:
+                            self.is_lr1 = False
                     else:
                         self.is_lr1 &= is_register(self.goto, idx, next_symbol, node[next_symbol.Name][0].idx)
                 pass

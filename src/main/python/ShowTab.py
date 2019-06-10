@@ -41,7 +41,6 @@ class ShowResults(QWidget):
         self.all_info = QTextEdit()
         self.image_label = QLabel()
         self.image = None
-
         scroll_layout.addWidget(self.all_info)
         self.scroll.setWidget(scroll_content)
         self.setLayout(self.layout)
@@ -64,7 +63,8 @@ class ShowResults(QWidget):
                     continue
                 tokens = tokenize_input(line, grammar)
                 output, productions = parser(tokens)
-                info += pprint(productions, f'Parse para cadena -> {line}:') + '\n\n'
+                if output is not None and productions is not None:
+                    info += pprint(productions, f'Parse para cadena -> {line}:') + '\n\n'
 
         return info
 
