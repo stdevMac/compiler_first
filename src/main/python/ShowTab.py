@@ -99,12 +99,12 @@ class ShowResults(QWidget):
                     dot = states[0].graph()
 
                     (graph, ) = pydot.graph_from_dot_data(str(dot))
+                    graph.set_label('Automata expresion Regular Asociada')
                     gr = pgv.AGraph().from_string(str(graph))
                     gr.layout()
                     gr.draw('graph.png')
                     self.image = QPixmap('graph.png')
                     self.image_label.setPixmap(self.image)
-
                     self.image_label.show()
                 except:
                     info += 'No es posible mostrar el automata...Error' + '\n\n'
