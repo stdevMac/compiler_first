@@ -13,14 +13,14 @@ class SLR1Parser(ShiftReduceParser):
         firsts = compute_firsts(grammar)
         follows = compute_follows(grammar, firsts)
 
-        automaton = build_LR0_automaton(grammar).to_deterministic(empty_formatter)
+        self.automaton = build_LR0_automaton(grammar).to_deterministic(empty_formatter)
 
-        for i, node in enumerate(automaton):
+        for i, node in enumerate(self.automaton):
             if self.verbose:
                 print(i, node)
             node.idx = i
 
-        for node in automaton:
+        for node in self.automaton:
             idx = node.idx
             for state in node.state:
                 item = state.state
