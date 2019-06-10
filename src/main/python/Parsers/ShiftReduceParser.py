@@ -8,6 +8,7 @@ class ShiftReduceParser:
         self.verbose = verbose
         self.action = {}
         self.goto = {}
+        self.automaton = None
         self._build_parsing_table()
 
     def _build_parsing_table(self):

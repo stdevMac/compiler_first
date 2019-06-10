@@ -9,13 +9,13 @@ class LR1Parser(ShiftReduceParser):
 
         grammar = self.grammar.AugmentedGrammar(True)
 
-        automaton = build_lr1_automaton(grammar)
-        for i, node in enumerate(automaton):
+        self.automaton = build_lr1_automaton(grammar)
+        for i, node in enumerate(self.automaton):
             if self.verbose:
                 print(i, '\t', '\n\t '.join(str(x) for x in node.state), '\n')
             node.idx = i
 
-        for node in automaton:
+        for node in self.automaton:
             idx = node.idx
             for item in node.state:
 
