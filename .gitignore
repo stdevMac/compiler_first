@@ -1,6 +1,6 @@
 *.idea/*
-src/main/python/graph.png
-src/main/python/lr.png
-src/main/python/slr.png
+graph.png
+lr.png
+slr.png
 *__pycache__*
 *.pyc
